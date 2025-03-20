@@ -15,21 +15,6 @@ jxl.log
 jmx.log
 derby.log
 
-# Gradle artifacts
-.gradle
-.gradletasknamecache
-/build
-buildSrc/build
-/spring-*/build
-/framework-*/build
-/integration-tests/build
-/src/asciidoc/build
-spring-test/test-output/
-
-# Maven artifacts
-pom.xml
-/target/
-
 # Eclipse artifacts, including WTP generated manifests
 bin
 .classpath
