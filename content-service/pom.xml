@@ -31,6 +31,11 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -65,6 +70,18 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>3.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>3.4.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -118,12 +135,24 @@
 					</excludes>
 				</configuration>
 			</plugin>
-      <plugin>
-        <groupId>com.github.sherter.google-java-format</groupId>
-        <artifactId>google-java-format-maven-plugin</artifactId>
-        <version>2.15.0</version>
-      </plugin>
+			<plugin>
+				<groupId>com.github.sherter.google-java-format</groupId>
+				<artifactId>google-java-format-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<style>google</style>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</configuration>
+			  </plugin>
 		</plugins>
 	</build>
-
 </project>
