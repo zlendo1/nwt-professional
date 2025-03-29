@@ -13,13 +13,13 @@ import lombok.*;
 public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recommendationId;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "jobId", nullable = false)
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

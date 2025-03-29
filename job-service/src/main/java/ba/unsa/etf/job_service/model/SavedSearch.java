@@ -12,14 +12,14 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "SavedSearches")
+@Table(name = "saved_searches")
 public class SavedSearch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long searchId;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private String keywords;
@@ -28,5 +28,6 @@ public class SavedSearch {
     @Enumerated(EnumType.STRING)
     private EmploymentType employmentType;
 
+    @Column(columnDefinition = "DATETIME")
     private Date saveDate;
 }

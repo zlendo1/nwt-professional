@@ -18,13 +18,13 @@
     public class Job {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long jobId;
+        private Long id;
 
         @Column(nullable = false, unique = true)
         private String jobUUID = UUID.randomUUID().toString();
 
         @ManyToOne
-        @JoinColumn(name = "companyId", nullable = false)
+        @JoinColumn(name = "company_id", nullable = false)
         private Company company;
 
         private String title;
@@ -37,7 +37,10 @@
         @Enumerated(EnumType.STRING)
         private EmploymentType employmentType;
 
+        @Column(columnDefinition = "DATETIME")
         private Date publishDate;
+
+        @Column(columnDefinition = "DATETIME")
         private Date expirationDate;
         private Integer applicationCount;
     }

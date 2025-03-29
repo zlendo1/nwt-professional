@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -16,19 +17,20 @@ import java.util.Date;
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long applicationId;
+    private Long id;
 
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String applicationUUID;
+    @Column(nullable = false, unique = true)
+    private String applicationUUID = UUID.randomUUID().toString();
 
     @ManyToOne
-    @JoinColumn(name = "jobId", nullable = false)
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(columnDefinition = "DATETIME")
     private Date applicationDate;
 
     @Enumerated(EnumType.STRING)
