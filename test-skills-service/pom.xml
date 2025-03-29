@@ -45,9 +45,9 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-    <dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -118,11 +118,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-      <plugin>
-        <groupId>com.github.sherter.google-java-format</groupId>
-        <artifactId>google-java-format-maven-plugin</artifactId>
-        <version>2.15.0</version>
-      </plugin>
 		</plugins>
 	</build>
 
