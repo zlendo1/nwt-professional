@@ -9,5 +9,4 @@ public class CommunicationServiceApplication {
   public static void main(String[] args) {
     SpringApplication.run(CommunicationServiceApplication.class, args);
   }
-
 }
