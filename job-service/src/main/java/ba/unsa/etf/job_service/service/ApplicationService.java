@@ -10,16 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private ApplicationRepository applicationRepository;
+  @Autowired private ModelMapper modelMapper;
+  @Autowired private ApplicationRepository applicationRepository;
 
-    public ApplicationDTO convertToDTO(Application application) {
-        return modelMapper.map(application, ApplicationDTO.class);
-    }
+  public ApplicationDTO convertToDTO(Application application) {
+    return modelMapper.map(application, ApplicationDTO.class);
+  }
 
-    public Application convertToEntity(ApplicationDTO applicationDTO) {
-        return modelMapper.map(applicationDTO, Application.class);
-    }
+  public Application convertToEntity(ApplicationDTO applicationDTO) {
+    return modelMapper.map(applicationDTO, Application.class);
+  }
 }

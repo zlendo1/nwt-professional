@@ -10,17 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private CompanyRepository companyRepository;
+  @Autowired private ModelMapper modelMapper;
+  @Autowired private CompanyRepository companyRepository;
 
-    public CompanyDTO convertToDTO(Company company) {
-        return modelMapper.map(company, CompanyDTO.class);
-    }
+  public CompanyDTO convertToDTO(Company company) {
+    return modelMapper.map(company, CompanyDTO.class);
+  }
 
-    public Company convertToEntity(CompanyDTO companyDTO) {
-        return modelMapper.map(companyDTO, Company.class);
-    }
+  public Company convertToEntity(CompanyDTO companyDTO) {
+    return modelMapper.map(companyDTO, Company.class);
+  }
 }
-

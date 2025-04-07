@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobSearchDTO {
-    private String jobTitle;
-    private String companyName;
-    private String location;
-    private JobLocation locationType;
-    private EmploymentType employmentType;
-    private String publishDateFrom;
-    private String publishDateTo;
+  private String jobTitle;
+  private String companyName;
+  private String location;
+  private JobLocation locationType;
+  private EmploymentType employmentType;
+  private String publishDateFrom;
+  private String publishDateTo;
 }
-

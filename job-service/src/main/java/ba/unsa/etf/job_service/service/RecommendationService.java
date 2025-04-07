@@ -10,17 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RecommendationService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private RecommendationRepository recommendationRepository;
+  @Autowired private ModelMapper modelMapper;
+  @Autowired private RecommendationRepository recommendationRepository;
 
-    public RecommendationDTO convertToDTO(Recommendation recommendation) {
-        return modelMapper.map(recommendation, RecommendationDTO.class);
-    }
+  public RecommendationDTO convertToDTO(Recommendation recommendation) {
+    return modelMapper.map(recommendation, RecommendationDTO.class);
+  }
 
-    public Recommendation convertToEntity(RecommendationDTO recommendationDTO) {
-        return modelMapper.map(recommendationDTO, Recommendation.class);
-    }
+  public Recommendation convertToEntity(RecommendationDTO recommendationDTO) {
+    return modelMapper.map(recommendationDTO, Recommendation.class);
+  }
 }
-

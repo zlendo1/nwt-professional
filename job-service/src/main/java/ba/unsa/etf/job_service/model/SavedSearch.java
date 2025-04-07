@@ -2,9 +2,8 @@ package ba.unsa.etf.job_service.model;
 
 import ba.unsa.etf.job_service.model.enums.EmploymentType;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Date;
+import lombok.*;
 
 @Entity
 @Data
@@ -14,20 +13,20 @@ import java.util.Date;
 @Setter
 @Table(name = "saved_searches")
 public class SavedSearch {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    private String keywords;
-    private String location;
+  private String keywords;
+  private String location;
 
-    @Enumerated(EnumType.STRING)
-    private EmploymentType employmentType;
+  @Enumerated(EnumType.STRING)
+  private EmploymentType employmentType;
 
-    @Column(columnDefinition = "DATETIME")
-    private Date saveDate;
+  @Column(columnDefinition = "DATETIME")
+  private Date saveDate;
 }
