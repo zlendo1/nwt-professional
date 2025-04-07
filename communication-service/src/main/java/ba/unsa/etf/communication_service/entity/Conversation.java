@@ -17,6 +17,4 @@ public class Conversation {
 
   @Column(name = "name", nullable = false)
   private String name;
-
-  private String type;
 }
