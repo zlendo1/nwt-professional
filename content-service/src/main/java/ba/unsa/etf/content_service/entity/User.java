@@ -2,77 +2,92 @@ package ba.unsa.etf.content_service.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment primary key
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment primary key
+    private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String username;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-  @Column(nullable = false, unique = true)
-  private String userlastname;
+    @Column(nullable = false, unique = true)
+    private String userlastname;
 
-  @Column(nullable = false, unique = true)
-  private String email;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-  @Column(nullable = false)
-  private String password;
+    @Column(nullable = false)
+    private String password;
 
-  @Column(nullable = false)
-  private LocalDate regdate;
+    @Column(nullable = false)
+    private LocalDate regdate;
 
-  // Constructor default
-  public User() {}
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 
-  // Getteri i setteri
+    // Default constructor
+    public User() {}
 
-  // id
-  public Long getId() {
-    return id;
-  }
+    // Getteri i setteri
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  // username
-  public String getUsername() {
-    return username;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  // lastname
-  public String getUserlastname() {
-    return userlastname;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public void setUserlastname(String userlastname) {
-    this.userlastname = userlastname;
-  }
+    public String getUserlastname() {
+        return userlastname;
+    }
 
-  // email
-  public String getEmail() {
-    return email;
-  }
+    public void setUserlastname(String userlastname) {
+        this.userlastname = userlastname;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  // pass
-  public String getPassword() {
-    return password;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public LocalDate getRegdate() {
+        return regdate;
+    }
+
+    public void setRegdate(LocalDate regdate) {
+        this.regdate = regdate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
