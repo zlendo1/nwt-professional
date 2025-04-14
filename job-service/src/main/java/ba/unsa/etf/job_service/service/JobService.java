@@ -1,7 +1,6 @@
 package ba.unsa.etf.job_service.service;
 
 import ba.unsa.etf.job_service.dto.JobDTO;
-import ba.unsa.etf.job_service.dto.JobSearchDTO;
 import ba.unsa.etf.job_service.model.Company;
 import ba.unsa.etf.job_service.model.Job;
 import ba.unsa.etf.job_service.repository.CompanyRepository;
@@ -13,7 +12,6 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

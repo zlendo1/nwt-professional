@@ -8,7 +8,6 @@ import ba.unsa.etf.job_service.repository.JobRepository;
 import ba.unsa.etf.job_service.repository.RecommendationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

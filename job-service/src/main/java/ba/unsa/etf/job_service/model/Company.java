@@ -3,8 +3,6 @@ package ba.unsa.etf.job_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "company")
 @Data
