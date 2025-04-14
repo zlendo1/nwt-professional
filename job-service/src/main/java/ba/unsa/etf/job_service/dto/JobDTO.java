@@ -3,15 +3,15 @@ package ba.unsa.etf.job_service.dto;
 import ba.unsa.etf.job_service.model.enums.EmploymentType;
 import ba.unsa.etf.job_service.model.enums.JobLocation;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class JobDTO {
 
     @NotBlank(message = "Job title is required")

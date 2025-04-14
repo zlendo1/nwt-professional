@@ -7,9 +7,13 @@ import ba.unsa.etf.job_service.repository.SavedSearchRepository;
 import ba.unsa.etf.job_service.repository.UserRepository;  // To fetch the user by UUID
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SavedSearchService {
@@ -53,11 +57,11 @@ public class SavedSearchService {
         return savedSearchDTO;
     }
 
-    // Retrieve saved searches by userUUID
-    public List<SavedSearchDTO> getSavedSearches(Long id) {
-        List<SavedSearch> savedSearches = savedSearchRepository.findByUserId(id);
-        return savedSearches.stream()
-                .map(savedSearch -> modelMapper.map(savedSearch, SavedSearchDTO.class))
-                .toList();
+    public Page<SavedSearchDTO> getUserSavedSearches(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<SavedSearch> savedSearches = savedSearchRepository.findByUser_Id(userId, pageable);
+
+        return savedSearches.map(savedSearch -> modelMapper.map(savedSearch, SavedSearchDTO.class));
     }
+
 }

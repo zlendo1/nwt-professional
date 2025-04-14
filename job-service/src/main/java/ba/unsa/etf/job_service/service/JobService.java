@@ -6,13 +6,20 @@ import ba.unsa.etf.job_service.model.Company;
 import ba.unsa.etf.job_service.model.Job;
 import ba.unsa.etf.job_service.repository.CompanyRepository;
 import ba.unsa.etf.job_service.repository.JobRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class JobService {
@@ -32,26 +39,16 @@ public class JobService {
     }
 
     public JobDTO createJob(JobDTO jobDTO) {
-        // Pretraga kompanije po imenu
         Optional<Company> companyOpt = companyRepository.findByName(jobDTO.getCompanyName());
 
         if (companyOpt.isEmpty()) {
-            // Ako kompanija nije pronađena, možeš da baciš exception ili da kreiraš novu kompaniju
             throw new RuntimeException("Company not found");
         }
 
         Company company = companyOpt.get();
-
-        // Mapiramo JobDTO u Job entitet
         Job job = convertToEntity(jobDTO);
-
-        // Popunjavanje Company objekta
         job.setCompany(company);
-
-        // Sačuvaj posao u bazi
         job = jobRepository.save(job);
-
-        // Vratimo JobDTO sa sačuvanim podacima
         return convertToDTO(job);
     }
 
@@ -68,16 +65,30 @@ public class JobService {
         return modelMapper.map(jobOpt.get(), JobDTO.class);
     }
 
-    public List<JobDTO> searchJobs(JobSearchDTO jobSearchDTO) {
-        List<Job> jobs = jobRepository.findByTitleContainingIgnoreCaseAndLocationContainingIgnoreCaseAndCompanyNameContainingIgnoreCase(
-                jobSearchDTO.getJobTitle(),
-                jobSearchDTO.getLocation(),
-                jobSearchDTO.getCompanyName()
-        );
+    public Page<JobDTO> searchJobs(String title, String location, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Job> jobs;
 
-        return jobs.stream()
-                .map(job -> modelMapper.map(job, JobDTO.class))
-                .collect(Collectors.toList());
+        if (title != null && location != null) {
+            jobs = jobRepository.findByTitleContainingAndLocationContaining(title, location, pageable);
+        } else if (title != null) {
+            jobs = jobRepository.findByTitleContaining(title, pageable);
+        } else if (location != null) {
+            jobs = jobRepository.findByLocationContaining(location, pageable);
+        } else {
+            jobs = jobRepository.findAll(pageable);
+        }
+
+        return jobs.map(job -> modelMapper.map(job, JobDTO.class));
+    }
+    public Job applyPatchToJob(JsonPatch patch, Job targetJob) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode patched = patch.apply(objectMapper.convertValue(targetJob, JsonNode.class));
+            return objectMapper.treeToValue(patched, Job.class);
+        } catch (JsonPatchException | JsonProcessingException e) {
+            throw new RuntimeException("Failed to apply patch to Job", e);
+        }
     }
 }
 

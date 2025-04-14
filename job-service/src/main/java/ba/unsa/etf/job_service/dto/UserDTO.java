@@ -3,13 +3,13 @@ package ba.unsa.etf.job_service.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
     @NotNull(message = "User UUID cannot be null")
     @Size(min = 1, message = "User UUID cannot be empty")
