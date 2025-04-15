@@ -2,13 +2,13 @@ package ba.unsa.etf.job_service.dto;
 
 import ba.unsa.etf.job_service.model.enums.EmploymentType;
 import ba.unsa.etf.job_service.model.enums.JobLocation;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class JobSearchDTO {
   private String jobTitle;
   private String companyName;

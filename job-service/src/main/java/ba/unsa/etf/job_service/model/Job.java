@@ -10,11 +10,10 @@ import lombok.*;
 @Entity
 @Table(name = "job")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Job {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -22,7 +21,8 @@ public class Job {
   @Column(nullable = false, unique = true)
   private String jobUUID = UUID.randomUUID().toString();
 
-  @ManyToOne
+  // Explicitly set the fetching strategy to Lazy (default) for company
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", nullable = false)
   private Company company;
 

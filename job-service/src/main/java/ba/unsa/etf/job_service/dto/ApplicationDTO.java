@@ -5,14 +5,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ApplicationDTO {
+
+  @NotNull(message = "Job ID is required")
+  private Long jobId;
+
+  @NotNull(message = "User ID is required")
+  private Long userId;
 
   @NotBlank(message = "Job title is required")
   @Size(max = 100, message = "Job title cannot exceed 100 characters")

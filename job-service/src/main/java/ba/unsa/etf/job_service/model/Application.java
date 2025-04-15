@@ -34,4 +34,12 @@ public class Application {
 
   @Enumerated(EnumType.STRING)
   private ApplicationStatus status;
+
+  public Long getJobId() {
+    return job != null ? job.getId() : null;
+  }
+
+  public Long getUserId() {
+    return user != null ? user.getId() : null;
+  }
 }
