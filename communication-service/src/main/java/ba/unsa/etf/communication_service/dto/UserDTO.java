@@ -1,7 +1,6 @@
 package ba.unsa.etf.communication_service.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,9 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-  @NotNull(message = "UUID cannot be null")
-  @NotBlank(message = "UUID cannot be blank")
-  private String uuid;
+  @NotNull(message = "Id cannot be null")
+  private Long id;
 
   @NotNull(message = "Username cannot be null")
   @Size(max = 50, message = "Username cannot be longer than 50 characters")
