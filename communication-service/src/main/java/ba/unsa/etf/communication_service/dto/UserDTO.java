@@ -12,12 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+  @NotNull(message = "UUID cannot be null")
   @NotBlank(message = "UUID cannot be blank")
   private String uuid;
 
-  @NotNull(message = "Name cannot be null")
-  @Size(max = 50, message = "Name cannot be longer than 50 characters")
-  private String name;
+  @NotNull(message = "Username cannot be null")
+  @Size(max = 50, message = "Username cannot be longer than 50 characters")
+  private String username;
 
   @NotNull(message = "Email cannot be null")
   @Email(message = "Email must have proper format")
