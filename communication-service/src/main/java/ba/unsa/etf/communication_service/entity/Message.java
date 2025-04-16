@@ -1,7 +1,7 @@
 package ba.unsa.etf.communication_service.entity;
 
 import jakarta.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -33,5 +33,5 @@ public class Message {
 
   @CreatedDate
   @Column(name = "created_at", nullable = false, updatable = false)
-  private Instant createdAt;
+  private LocalDateTime createdAt;
 }
