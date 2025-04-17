@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageDTO {
+  @NotNull(message = "Id cannot be null")
+  private Long id;
+
   @NotBlank(message = "User name cannot be blank")
   @Size(max = 50, message = "User name cannot exceed 50 characters")
   private String userName;
