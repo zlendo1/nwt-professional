@@ -1,6 +1,8 @@
 package ba.unsa.etf.communication_service.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.*;
 
 @Entity
@@ -17,4 +19,7 @@ public class Conversation {
 
   @Column(name = "name", nullable = false)
   private String name;
+
+  @ManyToMany(mappedBy = "conversations")
+  private Set<User> users = new HashSet<>();
 }

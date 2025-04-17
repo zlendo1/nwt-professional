@@ -1,11 +1,14 @@
 package ba.unsa.etf.communication_service.controller;
 
+import ba.unsa.etf.communication_service.dto.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +51,13 @@ public class UserController {
     }
 
     return ResponseEntity.badRequest().build();
+  }
+
+  @GetMapping("/{id}/conversations")
+  public ResponseEntity<Set<ConversationDTO>> getUserConversations(@PathVariable Long id) {
+    return userService
+        .findConversationsById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
   }
 }

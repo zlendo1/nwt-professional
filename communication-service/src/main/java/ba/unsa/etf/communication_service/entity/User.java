@@ -1,6 +1,8 @@
 package ba.unsa.etf.communication_service.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.*;
 
 @Entity
@@ -20,4 +22,11 @@ public class User {
 
   @Column(nullable = false, unique = true)
   private String email;
+
+  @ManyToMany
+  @JoinTable(
+      name = "UserConversation",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+  private Set<Conversation> conversations = new HashSet<>();
 }
