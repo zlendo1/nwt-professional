@@ -20,6 +20,9 @@ public class Conversation {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @ManyToMany(mappedBy = "conversations")
+  @ManyToMany(mappedBy = "conversation")
   private Set<User> users = new HashSet<>();
+
+  @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Message> messages = new HashSet<>();
 }
