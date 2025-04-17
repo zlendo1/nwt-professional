@@ -1,4 +1,4 @@
-package ba.unsa.etf.communication_service.dto;
+package ba.unsa.etf.communication_service.dto.message;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,12 +26,6 @@ public class MessageDTO {
 
   @NotNull(message = "Content cannot be null")
   private String content;
-
-  @NotBlank(message = "Type cannot be blank")
-  private String type;
-
-  @NotBlank(message = "Encoding cannot be blank")
-  private String encoding;
 
   @NotNull(message = "created_at cannot be null")
   @PastOrPresent(message = "created_at cannot be in the future")
