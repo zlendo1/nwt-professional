@@ -32,7 +32,7 @@ public class File {
         return fileId;
     }
 
-    public void setPostId(Long postId) {
+    public void setFileId(Long fileId) {
         this.fileId = fileId;
     }
 
@@ -59,4 +59,8 @@ public class File {
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }
+
+    public Post getPost() { return post; }
+
+    public void setPost(Post post) { this.post = post; }
 }
