@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ConversationMapper {
-  ConversationDTO toConversationDTO(Conversation conversation);
+  ConversationDTO toDTO(Conversation conversation);
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "users", ignore = true)
   @Mapping(target = "messages", ignore = true)
-  Conversation fromCreateConversationDTO(CreateConversationDTO createConversationDTO);
+  Conversation fromCreateDTO(CreateConversationDTO createConversationDTO);
 }

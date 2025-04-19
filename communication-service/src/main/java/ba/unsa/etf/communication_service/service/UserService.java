@@ -22,24 +22,22 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public List<UserDTO> findAll() {
-    return userRepository.findAll().stream()
-        .map(userMapper::toUserDTO)
-        .collect(Collectors.toList());
+    return userRepository.findAll().stream().map(userMapper::toDTO).collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
   public Optional<UserDTO> findById(Long id) {
-    return userRepository.findById(id).map(userMapper::toUserDTO);
+    return userRepository.findById(id).map(userMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
   public Optional<UserDTO> findByUsername(String username) {
-    return userRepository.findByUsername(username).map(userMapper::toUserDTO);
+    return userRepository.findByUsername(username).map(userMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
   public Optional<UserDTO> findByEmail(String username) {
-    return userRepository.findByEmail(username).map(userMapper::toUserDTO);
+    return userRepository.findByEmail(username).map(userMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
@@ -49,7 +47,7 @@ public class UserService {
         .map(
             user ->
                 user.getConversations().stream()
-                    .map(conversationMapper::toConversationDTO)
+                    .map(conversationMapper::toDTO)
                     .collect(Collectors.toSet()));
   }
 }
