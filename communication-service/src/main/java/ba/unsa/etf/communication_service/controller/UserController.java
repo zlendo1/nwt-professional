@@ -1,7 +1,7 @@
 package ba.unsa.etf.communication_service.controller;
 
-import ba.unsa.etf.communication_service.dto.ConversationDTO;
-import ba.unsa.etf.communication_service.dto.UserDTO;
+import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
+import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package ba.unsa.etf.communication_service.dto;
+package ba.unsa.etf.communication_service.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
