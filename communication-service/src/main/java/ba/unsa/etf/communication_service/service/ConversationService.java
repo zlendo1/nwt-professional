@@ -9,7 +9,6 @@ import ba.unsa.etf.communication_service.mapper.UserMapper;
 import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,21 +34,21 @@ public class ConversationService {
   }
 
   @Transactional(readOnly = true)
-  public Set<ConversationDTO> findByName(String name) {
+  public List<ConversationDTO> findByName(String name) {
     return conversationRepository.findByName(name).stream()
         .map(conversationMapper::toDTO)
-        .collect(Collectors.toSet());
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
-  public Optional<Set<UserDTO>> findConversationById(Long id) {
+  public Optional<List<UserDTO>> findUsersById(Long id) {
     return conversationRepository
         .findById(id)
         .map(
             conversation ->
                 conversation.getUsers().stream()
                     .map(userMapper::toDTO)
-                    .collect(Collectors.toSet()));
+                    .collect(Collectors.toList()));
   }
 
   @Transactional
@@ -57,6 +56,20 @@ public class ConversationService {
     Conversation conversation = conversationRepository.save(conversationMapper.fromCreateDTO(dto));
 
     return conversationMapper.toDTO(conversation);
+  }
+
+  @Transactional
+  public Optional<ConversationDTO> update(Long id, CreateConversationDTO dto) {
+    return conversationRepository
+        .findById(id)
+        .map(
+            conversation -> {
+              conversation.setName(dto.getName());
+
+              conversationRepository.save(conversation);
+
+              return conversationMapper.toDTO(conversation);
+            });
   }
 
   @Transactional
