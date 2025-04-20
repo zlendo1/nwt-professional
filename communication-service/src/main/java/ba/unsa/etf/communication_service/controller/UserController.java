@@ -4,6 +4,7 @@ import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -64,6 +65,30 @@ public class UserController {
         .findConversationsById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
+  }
+
+  @PutMapping("/{userId}/link/conversation/{conversationId}")
+  public ResponseEntity<Void> linkWithConversation(
+      @PathVariable Long userId, @PathVariable Long conversationId) {
+    try {
+      userService.linkWithConversation(userId, conversationId);
+
+      return ResponseEntity.ok().build();
+    } catch (EntityNotFoundException e) {
+      return ResponseEntity.notFound().header("error", e.getMessage()).build();
+    }
+  }
+
+  @PutMapping("/{userId}/unlink/conversation/{conversationId}")
+  public ResponseEntity<Void> unlinkWithConversation(
+      @PathVariable Long userId, @PathVariable Long conversationId) {
+    try {
+      userService.unlinkWithConversation(userId, conversationId);
+
+      return ResponseEntity.ok().build();
+    } catch (EntityNotFoundException e) {
+      return ResponseEntity.notFound().header("error", e.getMessage()).build();
+    }
   }
 
   @PostMapping

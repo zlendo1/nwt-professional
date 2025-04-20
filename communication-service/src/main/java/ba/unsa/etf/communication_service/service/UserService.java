@@ -3,10 +3,13 @@ package ba.unsa.etf.communication_service.service;
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
+import ba.unsa.etf.communication_service.entity.Conversation;
 import ba.unsa.etf.communication_service.entity.User;
 import ba.unsa.etf.communication_service.mapper.ConversationMapper;
 import ba.unsa.etf.communication_service.mapper.UserMapper;
+import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class UserService {
   private final UserRepository userRepository;
+  private final ConversationRepository conversationRepository;
   private final UserMapper userMapper;
   private final ConversationMapper conversationMapper;
 
@@ -50,6 +54,44 @@ public class UserService {
                 user.getConversations().stream()
                     .map(conversationMapper::toDTO)
                     .collect(Collectors.toList()));
+  }
+
+  @Transactional
+  public void linkWithConversation(Long userId, Long conversationId) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+    Conversation conversation =
+        conversationRepository
+            .findById(conversationId)
+            .orElseThrow(() -> new EntityNotFoundException("Conversation not found"));
+
+    user.getConversations().add(conversation);
+    conversation.getUsers().add(user);
+
+    userRepository.save(user);
+    conversationRepository.save(conversation);
+  }
+
+  @Transactional
+  public void unlinkWithConversation(Long userId, Long conversationId) {
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+    Conversation conversation =
+        conversationRepository
+            .findById(conversationId)
+            .orElseThrow(() -> new EntityNotFoundException("Conversation not found"));
+
+    user.getConversations().remove(conversation);
+    conversation.getUsers().remove(user);
+
+    userRepository.save(user);
+    conversationRepository.save(conversation);
   }
 
   @Transactional
