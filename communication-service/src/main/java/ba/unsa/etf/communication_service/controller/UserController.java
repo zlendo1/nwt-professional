@@ -26,41 +26,36 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping
-  public ResponseEntity<List<UserDTO>> getAllUsers() {
+  public ResponseEntity<List<UserDTO>> getAll() {
     return ResponseEntity.ok(userService.findAll());
   }
 
-  @GetMapping(params = {"id", "username", "email"})
-  public ResponseEntity<UserDTO> getUser(
-      @RequestParam(required = false) Long id,
-      @RequestParam(required = false) String username,
-      @RequestParam(required = false) String email) {
-    if (id != null) {
-      return userService
-          .findById(id)
-          .map(ResponseEntity::ok)
-          .orElse(ResponseEntity.notFound().build());
-    }
+  @GetMapping(params = {"id"})
+  public ResponseEntity<UserDTO> getById(@RequestParam(required = true) Long id) {
+    return userService
+        .findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+  }
 
-    if (username != null) {
-      return userService
-          .findByUsername(username)
-          .map(ResponseEntity::ok)
-          .orElse(ResponseEntity.notFound().build());
-    }
+  @GetMapping(params = {"username"})
+  public ResponseEntity<UserDTO> getByUsername(@RequestParam(required = true) String username) {
+    return userService
+        .findByUsername(username)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+  }
 
-    if (email != null) {
-      return userService
-          .findByEmail(email)
-          .map(ResponseEntity::ok)
-          .orElse(ResponseEntity.notFound().build());
-    }
-
-    return ResponseEntity.badRequest().build();
+  @GetMapping(params = {"email"})
+  public ResponseEntity<UserDTO> getByEmail(@RequestParam(required = true) String email) {
+    return userService
+        .findByEmail(email)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
   }
 
   @GetMapping("/{id}/conversations")
-  public ResponseEntity<List<ConversationDTO>> getUserConversations(@PathVariable Long id) {
+  public ResponseEntity<List<ConversationDTO>> getConversations(@PathVariable Long id) {
     return userService
         .findConversationsById(id)
         .map(ResponseEntity::ok)
@@ -107,8 +102,12 @@ public class UserController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    userService.delete(id);
+    boolean deleted = userService.delete(id);
 
-    return ResponseEntity.noContent().build();
+    if (deleted) {
+      return ResponseEntity.noContent().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 }

@@ -26,13 +26,12 @@ public class ConversationController {
   private final ConversationService conversationService;
 
   @GetMapping
-  public ResponseEntity<List<ConversationDTO>> getAllConversations() {
+  public ResponseEntity<List<ConversationDTO>> getAll() {
     return ResponseEntity.ok(conversationService.findAll());
   }
 
   @GetMapping(params = {"id"})
-  public ResponseEntity<ConversationDTO> getConversationById(
-      @RequestParam(required = true) Long id) {
+  public ResponseEntity<ConversationDTO> getById(@RequestParam(required = true) Long id) {
     return conversationService
         .findById(id)
         .map(ResponseEntity::ok)
@@ -40,12 +39,12 @@ public class ConversationController {
   }
 
   @GetMapping(params = {"name"})
-  public List<ConversationDTO> getConversationsByName(@RequestParam(required = true) String name) {
+  public List<ConversationDTO> getByName(@RequestParam(required = true) String name) {
     return conversationService.findByName(name);
   }
 
   @GetMapping("/{id}/users")
-  public ResponseEntity<List<UserDTO>> getConversationUsers(@PathVariable Long id) {
+  public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long id) {
     return conversationService
         .findUsersById(id)
         .map(ResponseEntity::ok)
@@ -53,7 +52,7 @@ public class ConversationController {
   }
 
   @PutMapping("/{conversationId}/link/user/{userId}")
-  public ResponseEntity<Void> linkWithConversation(
+  public ResponseEntity<Void> linkWithUser(
       @PathVariable Long userId, @PathVariable Long conversationId) {
     try {
       conversationService.linkWithUser(userId, conversationId);
@@ -65,7 +64,7 @@ public class ConversationController {
   }
 
   @PutMapping("/{conversationId}/unlink/user/{userId}")
-  public ResponseEntity<Void> unlinkWithConversation(
+  public ResponseEntity<Void> unlinkWithUser(
       @PathVariable Long userId, @PathVariable Long conversationId) {
     try {
       conversationService.unlinkWithUser(userId, conversationId);
@@ -92,8 +91,12 @@ public class ConversationController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    conversationService.delete(id);
+    boolean deleted = conversationService.delete(id);
 
-    return ResponseEntity.noContent().build();
+    if (deleted) {
+      return ResponseEntity.noContent().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 }
