@@ -8,13 +8,13 @@ import org.springframework.data.annotation.CreatedDate;
 @Entity
 @Table(name = "message")
 @Data
-@Getter
-@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @EqualsAndHashCode.Include
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)

@@ -8,13 +8,13 @@ import lombok.*;
 @Entity
 @Table(name = "conversation")
 @Data
-@Getter
-@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Conversation {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @EqualsAndHashCode.Include
   private Long id;
 
   @Column(name = "name", nullable = false)
