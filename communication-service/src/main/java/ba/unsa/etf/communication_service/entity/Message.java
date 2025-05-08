@@ -6,7 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
-@Table(name = "Message")
+@Table(name = "message")
 @Data
 @Getter
 @Setter

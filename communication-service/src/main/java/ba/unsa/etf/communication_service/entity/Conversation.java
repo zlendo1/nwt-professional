@@ -6,7 +6,7 @@ import java.util.Set;
 import lombok.*;
 
 @Entity
-@Table(name = "Conversation")
+@Table(name = "conversation")
 @Data
 @Getter
 @Setter

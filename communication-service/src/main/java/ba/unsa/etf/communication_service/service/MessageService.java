@@ -32,14 +32,14 @@ public class MessageService {
 
   @Transactional(readOnly = true)
   public List<MessageDTO> findByConversationId(Long conversationId) {
-    return messageRepository.findByConversation(conversationId).stream()
+    return messageRepository.findByConversation_Id(conversationId).stream()
         .map(messageMapper::toDTO)
         .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
   public List<MessageDTO> findByUserAndConversationId(Long userId, Long conversationId) {
-    return messageRepository.findByUserAndConversation(userId, conversationId).stream()
+    return messageRepository.findByUser_IdAndConversation_Id(userId, conversationId).stream()
         .map(messageMapper::toDTO)
         .collect(Collectors.toList());
   }
