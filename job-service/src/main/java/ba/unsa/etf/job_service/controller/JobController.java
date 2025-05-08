@@ -18,7 +18,7 @@ public class JobController {
 
   @Autowired private JobService jobService;
 
-  @Autowired private JobRepository jobRepository;
+  private JobRepository jobRepository;
 
   @PostMapping
   public ResponseEntity<JobDTO> createJob(@Valid @RequestBody JobDTO jobDTO) {
