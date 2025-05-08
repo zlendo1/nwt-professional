@@ -18,7 +18,7 @@ public class SavedSearch {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "users_id", nullable = false)
   private User user;
 
   private String keywords;

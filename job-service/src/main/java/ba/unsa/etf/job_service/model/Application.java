@@ -26,7 +26,7 @@ public class Application {
   private Job job;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "users_id", nullable = false)
   private User user;
 
   @Column(columnDefinition = "DATETIME")
