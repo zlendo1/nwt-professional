@@ -6,64 +6,75 @@ import ba.unsa.etf.content_service.entity.Post;
 import ba.unsa.etf.content_service.mapper.AnalyticsMapper;
 import ba.unsa.etf.content_service.repository.PostRepository;
 import ba.unsa.etf.content_service.service.AnalyticsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import java.util.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/analytics")
+@RequiredArgsConstructor
 public class AnalyticsController {
 
-    private final AnalyticsService analyticsService;
-    private final AnalyticsMapper analyticsMapper;
-    private final PostRepository postRepository;
+  private final AnalyticsService analyticsService;
+  private final AnalyticsMapper analyticsMapper;
+  private final PostRepository postRepository;
 
-    @Autowired
-    public AnalyticsController(AnalyticsService analyticsService, AnalyticsMapper analyticsMapper, PostRepository postRepository) {
-        this.analyticsService = analyticsService;
-        this.analyticsMapper = analyticsMapper;
-        this.postRepository = postRepository;
+  // GET all analytics
+  @GetMapping
+  public ResponseEntity<List<AnalyticsDto>> getAllAnalytics() {
+    List<Analytics> analyticsList = analyticsService.getAllAnalytics();
+    List<AnalyticsDto> analyticsDtos = analyticsMapper.toDTO(analyticsList);
+    return ResponseEntity.ok(analyticsDtos);
+  }
+
+  // GET analytics by ID
+  @GetMapping("/{id}")
+  public ResponseEntity<AnalyticsDto> getAnalyticsById(@PathVariable("id") Long id) {
+    Optional<Analytics> analytics = analyticsService.getAnalyticsById(id);
+    return analytics
+        .map(value -> ResponseEntity.ok(analyticsMapper.toDTO(value)))
+        .orElse(ResponseEntity.notFound().build());
+  }
+
+  // POST create new analytics
+  @PostMapping
+  public ResponseEntity<?> createAnalytics(
+      @Valid @RequestBody AnalyticsDto analyticsDto, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      Map<String, Object> response = new HashMap<>();
+      Map<String, String> messages = new HashMap<>();
+
+      bindingResult
+          .getFieldErrors()
+          .forEach(error -> messages.put(error.getField(), error.getDefaultMessage()));
+
+      response.put("error", "validation");
+      response.put("messages", messages);
+
+      return ResponseEntity.badRequest().body(response);
     }
 
-    // GET all analytics
-    @GetMapping
-    public ResponseEntity<List<AnalyticsDto>> getAllAnalytics() {
-        List<Analytics> analyticsList = analyticsService.getAllAnalytics();
-        List<AnalyticsDto> analyticsDtos = analyticsMapper.toDTO(analyticsList);
-        return new ResponseEntity<>(analyticsDtos, HttpStatus.OK);
-    }
+    Post post =
+        postRepository
+            .findById(analyticsDto.getPostId())
+            .orElseThrow(
+                () -> new RuntimeException("Post not found with ID: " + analyticsDto.getPostId()));
 
-    // GET analytics by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<AnalyticsDto> getAnalyticsById(@PathVariable("id") Long id) {
-        Optional<Analytics> analytics = analyticsService.getAnalyticsById(id);
-        return analytics.map(value -> new ResponseEntity<>(analyticsMapper.toDTO(value), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+    Analytics analytics = analyticsMapper.toEntity(analyticsDto);
+    analytics.setPost(post);
 
-    // POST create new analytics
-    @PostMapping
-    public ResponseEntity<AnalyticsDto> createAnalytics(@RequestBody AnalyticsDto analyticsDto) {
-        Analytics analytics = analyticsMapper.toEntity(analyticsDto);
+    Analytics createdAnalytics = analyticsService.createAnalytics(analytics);
+    return ResponseEntity.status(HttpStatus.CREATED).body(analyticsMapper.toDTO(createdAnalytics));
+  }
 
-        Post post = postRepository.findById(analyticsDto.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found with ID: " + analyticsDto.getPostId()));
-
-        analytics.setPost(post);
-
-        Analytics createdAnalytics = analyticsService.createAnalytics(analytics);
-        AnalyticsDto createdAnalyticsDto = analyticsMapper.toDTO(createdAnalytics);
-        return new ResponseEntity<>(createdAnalyticsDto, HttpStatus.CREATED);
-    }
-
-    // DELETE analytics by ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAnalytics(@PathVariable("id") Long id) {
-        analyticsService.deleteAnalytics(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+  // DELETE analytics by ID
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteAnalytics(@PathVariable("id") Long id) {
+    analyticsService.deleteAnalytics(id);
+    return ResponseEntity.noContent().build();
+  }
 }

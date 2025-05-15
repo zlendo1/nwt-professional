@@ -1,55 +1,67 @@
 package ba.unsa.etf.content_service.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class PostDto {
 
-    private Long postId;
-    private Long userId; // Ovdje ostaje "userId", ali povezujemo s `user.id` iz entiteta
-    private LocalDate postDate;
-    private String text;
-    private String status;
+  private Long postId;
 
-    // imageVideo izostavljen jer je BLOB - kasnije provjeriti
+  @NotNull(message = "User ID is required")
+  private Long userId; // Ovdje ostaje "userId", ali povezujemo s `user.id` iz entiteta
 
-    // Getteri i setteri
-    public Long getPostId() {
-        return postId;
-    }
+  @NotNull(message = "Post date is required")
+  private LocalDate postDate;
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
+  @NotBlank(message = "Post text cannot be blank")
+  @Size(min = 2, max = 500, message = "Post text must be between 2 and 500 characters")
+  private String text;
 
-    public Long getUserId() {
-        return userId;
-    }
+  @NotBlank(message = "Status cannot be blank")
+  private String status;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+  // imageVideo izostavljen jer je BLOB - kasnije provjeriti
 
-    public LocalDate getPostDate() {
-        return postDate;
-    }
+  // Getteri i setteri
+  public Long getPostId() {
+    return postId;
+  }
 
-    public void setPostDate(LocalDate postDate) {
-        this.postDate = postDate;
-    }
+  public void setPostId(Long postId) {
+    this.postId = postId;
+  }
 
-    public String getText() {
-        return text;
-    }
+  public Long getUserId() {
+    return userId;
+  }
 
-    public void setText(String text) {
-        this.text = text;
-    }
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public LocalDate getPostDate() {
+    return postDate;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public void setPostDate(LocalDate postDate) {
+    this.postDate = postDate;
+  }
+
+  public String getText() {
+    return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
 }

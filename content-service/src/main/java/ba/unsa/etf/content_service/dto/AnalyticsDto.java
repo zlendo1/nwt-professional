@@ -1,50 +1,64 @@
 package ba.unsa.etf.content_service.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class AnalyticsDto {
-    private Long analyticsId;
-    private Long postId; // ID posta kojem pripada analiza
-    private Integer viewsCount;
-    private Integer likesCount;
-    private Integer commentsCount;
+  private Long analyticsId;
 
-    // Getteri i setteri
-    public Long getAnalyticsId() {
-        return analyticsId;
-    }
+  @NotNull(message = "Post ID is required")
+  private Long postId;
 
-    public void setAnalyticsId(Long analyticsId) {
-        this.analyticsId = analyticsId;
-    }
+  @NotNull(message = "Views count is required")
+  @Min(value = 0, message = "Views count cannot be negative")
+  private Integer viewsCount;
 
-    public Long getPostId() {
-        return postId;
-    }
+  @NotNull(message = "Likes count is required")
+  @Min(value = 0, message = "Likes count cannot be negative")
+  private Integer likesCount;
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
+  @NotNull(message = "Comments count is required")
+  @Min(value = 0, message = "Comments count cannot be negative")
+  private Integer commentsCount;
 
-    public Integer getViewsCount() {
-        return viewsCount;
-    }
+  // Getteri i setteri
+  public Long getAnalyticsId() {
+    return analyticsId;
+  }
 
-    public void setViewsCount(Integer viewsCount) {
-        this.viewsCount = viewsCount;
-    }
+  public void setAnalyticsId(Long analyticsId) {
+    this.analyticsId = analyticsId;
+  }
 
-    public Integer getLikesCount() {
-        return likesCount;
-    }
+  public Long getPostId() {
+    return postId;
+  }
 
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
-    }
+  public void setPostId(Long postId) {
+    this.postId = postId;
+  }
 
-    public Integer getCommentsCount() {
-        return commentsCount;
-    }
+  public Integer getViewsCount() {
+    return viewsCount;
+  }
 
-    public void setCommentsCount(Integer commentsCount) {
-        this.commentsCount = commentsCount;
-    }
+  public void setViewsCount(Integer viewsCount) {
+    this.viewsCount = viewsCount;
+  }
+
+  public Integer getLikesCount() {
+    return likesCount;
+  }
+
+  public void setLikesCount(Integer likesCount) {
+    this.likesCount = likesCount;
+  }
+
+  public Integer getCommentsCount() {
+    return commentsCount;
+  }
+
+  public void setCommentsCount(Integer commentsCount) {
+    this.commentsCount = commentsCount;
+  }
 }
