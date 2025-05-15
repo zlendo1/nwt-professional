@@ -1,10 +1,10 @@
-package ba.unsa.etf.communication_service.dto;
+package ba.unsa.etf.communication_service.dto.message;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,24 +16,20 @@ public class MessageDTO {
   @NotNull(message = "Id cannot be null")
   private Long id;
 
-  @NotBlank(message = "User name cannot be blank")
-  @Size(max = 50, message = "User name cannot exceed 50 characters")
-  private String userName;
+  @NotNull(message = "User id cannot be null")
+  private Long userId;
 
-  @NotBlank(message = "Conversation name cannot be blank")
-  @Size(max = 50, message = "Conversation name cannot exceed 50 characters")
-  private String conversationName;
+  @NotBlank(message = "Username cannot be blank")
+  @Size(max = 50, message = "Username cannot be longer than 50 characters")
+  private String username;
+
+  @NotNull(message = "Conversation id cannot be null")
+  private Long conversationId;
 
   @NotNull(message = "Content cannot be null")
   private String content;
 
-  @NotBlank(message = "Type cannot be blank")
-  private String type;
-
-  @NotBlank(message = "Encoding cannot be blank")
-  private String encoding;
-
   @NotNull(message = "created_at cannot be null")
   @PastOrPresent(message = "created_at cannot be in the future")
-  private Instant created_at;
+  private LocalDateTime createdAt;
 }

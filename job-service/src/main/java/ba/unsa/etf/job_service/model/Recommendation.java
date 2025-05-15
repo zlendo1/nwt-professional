@@ -20,6 +20,6 @@ public class Recommendation {
   private Job job;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "users_id", nullable = false)
   private User user;
 }

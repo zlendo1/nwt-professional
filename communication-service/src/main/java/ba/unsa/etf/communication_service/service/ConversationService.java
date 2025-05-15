@@ -1,7 +1,7 @@
 package ba.unsa.etf.communication_service.service;
 
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
-import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
+import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.entity.Conversation;
 import ba.unsa.etf.communication_service.entity.User;
@@ -19,45 +19,44 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class UserService {
-  private final UserRepository userRepository;
+public class ConversationService {
   private final ConversationRepository conversationRepository;
-  private final UserMapper userMapper;
+  private final UserRepository userRepository;
   private final ConversationMapper conversationMapper;
+  private final UserMapper userMapper;
 
   @Transactional(readOnly = true)
-  public List<UserDTO> findAll() {
-    return userRepository.findAll().stream().map(userMapper::toDTO).collect(Collectors.toList());
+  public List<ConversationDTO> findAll() {
+    return conversationRepository.findAll().stream()
+        .map(conversationMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
-  public Optional<UserDTO> findById(Long id) {
-    return userRepository.findById(id).map(userMapper::toDTO);
+  public Optional<ConversationDTO> findById(Long id) {
+    return conversationRepository.findById(id).map(conversationMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
-  public Optional<UserDTO> findByUsername(String username) {
-    return userRepository.findByUsername(username).map(userMapper::toDTO);
+  public List<ConversationDTO> findByName(String name) {
+    return conversationRepository.findByName(name).stream()
+        .map(conversationMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
-  public Optional<UserDTO> findByEmail(String username) {
-    return userRepository.findByEmail(username).map(userMapper::toDTO);
-  }
-
-  @Transactional(readOnly = true)
-  public Optional<List<ConversationDTO>> findConversationsById(Long id) {
-    return userRepository
+  public Optional<List<UserDTO>> findUsersById(Long id) {
+    return conversationRepository
         .findById(id)
         .map(
-            user ->
-                user.getConversations().stream()
-                    .map(conversationMapper::toDTO)
+            conversation ->
+                conversation.getUsers().stream()
+                    .map(userMapper::toDTO)
                     .collect(Collectors.toList()));
   }
 
   @Transactional
-  public void linkWithConversation(Long userId, Long conversationId) {
+  public void linkWithUser(Long conversationId, Long userId) {
     User user =
         userRepository
             .findById(userId)
@@ -76,7 +75,7 @@ public class UserService {
   }
 
   @Transactional
-  public void unlinkWithConversation(Long userId, Long conversationId) {
+  public void unlinkWithUser(Long conversationId, Long userId) {
     User user =
         userRepository
             .findById(userId)
@@ -95,31 +94,30 @@ public class UserService {
   }
 
   @Transactional
-  public UserDTO create(CreateUserDTO dto) {
-    User user = userRepository.save(userMapper.fromCreateDTO(dto));
+  public ConversationDTO create(CreateConversationDTO dto) {
+    Conversation conversation = conversationRepository.save(conversationMapper.fromCreateDTO(dto));
 
-    return userMapper.toDTO(user);
+    return conversationMapper.toDTO(conversation);
   }
 
   @Transactional
-  public Optional<UserDTO> update(Long id, CreateUserDTO dto) {
-    return userRepository
+  public Optional<ConversationDTO> update(Long id, CreateConversationDTO dto) {
+    return conversationRepository
         .findById(id)
         .map(
-            user -> {
-              user.setUsername(dto.getUsername());
-              user.setEmail(dto.getEmail());
+            conversation -> {
+              conversation.setName(dto.getName());
 
-              userRepository.save(user);
+              conversationRepository.save(conversation);
 
-              return userMapper.toDTO(user);
+              return conversationMapper.toDTO(conversation);
             });
   }
 
   @Transactional
   public boolean delete(Long id) {
-    if (userRepository.existsById(id)) {
-      userRepository.deleteById(id);
+    if (conversationRepository.existsById(id)) {
+      conversationRepository.deleteById(id);
 
       return true;
     }

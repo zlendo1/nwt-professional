@@ -6,7 +6,7 @@ import java.util.Set;
 import lombok.*;
 
 @Entity
-@Table(name = "Conversation")
+@Table(name = "conversation")
 @Data
 @Getter
 @Setter
@@ -22,4 +22,7 @@ public class Conversation {
 
   @ManyToMany(mappedBy = "conversations")
   private Set<User> users = new HashSet<>();
+
+  @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Message> messages = new HashSet<>();
 }

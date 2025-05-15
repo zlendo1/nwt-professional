@@ -6,7 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
-@Table(name = "Message")
+@Table(name = "message")
 @Data
 @Getter
 @Setter
@@ -17,19 +17,17 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "user_conversation_id", nullable = false)
-  private UserConversation userConversation;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "conversation_id", nullable = false)
+  private Conversation conversation;
 
   @Lob
   @Column(name = "content", nullable = false)
   private String content;
-
-  @Column(name = "type", nullable = false)
-  private String type;
-
-  @Column(name = "encoding", nullable = false)
-  private String encoding;
 
   @CreatedDate
   @Column(name = "created_at", nullable = false, updatable = false)

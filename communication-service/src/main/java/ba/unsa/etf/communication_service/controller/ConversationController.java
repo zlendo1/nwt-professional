@@ -1,9 +1,9 @@
 package ba.unsa.etf.communication_service.controller;
 
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
-import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
+import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
-import ba.unsa.etf.communication_service.service.UserService;
+import ba.unsa.etf.communication_service.service.ConversationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -20,53 +20,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("api/conversation")
 @AllArgsConstructor
-public class UserController {
-  private final UserService userService;
+public class ConversationController {
+  private final ConversationService conversationService;
 
   @GetMapping
-  public ResponseEntity<List<UserDTO>> getAll() {
-    return ResponseEntity.ok(userService.findAll());
+  public ResponseEntity<List<ConversationDTO>> getAll() {
+    return ResponseEntity.ok(conversationService.findAll());
   }
 
   @GetMapping(params = {"id"})
-  public ResponseEntity<UserDTO> getById(@RequestParam(required = true) Long id) {
-    return userService
+  public ResponseEntity<ConversationDTO> getById(@RequestParam(required = true) Long id) {
+    return conversationService
         .findById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping(params = {"username"})
-  public ResponseEntity<UserDTO> getByUsername(@RequestParam(required = true) String username) {
-    return userService
-        .findByUsername(username)
+  @GetMapping(params = {"name"})
+  public List<ConversationDTO> getByName(@RequestParam(required = true) String name) {
+    return conversationService.findByName(name);
+  }
+
+  @GetMapping("/{id}/users")
+  public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long id) {
+    return conversationService
+        .findUsersById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping(params = {"email"})
-  public ResponseEntity<UserDTO> getByEmail(@RequestParam(required = true) String email) {
-    return userService
-        .findByEmail(email)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
-  @GetMapping("/{id}/conversations")
-  public ResponseEntity<List<ConversationDTO>> getConversations(@PathVariable Long id) {
-    return userService
-        .findConversationsById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
-  @PutMapping("/{userId}/link/conversation/{conversationId}")
-  public ResponseEntity<Void> linkWithConversation(
+  @PutMapping("/{conversationId}/link/user/{userId}")
+  public ResponseEntity<Void> linkWithUser(
       @PathVariable Long userId, @PathVariable Long conversationId) {
     try {
-      userService.linkWithConversation(userId, conversationId);
+      conversationService.linkWithUser(userId, conversationId);
 
       return ResponseEntity.ok().build();
     } catch (EntityNotFoundException e) {
@@ -74,11 +63,11 @@ public class UserController {
     }
   }
 
-  @PutMapping("/{userId}/unlink/conversation/{conversationId}")
-  public ResponseEntity<Void> unlinkWithConversation(
+  @PutMapping("/{conversationId}/unlink/user/{userId}")
+  public ResponseEntity<Void> unlinkWithUser(
       @PathVariable Long userId, @PathVariable Long conversationId) {
     try {
-      userService.unlinkWithConversation(userId, conversationId);
+      conversationService.unlinkWithUser(userId, conversationId);
 
       return ResponseEntity.ok().build();
     } catch (EntityNotFoundException e) {
@@ -87,14 +76,14 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<UserDTO> create(@Valid @RequestBody CreateUserDTO dto) {
-    return ResponseEntity.ok(userService.create(dto));
+  public ResponseEntity<ConversationDTO> create(@Valid @RequestBody CreateConversationDTO dto) {
+    return ResponseEntity.ok(conversationService.create(dto));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<UserDTO> update(
-      @PathVariable Long id, @Valid @RequestBody CreateUserDTO dto) {
-    return userService
+  public ResponseEntity<ConversationDTO> update(
+      @PathVariable Long id, @Valid @RequestBody CreateConversationDTO dto) {
+    return conversationService
         .update(id, dto)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
@@ -102,7 +91,7 @@ public class UserController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    boolean deleted = userService.delete(id);
+    boolean deleted = conversationService.delete(id);
 
     if (deleted) {
       return ResponseEntity.noContent().build();

@@ -6,7 +6,7 @@ import java.util.Set;
 import lombok.*;
 
 @Entity
-@Table(name = "User")
+@Table(name = "app_user")
 @Data
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class User {
 
   @ManyToMany
   @JoinTable(
-      name = "UserConversation",
+      name = "user_conversation",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "conversation_id"))
   private Set<Conversation> conversations = new HashSet<>();

@@ -1,4 +1,4 @@
-package ba.unsa.etf.communication_service.dto;
+package ba.unsa.etf.communication_service.dto.conversation;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
