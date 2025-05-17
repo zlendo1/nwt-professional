@@ -1,0 +1,64 @@
+spring:
+  autoconfigure:
+    exclude:
+      # Isključuje auto-konfiguraciju za Spring Cloud Gateway JSON u gRPC filter i povezani SSL konfigurator
+      org.springframework.cloud.gateway.config.GatewayAutoConfiguration.JsonToGRPCFilterFactory: true
+      org.springframework.cloud.gateway.config.GatewayAutoConfiguration.GrpcSslConfigurer: true
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000" # Razmislite o specifičnijim originima za produkciju
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+            allowedHeaders: "*"
+            allowCredentials: true
+      discovery:
+        locator:
+          enabled: true # Omogućava automatsko kreiranje ruta na osnovu servisa registrovanih na Eureka-i
+  main:
+    web-application-type: reactive # Potrebno za Spring Cloud Gateway
+
+  # Konfiguracija za H2 bazu podataka
+  datasource:
+    url: jdbc:h2:mem:apigatewaydb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # In-memory H2 baza; DB_CLOSE_DELAY i DB_CLOSE_ON_EXIT sprečavaju gubljenje baze odmah po zatvaranju konekcije
+    driver-class-name: org.h2.Driver
+    username: sa # Standardni username za H2
+    password: '' # Standardna prazna lozinka za H2 (može biti i bilo koja druga)
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Hibernate dijalekt za H2
+    hibernate:
+      ddl-auto: update # Automatski ažurira šemu baze podataka. Za produkciju razmislite o 'validate' ili korištenju Flyway/Liquibase
+    show-sql: true # Prikazuje SQL upite u konzoli, korisno za debugiranje
+  h2:
+    console:
+      enabled: true # Omogućava H2 web konzolu
+      path: /h2-console # Putanja na kojoj će H2 konzola biti dostupna (npr. http://localhost:10001/h2-console)
+      settings:
+        trace: false # Isključuje praćenje SQL upita u H2 konzoli
+        web-allow-others: false # Onemogućava pristup H2 konzoli sa drugih mašina (sigurnosna mjera)
+
+security:
+  jwt:
+    secret-key: 4be0a99b2ac9d9fe650682bc9d2facff16ceb078ba9416b6cabd4d8734f60765 # Preporučljivo je koristiti environment varijable za osjetljive podatke
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ # Adresa Eureka servera
+
+grpc:
+  client:
+    hello: # Primjer konfiguracije gRPC klijenta, prilagodite vašim potrebama
+      address: localhost:10000
+      negotiation-type: plaintext
+
+server:
+  port: 10001 # Port na kojem će API Gateway slušati

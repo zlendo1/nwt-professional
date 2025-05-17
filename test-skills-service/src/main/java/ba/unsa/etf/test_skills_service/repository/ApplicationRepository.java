@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
+
   List<Application> findByUserId(Long userId); // Example custom finder method
 
   List<Application> findByTestTestId(

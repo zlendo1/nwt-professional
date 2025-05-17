@@ -17,7 +17,7 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
-  private Long userId; // Primary key for the user
+  private Long id; // Primary key for the user
 
   @Column(unique = true, nullable = false, length = 255)
   private String username;
@@ -37,6 +37,10 @@ public class User {
   @CreationTimestamp // Hibernate: Automatically sets the creation time
   @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
+
+  public Long getUserId() {
+    return id;
+  }
 
   // Optional: Link to the applications of this user (if a bidirectional relationship is needed)
   // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

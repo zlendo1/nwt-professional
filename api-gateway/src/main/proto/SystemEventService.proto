@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package ba.unsa.etf.gateway;
+
+service SystemEventService {
+  rpc SendSystemEvent(SystemEvent) returns (SystemEventResponse) {}
+}
+
+message SystemEvent {
+  string timestamp = 1;
+  string microserviceName = 2;
+  string user = 3;
+  string actionType = 4;
+  string resourceName = 5;
+  string responseType = 6;
+}
+
+message SystemEventResponse {
+  string message = 1;
+}

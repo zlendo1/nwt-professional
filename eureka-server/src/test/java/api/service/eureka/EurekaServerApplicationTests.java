@@ -1,11 +1,13 @@
-package ba.unsa.etf.test_skills_service;
+package api.service.eureka;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TestSkillsServiceApplicationTests {
+class EurekaServerApplicationTests {
 
-  @Test
-  void contextLoads() {}
+	@Test
+	void contextLoads() {
+	}
+
 }

@@ -36,7 +36,7 @@ class ApplicationServiceIntegrationTest {
 
   @BeforeEach
   void setUp() {
-    // Čišćenje pre svakog testa da se izbegnu konflikti
+    // Čišćenje prije svakog testa da se izbegnu konflikti
     applicationRepository.deleteAll();
     userRepository.deleteAll();
     testRepository.deleteAll();

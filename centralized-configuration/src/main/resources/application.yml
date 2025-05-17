@@ -1,0 +1,5 @@
+server.port: 8888
+
+spring:
+  application.name: configuration-service
+  cloud.config.server.git.uri: https://github.com/Zukic98/nwt-professional.git
