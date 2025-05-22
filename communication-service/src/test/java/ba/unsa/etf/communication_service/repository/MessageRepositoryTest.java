@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 public class MessageRepositoryTest {
@@ -22,7 +21,6 @@ public class MessageRepositoryTest {
   @PersistenceContext private EntityManager entityManager;
 
   @BeforeEach
-  @Sql("/test-data.sql")
   public void setUp() {
     User user1 = new User();
     user1.setUsername("user1");
