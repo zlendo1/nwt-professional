@@ -48,6 +48,9 @@ public class ConversationRepositoryTest {
     entityManager.persist(user2);
     entityManager.persist(conversation1);
     entityManager.persist(conversation2);
+
+    entityManager.flush();
+    entityManager.clear();
   }
 
   @Test

@@ -61,6 +61,9 @@ public class MessageRepositoryTest {
     entityManager.persist(conversation2);
     entityManager.persist(message1);
     entityManager.persist(message2);
+
+    entityManager.flush();
+    entityManager.clear();
   }
 
   @Test
