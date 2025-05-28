@@ -1,6 +1,5 @@
 package ba.unsa.etf.communication_service.controller;
 
-import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
@@ -54,12 +53,10 @@ public class UserController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping("/{id}/conversations")
-  public ResponseEntity<List<ConversationDTO>> getConversations(@PathVariable Long id) {
-    return userService
-        .findConversationsById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+  @GetMapping(params = {"conversationId"})
+  public ResponseEntity<List<UserDTO>> getByConversationId(
+      @RequestParam(required = true) Long conversationId) {
+    return ResponseEntity.ok(userService.findByConversationId(conversationId));
   }
 
   @PutMapping("/{userId}/link/conversation/{conversationId}")

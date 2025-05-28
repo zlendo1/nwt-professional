@@ -1,11 +1,9 @@
 package ba.unsa.etf.communication_service.service;
 
-import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.entity.Conversation;
 import ba.unsa.etf.communication_service.entity.User;
-import ba.unsa.etf.communication_service.mapper.ConversationMapper;
 import ba.unsa.etf.communication_service.mapper.UserMapper;
 import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.UserRepository;
@@ -23,7 +21,6 @@ public class UserService {
   private final UserRepository userRepository;
   private final ConversationRepository conversationRepository;
   private final UserMapper userMapper;
-  private final ConversationMapper conversationMapper;
 
   @Transactional(readOnly = true)
   public List<UserDTO> findAll() {
@@ -46,14 +43,10 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public Optional<List<ConversationDTO>> findConversationsById(Long id) {
-    return userRepository
-        .findById(id)
-        .map(
-            user ->
-                user.getConversations().stream()
-                    .map(conversationMapper::toDTO)
-                    .collect(Collectors.toList()));
+  public List<UserDTO> findByConversationId(Long conversationId) {
+    return userRepository.findByConversation_Id(conversationId).stream()
+        .map(userMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   @Transactional

@@ -2,7 +2,6 @@ package ba.unsa.etf.communication_service.controller;
 
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
-import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.ConversationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -43,12 +42,10 @@ public class ConversationController {
     return conversationService.findByName(name);
   }
 
-  @GetMapping("/{id}/users")
-  public ResponseEntity<List<UserDTO>> getUsers(@PathVariable Long id) {
-    return conversationService
-        .findUsersById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+  @GetMapping(params = {"userId"})
+  public ResponseEntity<List<ConversationDTO>> getByUserId(
+      @RequestParam(required = true) Long userId) {
+    return ResponseEntity.ok(conversationService.findByUserId(userId));
   }
 
   @PutMapping("/{conversationId}/link/user/{userId}")

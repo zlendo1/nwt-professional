@@ -2,11 +2,9 @@ package ba.unsa.etf.communication_service.service;
 
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
-import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.entity.Conversation;
 import ba.unsa.etf.communication_service.entity.User;
 import ba.unsa.etf.communication_service.mapper.ConversationMapper;
-import ba.unsa.etf.communication_service.mapper.UserMapper;
 import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,7 +21,6 @@ public class ConversationService {
   private final ConversationRepository conversationRepository;
   private final UserRepository userRepository;
   private final ConversationMapper conversationMapper;
-  private final UserMapper userMapper;
 
   @Transactional(readOnly = true)
   public List<ConversationDTO> findAll() {
@@ -45,14 +42,10 @@ public class ConversationService {
   }
 
   @Transactional(readOnly = true)
-  public Optional<List<UserDTO>> findUsersById(Long id) {
-    return conversationRepository
-        .findById(id)
-        .map(
-            conversation ->
-                conversation.getUsers().stream()
-                    .map(userMapper::toDTO)
-                    .collect(Collectors.toList()));
+  public List<ConversationDTO> findByUserId(Long userId) {
+    return conversationRepository.findByUser_Id(userId).stream()
+        .map(conversationMapper::toDTO)
+        .collect(Collectors.toList());
   }
 
   @Transactional
