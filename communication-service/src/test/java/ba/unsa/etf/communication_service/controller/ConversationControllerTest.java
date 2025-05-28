@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
-import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.ConversationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -84,21 +83,14 @@ public class ConversationControllerTest {
 
   @Test
   public void testGetUsers() throws Exception {
-    List<UserDTO> users =
-        Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
-    given(conversationService.findUsersById(1L)).willReturn(Optional.of(users));
+    List<ConversationDTO> conversations =
+        Collections.singletonList(new ConversationDTO(1L, "Test Conversation"));
+    given(conversationService.findByUserId(1L)).willReturn(conversations);
 
     mockMvc
-        .perform(get("/api/conversation/1/users"))
+        .perform(get("/api/conversation?userId=1"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(users)));
-  }
-
-  @Test
-  public void testGetUsers_NotFound() throws Exception {
-    given(conversationService.findUsersById(1L)).willReturn(Optional.empty());
-
-    mockMvc.perform(get("/api/conversation/1/users")).andExpect(status().isNotFound());
+        .andExpect(content().json(objectMapper.writeValueAsString(conversations)));
   }
 
   @Test

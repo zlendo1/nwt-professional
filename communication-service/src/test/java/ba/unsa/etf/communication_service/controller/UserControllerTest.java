@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
@@ -107,22 +106,15 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testGetConversations() throws Exception {
-    List<ConversationDTO> conversations =
-        Collections.singletonList(new ConversationDTO(1L, "Test Conversation"));
-    given(userService.findConversationsById(1L)).willReturn(Optional.of(conversations));
+  public void testGetByConversationId() throws Exception {
+    List<UserDTO> users =
+        Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
+    given(userService.findByConversationId(1L)).willReturn(users);
 
     mockMvc
-        .perform(get("/api/users/1/conversations"))
+        .perform(get("/api/users?conversationId=1"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(conversations)));
-  }
-
-  @Test
-  public void testGetConversations_NotFound() throws Exception {
-    given(userService.findConversationsById(1L)).willReturn(Optional.empty());
-
-    mockMvc.perform(get("/api/users/1/conversations")).andExpect(status().isNotFound());
+        .andExpect(content().json(objectMapper.writeValueAsString(users)));
   }
 
   @Test
