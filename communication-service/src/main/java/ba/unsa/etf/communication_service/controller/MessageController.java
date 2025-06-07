@@ -4,8 +4,9 @@ import ba.unsa.etf.communication_service.dto.message.CreateMessageDTO;
 import ba.unsa.etf.communication_service.dto.message.MessageDTO;
 import ba.unsa.etf.communication_service.service.MessageService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,8 @@ public class MessageController {
   private final MessageService messageService;
 
   @GetMapping
-  public ResponseEntity<List<MessageDTO>> getAll() {
-    return ResponseEntity.ok(messageService.findAll());
+  public ResponseEntity<Page<MessageDTO>> getAll(Pageable pageable) {
+    return ResponseEntity.ok(messageService.findAll(pageable));
   }
 
   @GetMapping(params = {"id"})
@@ -36,15 +37,18 @@ public class MessageController {
   }
 
   @GetMapping(params = {"conversationId"})
-  public List<MessageDTO> getByConversationId(@RequestParam(required = true) Long conversationId) {
-    return messageService.findByConversationId(conversationId);
+  public ResponseEntity<Page<MessageDTO>> getByConversationId(
+      @RequestParam(required = true) Long conversationId, Pageable pageable) {
+    return ResponseEntity.ok(messageService.findByConversationId(conversationId, pageable));
   }
 
   @GetMapping(params = {"userId", "conversationId"})
-  public List<MessageDTO> getByUserAndConversationId(
+  public ResponseEntity<Page<MessageDTO>> getByUserAndConversationId(
       @RequestParam(required = true) Long userId,
-      @RequestParam(required = true) Long conversationId) {
-    return messageService.findByUserAndConversationId(userId, conversationId);
+      @RequestParam(required = true) Long conversationId,
+      Pageable pageable) {
+    return ResponseEntity.ok(
+        messageService.findByUserAndConversationId(userId, conversationId, pageable));
   }
 
   @PostMapping
