@@ -16,18 +16,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ba.unsa.etf.communication_service.dto.conversation.ConversationDTO;
 import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
 import ba.unsa.etf.communication_service.service.ConversationService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,21 +45,33 @@ public class ConversationControllerTest {
 
   @Autowired private ObjectMapper objectMapper;
 
+  private ResultMatcher expectContentExact(String expected) {
+    return result -> {
+      String actualJson = result.getResponse().getContentAsString();
+      JsonNode actualContent = objectMapper.readTree(actualJson).get("content");
+
+      JSONAssert.assertEquals(expected, actualContent.toString(), JSONCompareMode.STRICT);
+    };
+  }
+
   @Test
   public void testGetAll() throws Exception {
     List<ConversationDTO> conversations =
         Collections.singletonList(new ConversationDTO(1L, "Test Conversation"));
-    given(conversationService.findAll()).willReturn(conversations);
+    Page<ConversationDTO> conversationsPage = new PageImpl<>(conversations);
+
+    given(conversationService.findAll(any())).willReturn(conversationsPage);
 
     mockMvc
         .perform(get("/api/conversation"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(conversations)));
+        .andExpect(expectContentExact(objectMapper.writeValueAsString(conversations)));
   }
 
   @Test
   public void testGetById() throws Exception {
     ConversationDTO conversation = new ConversationDTO(1L, "Test Conversation");
+
     given(conversationService.findById(1L)).willReturn(Optional.of(conversation));
 
     mockMvc
@@ -73,24 +91,29 @@ public class ConversationControllerTest {
   public void testGetByName() throws Exception {
     List<ConversationDTO> conversations =
         Collections.singletonList(new ConversationDTO(1L, "Test Conversation"));
-    given(conversationService.findByName("Test Conversation")).willReturn(conversations);
+    Page<ConversationDTO> conversationsPage = new PageImpl<>(conversations);
+
+    given(conversationService.findByName(eq("Test Conversation"), any()))
+        .willReturn(conversationsPage);
 
     mockMvc
         .perform(get("/api/conversation?name=Test Conversation"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(conversations)));
+        .andExpect(expectContentExact(objectMapper.writeValueAsString(conversations)));
   }
 
   @Test
   public void testGetUsers() throws Exception {
     List<ConversationDTO> conversations =
         Collections.singletonList(new ConversationDTO(1L, "Test Conversation"));
-    given(conversationService.findByUserId(1L)).willReturn(conversations);
+    Page<ConversationDTO> conversationsPage = new PageImpl<>(conversations);
+
+    given(conversationService.findByUserId(eq(1L), any())).willReturn(conversationsPage);
 
     mockMvc
         .perform(get("/api/conversation?userId=1"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(conversations)));
+        .andExpect(expectContentExact(objectMapper.writeValueAsString(conversations)));
   }
 
   @Test
@@ -135,6 +158,7 @@ public class ConversationControllerTest {
   public void testCreate() throws Exception {
     CreateConversationDTO createConversationDTO = new CreateConversationDTO("Test Conversation");
     ConversationDTO conversation = new ConversationDTO(1L, "Test Conversation");
+
     given(conversationService.create(any(CreateConversationDTO.class))).willReturn(conversation);
 
     mockMvc
@@ -150,6 +174,7 @@ public class ConversationControllerTest {
   public void testUpdate() throws Exception {
     CreateConversationDTO createConversationDTO = new CreateConversationDTO("Updated Conversation");
     ConversationDTO conversation = new ConversationDTO(1L, "Updated Conversation");
+
     given(conversationService.update(eq(1L), any(CreateConversationDTO.class)))
         .willReturn(Optional.of(conversation));
 
@@ -165,6 +190,7 @@ public class ConversationControllerTest {
   @Test
   public void testUpdate_NotFound() throws Exception {
     CreateConversationDTO createConversationDTO = new CreateConversationDTO("Updated Conversation");
+
     given(conversationService.update(eq(1L), any(CreateConversationDTO.class)))
         .willReturn(Optional.empty());
 

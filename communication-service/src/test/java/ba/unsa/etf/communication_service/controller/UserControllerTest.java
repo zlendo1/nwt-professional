@@ -16,18 +16,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ba.unsa.etf.communication_service.dto.user.CreateUserDTO;
 import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,21 +45,33 @@ public class UserControllerTest {
 
   @Autowired private ObjectMapper objectMapper;
 
+  private ResultMatcher expectContentExact(String expected) {
+    return result -> {
+      String actualJson = result.getResponse().getContentAsString();
+      JsonNode actualContent = objectMapper.readTree(actualJson).get("content");
+
+      JSONAssert.assertEquals(expected, actualContent.toString(), JSONCompareMode.STRICT);
+    };
+  }
+
   @Test
   public void testGetAll() throws Exception {
     List<UserDTO> users =
         Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
-    given(userService.findAll()).willReturn(users);
+    Page<UserDTO> usersPage = new PageImpl<>(users);
+
+    given(userService.findAll(any())).willReturn(usersPage);
 
     mockMvc
         .perform(get("/api/users"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(users)));
+        .andExpect(expectContentExact(objectMapper.writeValueAsString(users)));
   }
 
   @Test
   public void testGetById() throws Exception {
     UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+
     given(userService.findById(1L)).willReturn(Optional.of(user));
 
     mockMvc
@@ -72,6 +90,7 @@ public class UserControllerTest {
   @Test
   public void testGetByUsername() throws Exception {
     UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+
     given(userService.findByUsername("testuser")).willReturn(Optional.of(user));
 
     mockMvc
@@ -90,6 +109,7 @@ public class UserControllerTest {
   @Test
   public void testGetByEmail() throws Exception {
     UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+
     given(userService.findByEmail("testuser@example.com")).willReturn(Optional.of(user));
 
     mockMvc
@@ -109,12 +129,14 @@ public class UserControllerTest {
   public void testGetByConversationId() throws Exception {
     List<UserDTO> users =
         Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
-    given(userService.findByConversationId(1L)).willReturn(users);
+    Page<UserDTO> usersPage = new PageImpl<>(users);
+
+    given(userService.findByConversationId(eq(1L), any())).willReturn(usersPage);
 
     mockMvc
         .perform(get("/api/users?conversationId=1"))
         .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(users)));
+        .andExpect(expectContentExact(objectMapper.writeValueAsString(users)));
   }
 
   @Test
@@ -159,6 +181,7 @@ public class UserControllerTest {
   public void testCreate() throws Exception {
     CreateUserDTO createUserDTO = new CreateUserDTO("testuser", "testuser@example.com");
     UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+
     given(userService.create(any(CreateUserDTO.class))).willReturn(user);
 
     mockMvc
@@ -174,6 +197,7 @@ public class UserControllerTest {
   public void testUpdate() throws Exception {
     CreateUserDTO createUserDTO = new CreateUserDTO("updateduser", "updateduser@example.com");
     UserDTO user = new UserDTO(1L, "updateduser", "updateduser@example.com");
+
     given(userService.update(eq(1L), any(CreateUserDTO.class))).willReturn(Optional.of(user));
 
     mockMvc
@@ -188,6 +212,7 @@ public class UserControllerTest {
   @Test
   public void testUpdate_NotFound() throws Exception {
     CreateUserDTO createUserDTO = new CreateUserDTO("updateduser", "updateduser@example.com");
+
     given(userService.update(eq(1L), any(CreateUserDTO.class))).willReturn(Optional.empty());
 
     mockMvc
