@@ -5,8 +5,9 @@ import ba.unsa.etf.communication_service.dto.conversation.CreateConversationDTO;
 import ba.unsa.etf.communication_service.service.ConversationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,8 @@ public class ConversationController {
   private final ConversationService conversationService;
 
   @GetMapping
-  public ResponseEntity<List<ConversationDTO>> getAll() {
-    return ResponseEntity.ok(conversationService.findAll());
+  public ResponseEntity<Page<ConversationDTO>> getAll(Pageable pageable) {
+    return ResponseEntity.ok(conversationService.findAll(pageable));
   }
 
   @GetMapping(params = {"id"})
@@ -38,14 +39,15 @@ public class ConversationController {
   }
 
   @GetMapping(params = {"name"})
-  public List<ConversationDTO> getByName(@RequestParam(required = true) String name) {
-    return conversationService.findByName(name);
+  public ResponseEntity<Page<ConversationDTO>> getByName(
+      @RequestParam(required = true) String name, Pageable pageable) {
+    return ResponseEntity.ok(conversationService.findByName(name, pageable));
   }
 
   @GetMapping(params = {"userId"})
-  public ResponseEntity<List<ConversationDTO>> getByUserId(
-      @RequestParam(required = true) Long userId) {
-    return ResponseEntity.ok(conversationService.findByUserId(userId));
+  public ResponseEntity<Page<ConversationDTO>> getByUserId(
+      @RequestParam(required = true) Long userId, Pageable pageable) {
+    return ResponseEntity.ok(conversationService.findByUserId(userId, pageable));
   }
 
   @PutMapping("/{conversationId}/link/user/{userId}")
