@@ -1,9 +1,9 @@
 spring:
   autoconfigure:
     exclude:
-      # Isključuje auto-konfiguraciju za Spring Cloud Gateway JSON u gRPC filter i povezani SSL konfigurator
       org.springframework.cloud.gateway.config.GatewayAutoConfiguration.JsonToGRPCFilterFactory: true
       org.springframework.cloud.gateway.config.GatewayAutoConfiguration.GrpcSslConfigurer: true
+
   application:
     name: api-gateway
   cloud:

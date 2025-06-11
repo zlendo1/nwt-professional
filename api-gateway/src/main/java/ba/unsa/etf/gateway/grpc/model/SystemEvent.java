@@ -22,7 +22,7 @@ public class SystemEvent {
     private String timestamp;
     @Column(name = "microservice_name")
     private String microserviceName;
-    @Column(name = "_user")
+    @Column(name = "event_user")
     private String user;
     @Column(name = "action_type")
     private String actionType;
