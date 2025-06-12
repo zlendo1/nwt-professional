@@ -28,6 +28,13 @@ public class GatewayConfig {
                         .filters(f -> f.filter(filter)) // Apply authentication filter
                         .uri("lb://user-management-service")) // Forward to the user service
 
+                .route("communication-service", r -> r.path("/api/communication/**") // All requests to /api/users/...
+                        .filters(f -> f.filter(filter)) // Apply authentication filter
+                        .uri("lb://communication-service")) // Forward to the user service
+
+                .route("communication-service", r -> r.path("/api/content/**") // All requests to /api/users/...
+                        .filters(f -> f.filter(filter)) // Apply authentication filter
+                        .uri("lb://content-service")) // Forward to the user service
                 .build();
     }
 }
