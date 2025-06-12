@@ -1,17 +1,13 @@
 package ba.unsa.etf.user_management_service.user.controller;
 
+import ba.unsa.etf.user_management_service.user.dto.UserDTO;
 import ba.unsa.etf.user_management_service.user.model.User;
 import ba.unsa.etf.user_management_service.user.repository.UserRepository;
+import ba.unsa.etf.user_management_service.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
@@ -20,6 +16,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
@@ -55,4 +52,15 @@ public class UserController {
         userRepository.deleteById(id);
         return ResponseEntity.ok("User with id: " + id + " has been deleted successfully.");
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO signUpRequest) {
+        try {
+            User newUser = userService.registerUser(signUpRequest);
+            return ResponseEntity.status(201).body(newUser); // Return 201 Created status
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(409).body(e.getMessage()); // 409 Conflict if user exists
+        }
+    }
+
 }

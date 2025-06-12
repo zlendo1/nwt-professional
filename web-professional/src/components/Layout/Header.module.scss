@@ -1,0 +1,105 @@
+@import '../../styles/variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-medium $spacing-large;
+  background-color: #fff;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $box-shadow;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .leftSection {
+    display: flex;
+    align-items: center;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: $spacing-small / 2;
+      font-weight: bold;
+      font-size: $font-size-large;
+      color: $primary-color;
+      margin-right: $spacing-medium;
+    }
+
+    .searchBar {
+      input {
+        width: 250px;
+        padding: $spacing-small;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        font-size: $font-size-small;
+        background-color: $background-color;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .mainNav {
+    ul {
+      display: flex;
+      gap: $spacing-large;
+
+      li {
+        position: relative; // Za dropdown
+        a {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: $light-text-color;
+          font-size: $font-size-small;
+          transition: color 0.2s ease;
+
+          &:hover {
+            color: $text-color;
+          }
+
+          svg {
+            margin-bottom: 4px;
+          }
+        }
+
+        &.profileDropdown {
+          &:hover .dropdownContent {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+    top: 100%; // Ispod "Ja" linka
+    border-radius: $border-radius;
+    overflow: hidden; // Da bi se border-radius primenio
+
+    a, button {
+      color: $text-color;
+      padding: $spacing-small $spacing-medium;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      &:hover {
+        background-color: $border-color;
+      }
+    }
+  }
+}

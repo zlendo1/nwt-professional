@@ -2,6 +2,7 @@ package ba.unsa.etf.job_service.repository;
 
 import ba.unsa.etf.job_service.model.Job;
 import ba.unsa.etf.job_service.model.enums.EmploymentType;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -38,4 +39,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
       attributePaths =
           "company") // Fetch jobs by location with pagination and eager load company data
   Page<Job> findByLocationContaining(String location, Pageable pageable);
+
+  @EntityGraph(attributePaths = "company")
+  Optional<Job> findByJobUUID(String jobUUID);
 }

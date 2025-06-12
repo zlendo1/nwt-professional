@@ -32,6 +32,12 @@ public class JobController {
     return job != null ? ResponseEntity.ok(job) : ResponseEntity.notFound().build();
   }
 
+  @GetMapping("/uuid/{jobId}")
+  public ResponseEntity<JobDTO> getJobById(@PathVariable String jobId) {
+    JobDTO job = jobService.getJobById(jobId);
+    return job != null ? ResponseEntity.ok(job) : ResponseEntity.notFound().build();
+  }
+
   @GetMapping("/search")
   public ResponseEntity<Page<JobDTO>> searchJobs(
       @RequestParam(required = false) String title,

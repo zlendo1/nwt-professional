@@ -86,4 +86,17 @@ public class JobService {
       throw new RuntimeException("Failed to apply patch to Job", e);
     }
   }
+
+  public JobDTO getJobById(String jobId) {
+    // Find job by jobId
+    Optional<Job> jobOpt = jobRepository.findByJobUUID(jobId);
+
+    // If job not found, throw an exception
+    if (jobOpt.isEmpty()) {
+      throw new RuntimeException("Job with ID " + jobId + " not found");
+    }
+
+    // Convert Job entity to JobDTO
+    return modelMapper.map(jobOpt.get(), JobDTO.class);
+  }
 }

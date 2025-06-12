@@ -50,4 +50,5 @@ public class User {
             this.uuid = String.valueOf(UUID.randomUUID());  // Generate the UUID only once
         }
     }
+
 }
