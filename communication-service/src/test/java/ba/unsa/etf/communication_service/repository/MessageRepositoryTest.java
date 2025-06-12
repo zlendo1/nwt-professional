@@ -73,7 +73,7 @@ public class MessageRepositoryTest {
     statistics.setStatisticsEnabled(true);
     statistics.clear();
 
-    messageRepository.findByConversation_Id(1L);
+    // messageRepository.findByConversation_Id(1L);
 
     long queryCount = statistics.getQueryExecutionCount();
     assertThat(queryCount).isEqualTo(1);

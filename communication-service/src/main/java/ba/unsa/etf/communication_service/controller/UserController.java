@@ -5,8 +5,9 @@ import ba.unsa.etf.communication_service.dto.user.UserDTO;
 import ba.unsa.etf.communication_service.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,8 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping
-  public ResponseEntity<List<UserDTO>> getAll() {
-    return ResponseEntity.ok(userService.findAll());
+  public ResponseEntity<Page<UserDTO>> getAll(Pageable pageable) {
+    return ResponseEntity.ok(userService.findAll(pageable));
   }
 
   @GetMapping(params = {"id"})
@@ -54,9 +55,9 @@ public class UserController {
   }
 
   @GetMapping(params = {"conversationId"})
-  public ResponseEntity<List<UserDTO>> getByConversationId(
-      @RequestParam(required = true) Long conversationId) {
-    return ResponseEntity.ok(userService.findByConversationId(conversationId));
+  public ResponseEntity<Page<UserDTO>> getByConversationId(
+      @RequestParam(required = true) Long conversationId, Pageable pageable) {
+    return ResponseEntity.ok(userService.findByConversationId(conversationId, pageable));
   }
 
   @PutMapping("/{userId}/link/conversation/{conversationId}")

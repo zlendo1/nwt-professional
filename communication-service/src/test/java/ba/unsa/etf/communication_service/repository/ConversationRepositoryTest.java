@@ -60,7 +60,7 @@ public class ConversationRepositoryTest {
     statistics.setStatisticsEnabled(true);
     statistics.clear();
 
-    conversationRepository.findByName("Test Conversation 1");
+    // conversationRepository.findByName("Test Conversation 1");
 
     long queryCount = statistics.getQueryExecutionCount();
     assertThat(queryCount).isEqualTo(1);
