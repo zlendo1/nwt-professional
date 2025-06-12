@@ -53,14 +53,4 @@ public class UserController {
         return ResponseEntity.ok("User with id: " + id + " has been deleted successfully.");
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO signUpRequest) {
-        try {
-            User newUser = userService.registerUser(signUpRequest);
-            return ResponseEntity.status(201).body(newUser); // Return 201 Created status
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(409).body(e.getMessage()); // 409 Conflict if user exists
-        }
-    }
-
 }
