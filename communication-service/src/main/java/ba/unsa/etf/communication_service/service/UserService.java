@@ -8,10 +8,10 @@ import ba.unsa.etf.communication_service.mapper.UserMapper;
 import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +23,8 @@ public class UserService {
   private final UserMapper userMapper;
 
   @Transactional(readOnly = true)
-  public List<UserDTO> findAll() {
-    return userRepository.findAll().stream().map(userMapper::toDTO).collect(Collectors.toList());
+  public Page<UserDTO> findAll(Pageable pageable) {
+    return userRepository.findAll(pageable).map(userMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
@@ -38,15 +38,13 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public Optional<UserDTO> findByEmail(String username) {
-    return userRepository.findByEmail(username).map(userMapper::toDTO);
+  public Optional<UserDTO> findByEmail(String email) {
+    return userRepository.findByEmail(email).map(userMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
-  public List<UserDTO> findByConversationId(Long conversationId) {
-    return userRepository.findByConversation_Id(conversationId).stream()
-        .map(userMapper::toDTO)
-        .collect(Collectors.toList());
+  public Page<UserDTO> findByConversationId(Long conversationId, Pageable pageable) {
+    return userRepository.findByConversation_Id(conversationId, pageable).map(userMapper::toDTO);
   }
 
   @Transactional

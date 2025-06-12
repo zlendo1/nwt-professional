@@ -27,4 +27,4 @@ security:
     expiration-time: 86400000
 
 server:
-  port: 8023
+  port: 8025

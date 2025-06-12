@@ -11,6 +11,9 @@ public class Test {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "job_uuid")
+  private String jobUUID;
+
   private String name;
   private String type;
   private Integer timeLimitMinutes;

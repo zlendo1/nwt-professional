@@ -24,6 +24,17 @@ public class GatewayConfig {
                         .filters(f -> f.filter(filter)) // Primijenite isti filter (ili drugi po potrebi)
                         .uri("lb://job-service")) // Proslijedi na servis registrovan u Eureki pod imenom "job-service"
 
+                .route("user-management-service", r -> r.path("/api/user/**") // All requests to /api/users/...
+                        .filters(f -> f.filter(filter)) // Apply authentication filter
+                        .uri("lb://user-management-service")) // Forward to the user service
+
+                .route("communication-service", r -> r.path("/api/communication/**") // All requests to /api/users/...
+                        .filters(f -> f.filter(filter)) // Apply authentication filter
+                        .uri("lb://communication-service")) // Forward to the user service
+
+                .route("communication-service", r -> r.path("/api/content/**") // All requests to /api/users/...
+                        .filters(f -> f.filter(filter)) // Apply authentication filter
+                        .uri("lb://content-service")) // Forward to the user service
                 .build();
     }
 }

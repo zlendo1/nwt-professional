@@ -8,10 +8,10 @@ import ba.unsa.etf.communication_service.mapper.ConversationMapper;
 import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,8 @@ public class ConversationService {
   private final ConversationMapper conversationMapper;
 
   @Transactional(readOnly = true)
-  public List<ConversationDTO> findAll() {
-    return conversationRepository.findAll().stream()
-        .map(conversationMapper::toDTO)
-        .collect(Collectors.toList());
+  public Page<ConversationDTO> findAll(Pageable pageable) {
+    return conversationRepository.findAll(pageable).map(conversationMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
@@ -35,17 +33,13 @@ public class ConversationService {
   }
 
   @Transactional(readOnly = true)
-  public List<ConversationDTO> findByName(String name) {
-    return conversationRepository.findByName(name).stream()
-        .map(conversationMapper::toDTO)
-        .collect(Collectors.toList());
+  public Page<ConversationDTO> findByName(String name, Pageable pageable) {
+    return conversationRepository.findByName(name, pageable).map(conversationMapper::toDTO);
   }
 
   @Transactional(readOnly = true)
-  public List<ConversationDTO> findByUserId(Long userId) {
-    return conversationRepository.findByUser_Id(userId).stream()
-        .map(conversationMapper::toDTO)
-        .collect(Collectors.toList());
+  public Page<ConversationDTO> findByUserId(Long userId, Pageable pageable) {
+    return conversationRepository.findByUser_Id(userId, pageable).map(conversationMapper::toDTO);
   }
 
   @Transactional
