@@ -1,7 +1,7 @@
 .message-page {
   height: calc(100vh - 60px);
   display: grid;
-  grid-template-areas: 'messaging right-side-message';
+  grid-template-areas: "messaging right-side-message";
   grid-template-columns: minmax(0, 17fr) minmax(300px, 7fr);
   padding-top: 60px;
   justify-content: space-between;
@@ -41,7 +41,7 @@
 
 @media (max-width: 920px) {
   .message-page {
-    grid-template-areas: 'messaging';
+    grid-template-areas: "messaging";
     grid-template-columns: minmax(0, 1fr);
     padding: 60px 1rem 0;
 

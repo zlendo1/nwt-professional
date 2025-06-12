@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export function SendMessageForm({ onSendMsg, messagesToShow }) {
   const [newMsg, setNewMsg] = useState({
-    txt: '',
-  })
+    txt: "",
+  });
   const handleChange = async (e) => {
-    const field = e.target.name
+    const field = e.target.name;
     let value =
-      e.target.type === 'number' ? +e.target.value || '' : e.target.value
-    setNewMsg((prevCred) => ({ ...prevCred, [field]: value }))
-  }
+      e.target.type === "number" ? +e.target.value || "" : e.target.value;
+    setNewMsg((prevCred) => ({ ...prevCred, [field]: value }));
+  };
 
   const doSubmit = () => {
-    onSendMsg(newMsg.txt)
-    setNewMsg({ txt: '' })
-  }
+    onSendMsg(newMsg.txt);
+    setNewMsg({ txt: "" });
+  };
 
   const inputRef = (elInput) => {
-    if (elInput) elInput.focus()
-  }
+    if (elInput) elInput.focus();
+  };
 
   useEffect(() => {
-    setNewMsg({ txt: '' })
-    return () => {}
-  }, [messagesToShow])
+    setNewMsg({ txt: "" });
+    return () => {};
+  }, [messagesToShow]);
 
   return (
     <form
       className="send-msg-container"
       onSubmit={(ev) => {
-        ev.preventDefault()
-        doSubmit()
+        ev.preventDefault();
+        doSubmit();
       }}
     >
       <div className="input-container">
@@ -50,5 +50,5 @@ export function SendMessageForm({ onSendMsg, messagesToShow }) {
         <button>Send</button>
       </div>
     </form>
-  )
+  );
 }

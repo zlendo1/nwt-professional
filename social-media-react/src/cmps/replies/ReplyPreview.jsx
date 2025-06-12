@@ -1,49 +1,49 @@
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { userService } from '../../services/user/userService'
-import TimeAgo from 'react-timeago'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { userService } from "../../services/user/userService";
+import TimeAgo from "react-timeago";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ReplyPreview = ({ reply, updateReply }) => {
-  const { userId } = reply
-  const { loggedInUser } = useSelector((state) => state.userModule)
-  const [userReply, setUserReply] = useState(null)
+  const { userId } = reply;
+  const { loggedInUser } = useSelector((state) => state.userModule);
+  const [userReply, setUserReply] = useState(null);
 
   const onLikeReply = () => {
-    const replyToUpdate = { ...reply }
+    const replyToUpdate = { ...reply };
     const isAlreadyLike = replyToUpdate.reactions.some(
-      (reaction) => reaction.userId === loggedInUser._id
-    )
+      (reaction) => reaction.userId === loggedInUser._id,
+    );
     if (isAlreadyLike) {
       replyToUpdate.reactions = replyToUpdate.reactions.filter(
-        (reaction) => reaction.userId !== loggedInUser._id
-      )
+        (reaction) => reaction.userId !== loggedInUser._id,
+      );
     } else if (!isAlreadyLike) {
       replyToUpdate.reactions.push({
         userId: loggedInUser._id,
         fullname: loggedInUser.fullname,
-        reaction: 'like',
-      })
+        reaction: "like",
+      });
     }
-    updateReply(replyToUpdate)
-  }
+    updateReply(replyToUpdate);
+  };
 
   const loadUser = async () => {
-    const userReply = await userService.getById(userId)
-    setUserReply(userReply)
-  }
+    const userReply = await userService.getById(userId);
+    setUserReply(userReply);
+  };
 
   useEffect(() => {
-    loadUser()
-  }, [])
+    loadUser();
+  }, []);
 
-  if (!userReply) return
+  if (!userReply) return;
 
   const isLogedInUserLikeReply = reply?.reactions.some((reaction) => {
-    return loggedInUser._id === reaction.userId
-  })
+    return loggedInUser._id === reaction.userId;
+  });
 
-  const likeBtnStyle = isLogedInUserLikeReply ? 'liked' : ''
+  const likeBtnStyle = isLogedInUserLikeReply ? "liked" : "";
 
   return (
     <section className="reply-preview">
@@ -70,9 +70,9 @@ export const ReplyPreview = ({ reply, updateReply }) => {
           <p className="reply-txt">{reply.txt}</p>
         </div>
         <div className="reply-actions">
-          <span>{reply.reactions?.length || ''}</span>
+          <span>{reply.reactions?.length || ""}</span>
           <button
-            className={'like ' + likeBtnStyle}
+            className={"like " + likeBtnStyle}
             onClick={() => onLikeReply()}
           >
             Like
@@ -80,5 +80,5 @@ export const ReplyPreview = ({ reply, updateReply }) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

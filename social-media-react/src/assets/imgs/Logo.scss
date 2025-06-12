@@ -10,11 +10,11 @@ $transition: all 0.3s ease;
   cursor: pointer;
   transition: $transition;
   margin-right: 10px;
-  
+
   &:hover {
     opacity: 0.9;
   }
-  
+
   .logo-icon {
     font-size: 28px;
     font-weight: bold;
@@ -27,14 +27,14 @@ $transition: all 0.3s ease;
     align-items: center;
     justify-content: center;
     box-shadow: $card-shadow;
-    
+
     span {
       display: flex;
       align-items: center;
       justify-content: center;
     }
   }
-  
+
   .brand-name {
     font-size: 22px;
     font-weight: 700;
@@ -51,9 +51,9 @@ $transition: all 0.3s ease;
       width: 36px;
       height: 36px;
     }
-    
+
     .brand-name {
       font-size: 18px;
     }
   }
-} 
+}

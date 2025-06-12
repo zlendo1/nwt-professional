@@ -1,6 +1,6 @@
-import { Logo } from '../../assets/imgs/Logo'
-import { InputFilter } from './InputFilter'
-import { Nav } from './Nav'
+import { Logo } from "../../assets/imgs/Logo";
+import { InputFilter } from "./InputFilter";
+import { Nav } from "./Nav";
 
 export function Header() {
   return (
@@ -11,5 +11,5 @@ export function Header() {
         <Nav />
       </div>
     </header>
-  )
+  );
 }

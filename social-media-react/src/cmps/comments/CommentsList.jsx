@@ -1,7 +1,7 @@
-import { CommentPreview } from './CommentPreview'
+import { CommentPreview } from "./CommentPreview";
 
 export const CommentsList = ({ comments, onSaveComment }) => {
-  if (!comments) return <section className="list-comments">Loading..</section>
+  if (!comments) return <section className="list-comments">Loading..</section>;
 
   return (
     <section className="list-comments">
@@ -13,5 +13,5 @@ export const CommentsList = ({ comments, onSaveComment }) => {
         />
       ))}
     </section>
-  )
-}
+  );
+};

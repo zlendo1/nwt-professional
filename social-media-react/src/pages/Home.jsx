@@ -1,49 +1,49 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { login, setLogingLoading } from '../store/actions/userActions'
-import { useHistory } from 'react-router-dom'
-import loading from '../assets/imgs/loading-gif.gif'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Logo } from '../assets/imgs/Logo'
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login, setLogingLoading } from "../store/actions/userActions";
+import { useHistory } from "react-router-dom";
+import loading from "../assets/imgs/loading-gif.gif";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Logo } from "../assets/imgs/Logo";
 
 export const Home = (props) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [creds, setCreds] = useState({
-    username: 'guest123',
-    password: '1234',
-  })
+    username: "guest123",
+    password: "1234",
+  });
 
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState("");
 
-  const { isLogingLoading } = useSelector((state) => state.userModule)
+  const { isLogingLoading } = useSelector((state) => state.userModule);
 
   const showMsg = (txt) => {
-    setMsg(txt)
-    setTimeout(() => setMsg(''), 3000)
-  }
+    setMsg(txt);
+    setTimeout(() => setMsg(""), 3000);
+  };
 
   const handleChange = async ({ target }) => {
-    const field = target.name
-    let value = target.type === 'number' ? +target.value || '' : target.value
-    setCreds((prevCred) => ({ ...prevCred, [field]: value }))
-  }
+    const field = target.name;
+    let value = target.type === "number" ? +target.value || "" : target.value;
+    setCreds((prevCred) => ({ ...prevCred, [field]: value }));
+  };
 
   const doLogin = () => {
-    dispatch(setLogingLoading(true))
+    dispatch(setLogingLoading(true));
     dispatch(login(creds))
       .then((savedUser) => {
-        setCreds(() => ({ username: '', password: '' }))
-        props.history.push('/main/feed')
-        dispatch(setLogingLoading(false))
+        setCreds(() => ({ username: "", password: "" }));
+        props.history.push("/main/feed");
+        dispatch(setLogingLoading(false));
       })
       .catch((err) => {
-        dispatch(setLogingLoading(false))
-        showMsg('Something went wrong...')
-        console.log(err)
-      })
-  }
+        dispatch(setLogingLoading(false));
+        showMsg("Something went wrong...");
+        console.log(err);
+      });
+  };
 
   return (
     <section className="home-page">
@@ -74,21 +74,28 @@ export const Home = (props) => {
       <div className="hero-container">
         <div className="hero-content">
           <div className="welcome-text">
-            <h1>Connect with travelers<br/>around the world</h1>
-            <p>Join our community to share experiences, find travel companions, and discover new destinations.</p>
-            <button 
+            <h1>
+              Connect with travelers
+              <br />
+              around the world
+            </h1>
+            <p>
+              Join our community to share experiences, find travel companions,
+              and discover new destinations.
+            </p>
+            <button
               className="cta-button"
               onClick={() => history.push(`/signup`)}
             >
               Get Started
             </button>
           </div>
-          
+
           <div className="login-card">
             <form
               onSubmit={(ev) => {
-                ev.preventDefault()
-                doLogin()
+                ev.preventDefault();
+                doLogin();
               }}
               className="login-form"
             >
@@ -108,7 +115,7 @@ export const Home = (props) => {
                   />
                 </div>
               </div>
-              
+
               <div className="input-group">
                 <label htmlFor="password">Password</label>
                 <div className="input-wrapper">
@@ -135,7 +142,7 @@ export const Home = (props) => {
               <button type="submit" className="login-button">
                 Sign in
               </button>
-              
+
               <div className="login-footer">
                 <span>New to TravelsIn?</span>
                 <a onClick={() => history.push(`/signup`)}>Create account</a>
@@ -143,7 +150,7 @@ export const Home = (props) => {
             </form>
           </div>
         </div>
-        
+
         <div className="features-section">
           <h2>Connect. Explore. Share.</h2>
           <div className="feature-cards">
@@ -152,14 +159,19 @@ export const Home = (props) => {
                 <FontAwesomeIcon icon="map-marked-alt" />
               </div>
               <h3>Interactive Maps</h3>
-              <p>Discover travel destinations and connect with travelers worldwide</p>
+              <p>
+                Discover travel destinations and connect with travelers
+                worldwide
+              </p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">
                 <FontAwesomeIcon icon="comments" />
               </div>
               <h3>Real-time Messaging</h3>
-              <p>Connect with fellow travelers and share experiences instantly</p>
+              <p>
+                Connect with fellow travelers and share experiences instantly
+              </p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">
@@ -171,7 +183,7 @@ export const Home = (props) => {
           </div>
         </div>
       </div>
-      
+
       <footer className="home-footer">
         <div className="footer-content">
           <p>&copy; 2023 TravelsIn. All rights reserved.</p>
@@ -183,12 +195,12 @@ export const Home = (props) => {
           </div>
         </div>
       </footer>
-      
+
       {isLogingLoading && (
         <div className="loading-container">
           <img className="loading-logo" src={loading} alt="" />
         </div>
       )}
     </section>
-  )
-}
+  );
+};

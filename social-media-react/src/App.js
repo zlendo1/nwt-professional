@@ -1,21 +1,21 @@
-import './assets/scss/global.scss'
+import "./assets/scss/global.scss";
 
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { Home } from './pages/Home'
-import { Main } from './pages/Main'
-import { About } from './pages/About'
-import { Signup } from './pages/Signup'
-import { getLoggedinUser } from '../src/store/actions/userActions'
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import PrivateRoute from './cmps/PrivateRoute'
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Main } from "./pages/Main";
+import { About } from "./pages/About";
+import { Signup } from "./pages/Signup";
+import { getLoggedinUser } from "../src/store/actions/userActions";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import PrivateRoute from "./cmps/PrivateRoute";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getLoggedinUser())
-  }, [dispatch])
+    dispatch(getLoggedinUser());
+  }, [dispatch]);
 
   return (
     <Router>
@@ -30,7 +30,7 @@ const App = () => {
         </main>
       </div>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

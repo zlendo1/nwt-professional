@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux'
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PostMenu = ({
   toggleMenu,
@@ -8,19 +8,19 @@ export const PostMenu = ({
   postUserId,
   copyToClipBoard,
 }) => {
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
-  const [isAskAgain, setIsAskAgain] = useState(false)
+  const [isAskAgain, setIsAskAgain] = useState(false);
 
-  const isLoggedInUserCanDelete = loggedInUser._id === postUserId
+  const isLoggedInUserCanDelete = loggedInUser._id === postUserId;
 
   return (
     <section>
       <div
         className="bg-menu"
         onClick={(ev) => {
-          ev.stopPropagation()
-          toggleMenu()
+          ev.stopPropagation();
+          toggleMenu();
         }}
       ></div>
       <section className="post-menu">
@@ -55,9 +55,9 @@ export const PostMenu = ({
         <div className="copy-to-clip-board">
           <button
             onClick={(ev) => {
-              ev.stopPropagation()
-              toggleMenu()
-              copyToClipBoard()
+              ev.stopPropagation();
+              toggleMenu();
+              copyToClipBoard();
             }}
           >
             <FontAwesomeIcon icon="fa-solid fa-copy" />
@@ -66,5 +66,5 @@ export const PostMenu = ({
         </div>
       </section>
     </section>
-  )
-}
+  );
+};

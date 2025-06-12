@@ -1,7 +1,7 @@
-import { ThreadMsgPreview } from './ThreadMsgPreview'
+import { ThreadMsgPreview } from "./ThreadMsgPreview";
 
 export function ThreadMsgList({ messagesToShow }) {
-  if (!messagesToShow?.length) return <div>No msgs yet..</div>
+  if (!messagesToShow?.length) return <div>No msgs yet..</div>;
 
   return (
     <section className="thread-msg-list">
@@ -11,5 +11,5 @@ export function ThreadMsgList({ messagesToShow }) {
         ))}
       </div>
     </section>
-  )
+  );
 }

@@ -9,7 +9,7 @@ export const SortBy = ({ onSetSort }) => {
             name="sortBy"
             id="opts"
             onChange={(e) => {
-              onSetSort(e.target.value)
+              onSetSort(e.target.value);
             }}
           >
             <option value="-1">Newest</option>
@@ -18,5 +18,5 @@ export const SortBy = ({ onSetSort }) => {
         </label>
       </form>
     </section>
-  )
-}
+  );
+};

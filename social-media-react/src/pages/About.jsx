@@ -8,5 +8,5 @@ export function About() {
         title="hlomi-nugarker-portfolio.vercel.app/projects"
       ></iframe>
     </section>
-  )
+  );
 }

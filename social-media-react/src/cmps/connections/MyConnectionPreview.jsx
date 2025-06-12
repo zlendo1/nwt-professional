@@ -1,24 +1,24 @@
-import { userService } from '../../services/user/userService'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
-import TimeAgo from 'react-timeago'
-import { Link, useHistory } from 'react-router-dom'
+import { userService } from "../../services/user/userService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import TimeAgo from "react-timeago";
+import { Link, useHistory } from "react-router-dom";
 
 export function MyConnectionPreview({ connection }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
-  const history = useHistory()
+  const history = useHistory();
 
   const loadUser = async () => {
-    const user = await userService.getById(connection.userId)
-    setUser(() => user)
-  }
+    const user = await userService.getById(connection.userId);
+    setUser(() => user);
+  };
 
   useEffect(() => {
-    loadUser()
-  }, [])
+    loadUser();
+  }, []);
 
-  if (!user) return
+  if (!user) return;
 
   return (
     <section className="my-connection-preview">
@@ -29,7 +29,7 @@ export function MyConnectionPreview({ connection }) {
         <div className="fullname">
           <Link to={`/main/profile/${user._id}`}>
             <h3>{user.fullname}</h3>
-            <p>{user.profession || ' '}</p>
+            <p>{user.profession || " "}</p>
             {connection?.connected && (
               <p>
                 connected <TimeAgo date={connection?.connected} />
@@ -45,5 +45,5 @@ export function MyConnectionPreview({ connection }) {
         </div>
       </div>
     </section>
-  )
+  );
 }

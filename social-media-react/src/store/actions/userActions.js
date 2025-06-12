@@ -14,7 +14,7 @@ export function getUsers() {
       // console.log(ids);
 
       const usersWithoutLoggedInUser = users.filter(
-        (user) => user._id !== loggedInUser._id
+        (user) => user._id !== loggedInUser._id,
       );
 
       dispatch({

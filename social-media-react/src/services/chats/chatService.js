@@ -1,16 +1,16 @@
-import { httpService } from '../httpService'
+import { httpService } from "../httpService";
 
-const ENDPOINT = 'chat'
+const ENDPOINT = "chat";
 
 export const chatService = {
   query,
   // getById,
   // remove,
   save,
-}
+};
 
 async function query(filterBy = {}) {
-  return await httpService.get(ENDPOINT, filterBy)
+  return await httpService.get(ENDPOINT, filterBy);
 }
 
 // async function getById(id) {
@@ -24,7 +24,7 @@ async function query(filterBy = {}) {
 async function save(chat) {
   return chat._id
     ? await httpService.put(`${ENDPOINT}/${chat._id}`, chat)
-    : await httpService.post(ENDPOINT, chat)
+    : await httpService.post(ENDPOINT, chat);
 }
 
 // ;(async () => {

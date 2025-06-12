@@ -15,7 +15,7 @@
         justify-content: space-between;
         padding: 15px;
         border-bottom: 1px solid $border;
-        
+
         p {
           font-size: 18px;
           font-weight: 600;
@@ -26,18 +26,18 @@
           display: flex;
           align-items: center;
           color: #00000099;
-          
+
           span {
             margin: 5px;
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
             transition: background-color 0.2s;
-            
+
             &:hover {
               background-color: #f5f5f5;
             }
-            
+
             svg {
               font-size: 18px;
             }
@@ -57,7 +57,7 @@
           padding: 10px 15px;
           background-color: #f5f5f5;
           transition: all 0.2s;
-          
+
           &:focus {
             outline: none;
             border-color: #0a66c2;
@@ -92,7 +92,7 @@
     .container {
       .list-msg {
         width: 100%;
-        
+
         .title-container {
           padding: 12px;
         }

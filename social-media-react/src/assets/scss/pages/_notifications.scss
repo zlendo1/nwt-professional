@@ -1,6 +1,6 @@
 .notifications-page {
   display: grid;
-  grid-template-areas: 'sidebar main aside';
+  grid-template-areas: "sidebar main aside";
   grid-template-columns: minmax(0, 5fr) minmax(0, 12fr) minmax(300px, 7fr);
   padding-top: 60px;
   justify-content: space-between;
@@ -52,7 +52,7 @@
 
 @media (max-width: 920px) {
   .notifications-page {
-    grid-template-areas: 'main';
+    grid-template-areas: "main";
     grid-template-columns: minmax(0, 1fr);
     justify-items: center;
     .side-bar {

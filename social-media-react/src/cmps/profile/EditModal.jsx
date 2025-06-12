@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useDispatch } from 'react-redux'
-import { updateUser } from '../../store/actions/userActions'
-import { uploadImg } from '../../services/imgUpload.service'
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../store/actions/userActions";
+import { uploadImg } from "../../services/imgUpload.service";
 
 export function EditModal({ toggleShowEditModal, user }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [userToUpdate, setUserToUpdate] = useState({
     age: user.age,
     bg: user.bg,
@@ -15,40 +15,40 @@ export function EditModal({ toggleShowEditModal, user }) {
     phone: user.phone,
     profession: user.profession,
     birthDate: user.birthDate,
-  })
+  });
 
   const { age, bg, email, fullname, imgUrl, phone, profession, birthDate } =
-    userToUpdate
+    userToUpdate;
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   const handleChange = ({ target }) => {
-    const field = target.name
-    const value = target.type === 'number' ? +target.value || '' : target.value
+    const field = target.name;
+    const value = target.type === "number" ? +target.value || "" : target.value;
     setUserToUpdate((prev) => {
       return {
         ...prev,
         _id: user._id,
         [field]: value,
-      }
-    })
-  }
+      };
+    });
+  };
 
   const onSaveUser = () => {
     dispatch(updateUser({ ...user, ...userToUpdate })).then((res) => {
-      if (res) toggleShowEditModal()
-    })
-  }
+      if (res) toggleShowEditModal();
+    });
+  };
 
   const onUploadImg = async (ev) => {
-    const res = await uploadImg(ev)
+    const res = await uploadImg(ev);
     setUserToUpdate((prev) => {
       return {
         ...prev,
         imgUrl: res.url,
-      }
-    })
-  }
+      };
+    });
+  };
 
   return (
     <section className="edit-modal">
@@ -91,7 +91,7 @@ export function EditModal({ toggleShowEditModal, user }) {
                 onChange={handleChange}
                 id="fullname"
                 type="text"
-                value={fullname || ''}
+                value={fullname || ""}
               />
             </label>
 
@@ -102,7 +102,7 @@ export function EditModal({ toggleShowEditModal, user }) {
                 onChange={handleChange}
                 id="email"
                 type="email"
-                value={email || ''}
+                value={email || ""}
               />
             </label>
 
@@ -113,7 +113,7 @@ export function EditModal({ toggleShowEditModal, user }) {
                 onChange={handleChange}
                 id="profession"
                 type="text"
-                value={profession || ''}
+                value={profession || ""}
               />
             </label>
 
@@ -124,7 +124,7 @@ export function EditModal({ toggleShowEditModal, user }) {
                 onChange={handleChange}
                 id="age"
                 type="number"
-                value={age || ''}
+                value={age || ""}
               />
             </label>
 
@@ -135,7 +135,7 @@ export function EditModal({ toggleShowEditModal, user }) {
                 onChange={handleChange}
                 id="phone"
                 type="text"
-                value={phone || ''}
+                value={phone || ""}
               />
             </label>
           </form>
@@ -145,5 +145,5 @@ export function EditModal({ toggleShowEditModal, user }) {
         </div>
       </div>
     </section>
-  )
+  );
 }

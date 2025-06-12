@@ -1,5 +1,5 @@
-import { ListMsg } from './ListMsg'
-import { MessageThread } from './MessageThread'
+import { ListMsg } from "./ListMsg";
+import { MessageThread } from "./MessageThread";
 
 export function Messaging({
   chats,
@@ -38,5 +38,5 @@ export function Messaging({
         )}
       </div>
     </section>
-  )
+  );
 }

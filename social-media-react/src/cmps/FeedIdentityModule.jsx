@@ -1,24 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../store/actions/userActions'
-import { useHistory } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/actions/userActions";
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const FeedIdentityModule = (props) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
   const doLogout = async () => {
     dispatch(logout()).then((res) => {
-      if (res) history.push(`/`)
-    })
-  }
+      if (res) history.push(`/`);
+    });
+  };
 
   if (!loggedInUser)
-    return <section className="feed-identity-module">Loading</section>
+    return <section className="feed-identity-module">Loading</section>;
 
-  const { fullname, imgUrl, profession } = loggedInUser
+  const { fullname, imgUrl, profession } = loggedInUser;
 
   return (
     <section className="feed-identity-module">
@@ -55,5 +55,5 @@ export const FeedIdentityModule = (props) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

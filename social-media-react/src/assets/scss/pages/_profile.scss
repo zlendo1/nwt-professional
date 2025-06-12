@@ -1,7 +1,7 @@
 .profile-page {
   min-height: 100vh;
   display: grid;
-  grid-template-areas: 'main  aside';
+  grid-template-areas: "main  aside";
   grid-template-columns: minmax(0, 17fr) minmax(300px, 7fr);
   padding-top: 60px;
   justify-content: space-between;
@@ -116,7 +116,7 @@
 
 @media (max-width: 920px) {
   .profile-page {
-    grid-template-areas: 'main';
+    grid-template-areas: "main";
     grid-template-columns: minmax(0, 80%);
     justify-content: center;
     .left {

@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const UserIconPos = ({ url, userId, fullname, isCloseUserIcon }) => {
-  const [isUserIconOpen, setisUserIconOpen] = useState(false)
-  const history = useHistory()
+  const [isUserIconOpen, setisUserIconOpen] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (isCloseUserIcon) {
-      setisUserIconOpen(false)
+      setisUserIconOpen(false);
     }
-    return () => {}
-  }, [isCloseUserIcon])
+    return () => {};
+  }, [isCloseUserIcon]);
 
   return (
     <div
       className="user-icon-pos-container"
       onClick={(ev) => {
-        ev.stopPropagation()
-        setisUserIconOpen((prev) => !prev)
+        ev.stopPropagation();
+        setisUserIconOpen((prev) => !prev);
       }}
     >
       <img
@@ -49,8 +49,8 @@ export const UserIconPos = ({ url, userId, fullname, isCloseUserIcon }) => {
           <div
             className="close"
             onClick={(ev) => {
-              ev.stopPropagation()
-              setisUserIconOpen(false)
+              ev.stopPropagation();
+              setisUserIconOpen(false);
             }}
           >
             <span>Close</span>
@@ -58,5 +58,5 @@ export const UserIconPos = ({ url, userId, fullname, isCloseUserIcon }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
