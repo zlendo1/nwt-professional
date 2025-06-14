@@ -39,18 +39,16 @@ async function update(user) {
 }
 
 async function login(userCred) {
-  const user = await httpService.post("auth/login", userCred);
+  const user = await httpService.post("user/login", userCred);
   if (user) return _saveLocalUser(user);
 }
 async function signup(userCred) {
-  const user = await httpService.post("auth/signup", userCred);
+  const user = await httpService.post("user/register", userCred);
 
   return _saveLocalUser(user);
 }
 async function logout() {
   sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER);
-
-  return await httpService.post("auth/logout");
 }
 
 function _saveLocalUser(user) {
