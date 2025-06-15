@@ -1,19 +1,16 @@
 package ba.unsa.etf.content_service.mapper;
 
 import ba.unsa.etf.content_service.dto.PostDto;
+import ba.unsa.etf.content_service.dto.UserDto;
 import ba.unsa.etf.content_service.entity.Post;
-import ba.unsa.etf.content_service.dto.UserDto; // DTO za korisnika (onaj koji komunicira s user-management-service)
-// User entitet se ne koristi direktno u fromDto za postavljanje korisnika, to radi servis
-// import ba.unsa.etf.content_service.entity.User;
 import ba.unsa.etf.content_service.service.UserDataClientService;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections; // Za praznu listu
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class PostMapper {
@@ -28,8 +25,8 @@ public class PostMapper {
   }
 
   /**
-   * Mapira Post entitet u PostDto, obogaćujući ga podacima o korisniku
-   * pozivom UserDataClientService.
+   * Mapira Post entitet u PostDto, obogaćujući ga podacima o korisniku pozivom
+   * UserDataClientService.
    */
   public PostDto toDto(Post postEntity) {
     if (postEntity == null) {
@@ -47,17 +44,22 @@ public class PostMapper {
     //     postDto.setImageUrl(postEntity.getImageUrl());
     // }
 
-
     // Dohvati i postavi podatke o korisniku
     // Pretpostavka: Post entitet ima vezu na User entitet (barem s ID-om)
     if (postEntity.getUser() != null && postEntity.getUser().getId() != null) {
       Long userId = postEntity.getUser().getId();
-      logger.debug("Mapiranje posta ID: {}, dohvaćanje detalja za korisnika ID: {}", postEntity.getPostId(), userId);
+      logger.debug(
+          "Mapiranje posta ID: {}, dohvaćanje detalja za korisnika ID: {}",
+          postEntity.getPostId(),
+          userId);
       UserDto authorDetailsDto = userDataClientService.fetchUserById(userId);
       postDto.setUser(authorDetailsDto); // authorDetailsDto može biti stvarni user ili placeholder
     } else {
-      logger.warn("Post s ID: {} nema povezanog korisnika ili korisnik (entitet) nema ID. Postavljanje placeholder korisnika u DTO.", postEntity.getPostId());
-      // Pozovi fetchUserById s null da dobiješ placeholder, ili direktno kreiraj placeholder ako je metoda public u UserDataClientService
+      logger.warn(
+          "Post s ID: {} nema povezanog korisnika ili korisnik (entitet) nema ID. Postavljanje placeholder korisnika u DTO.",
+          postEntity.getPostId());
+      // Pozovi fetchUserById s null da dobiješ placeholder, ili direktno kreiraj placeholder ako je
+      // metoda public u UserDataClientService
       postDto.setUser(userDataClientService.fetchUserById(null));
     }
 
@@ -69,15 +71,14 @@ public class PostMapper {
       return Collections.emptyList(); // Vrati immutable praznu listu
     }
     return postEntities.stream()
-            .map(this::toDto) // Koristi this::toDto jer je toDto instancna metoda
-            .collect(Collectors.toList());
+        .map(this::toDto) // Koristi this::toDto jer je toDto instancna metoda
+        .collect(Collectors.toList());
   }
 
   /**
-   * Mapira PostDto (koji dolazi npr. s frontenda za kreiranje posta) u Post entitet.
-   * OVA METODA NE POSTAVLJA User ENTITET NA Post ENTITET.
-   * To je odgovornost PostService.createPost() metode, koja će prvo
-   * dohvatiti/kreirati lokalnu User referencu.
+   * Mapira PostDto (koji dolazi npr. s frontenda za kreiranje posta) u Post entitet. OVA METODA NE
+   * POSTAVLJA User ENTITET NA Post ENTITET. To je odgovornost PostService.createPost() metode, koja
+   * će prvo dohvatiti/kreirati lokalnu User referencu.
    */
   public Post fromDto(PostDto incomingPostDto) {
     if (incomingPostDto == null) {
