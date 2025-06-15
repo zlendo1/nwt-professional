@@ -22,7 +22,8 @@ spring:
             allowCredentials: true
       discovery:
         locator:
-          enabled: true # Omogućava automatsko kreiranje ruta na osnovu servisa registrovanih na Eureka-i
+          enabled: true
+          lower-case-service-id: true
   main:
     web-application-type: reactive # Potrebno za Spring Cloud Gateway
 
@@ -47,7 +48,8 @@ spring:
 
 security:
   jwt:
-    secret-key: 4be0a99b2ac9d9fe650682bc9d2facff16ceb078ba9416b6cabd4d8734f60765 # Preporučljivo je koristiti environment varijable za osjetljive podatke
+    secret-key: 374c09f29d14bb7f295fae49b44827ac54dec177ef52aa990d8663704c61d0d5
+    expiration-time: 86400000
 
 eureka:
   client:

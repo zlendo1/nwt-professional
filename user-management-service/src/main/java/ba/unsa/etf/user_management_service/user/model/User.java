@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 import java.sql.Date;
 import java.util.UUID;
@@ -25,6 +26,7 @@ public class User {
     private String uuid;
 
     @Email
+    @Unique
     private String email;
 
     @NotNull

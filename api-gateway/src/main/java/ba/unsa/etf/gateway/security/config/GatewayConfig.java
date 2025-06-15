@@ -20,7 +20,7 @@ public class GatewayConfig {
                         .uri("lb://test-skills-service"))
 
                 // NOVA RUTA ZA JOB-SERVICE
-                .route("job-service", r -> r.path("/api/job/**") // Definišite putanju na Gatewayu za job-service
+                .route("job-service", r -> r.path("/api/jobs/**") // Definišite putanju na Gatewayu za job-service
                         .filters(f -> f.filter(filter)) // Primijenite isti filter (ili drugi po potrebi)
                         .uri("lb://job-service")) // Proslijedi na servis registrovan u Eureki pod imenom "job-service"
 
@@ -32,7 +32,7 @@ public class GatewayConfig {
                         .filters(f -> f.filter(filter)) // Apply authentication filter
                         .uri("lb://communication-service")) // Forward to the user service
 
-                .route("communication-service", r -> r.path("/api/content/**") // All requests to /api/users/...
+                .route("content-service", r -> r.path("/api/content/**") // All requests to /api/users/...
                         .filters(f -> f.filter(filter)) // Apply authentication filter
                         .uri("lb://content-service")) // Forward to the user service
                 .build();
