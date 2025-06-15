@@ -26,7 +26,7 @@ public class User {
     private String uuid;
 
     @Email
-    @Unique
+    @Column(unique = true)
     private String email;
 
     @NotNull
