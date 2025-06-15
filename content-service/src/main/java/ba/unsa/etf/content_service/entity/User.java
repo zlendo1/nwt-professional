@@ -1,39 +1,28 @@
 package ba.unsa.etf.content_service.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
+// Eventualno importi za druga polja ako ih želiš (npr. username)
 
 @Entity
-@Table(name = "users")
+@Table(name = "users") // Pobrini se da se tablica zove 'users' ili kako već treba
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment primary key
+  // NE @GeneratedValue, jer ID dolazi od user-management-service-a
   private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String username;
+  // Opcionalno: možeš dodati osnovna polja koja želiš sinkronizirati/cacheirati
+  // Npr. ako često trebaš username za neku logiku unutar content-servicea
+  // private String username;
+  // private String firstName;
+  // private String lastName;
 
-  @Column(nullable = false, unique = true)
-  private String userlastname;
-
-  @Column(nullable = false, unique = true)
-  private String email;
-
-  @Column(nullable = false)
-  private String password;
-
-  @Column(nullable = false)
-  private LocalDate regdate;
-
-  @OneToMany(mappedBy = "user")
-  private List<Comment> comments;
-
-  // Default constructor
+  // Konstruktori, getteri, setteri
   public User() {}
 
-  // Getteri i setteri
+  public User(Long id) {
+    this.id = id;
+  }
 
   public Long getId() {
     return id;
@@ -43,51 +32,7 @@ public class User {
     this.id = id;
   }
 
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getUserlastname() {
-    return userlastname;
-  }
-
-  public void setUserlastname(String userlastname) {
-    this.userlastname = userlastname;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public LocalDate getRegdate() {
-    return regdate;
-  }
-
-  public void setRegdate(LocalDate regdate) {
-    this.regdate = regdate;
-  }
-
-  public List<Comment> getComments() {
-    return comments;
-  }
-
-  public void setComments(List<Comment> comments) {
-    this.comments = comments;
-  }
+  // Getteri i setteri za opcionalna polja ako ih dodaš
+  // public String getUsername() { return username; }
+  // public void setUsername(String username) { this.username = username; }
 }

@@ -55,6 +55,18 @@ const mockMessages = {
 
 // =================================================================================
 // 1. API CONFIG & SERVICES
+const API_GATEWAY_URL = 'http://localhost:10001';
+
+const apiClient = axios.create({
+    baseURL: API_GATEWAY_URL, // Svi zahtjevi idu preko Gatewaya
+});
+apiClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 // Centralno mjesto za konfiguraciju i komunikaciju sa Spring Boot mikroservisima.
 // =================================================================================
 
@@ -104,6 +116,7 @@ export const jobService = {
     getJobById: (id) => jobApiClient.get(`/${id}`),
     applyToJob: (id, applicationData) => jobApiClient.post(`/${id}/apply`, applicationData),
 };
+
 
 // ... Slično za contentService, testSkillsService, messageService ...
 
