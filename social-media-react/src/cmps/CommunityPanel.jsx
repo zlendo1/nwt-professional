@@ -13,5 +13,5 @@ export function CommunityPanel(props) {
         </p>
       </div>
     </section>
-  )
+  );
 }

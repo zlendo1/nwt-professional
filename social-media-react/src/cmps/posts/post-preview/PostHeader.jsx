@@ -1,19 +1,19 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import TimeAgo from 'react-timeago'
-import { Link, useHistory } from 'react-router-dom'
-import loadingCircle from '../../../assets/imgs/loading-circle.gif'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TimeAgo from "react-timeago";
+import { Link, useHistory } from "react-router-dom";
+import loadingCircle from "../../../assets/imgs/loading-circle.gif";
 
 export const PostHeader = ({ post, userPost }) => {
-  const history = useHistory()
+  const history = useHistory();
 
   if (!userPost)
     return (
       <section className="post-header">
         <img className="loading-circle" src={loadingCircle} alt="" />
       </section>
-    )
+    );
 
-  const { imgUrl, profession, fullname } = userPost
+  const { imgUrl, profession, fullname } = userPost;
   return (
     <section className="post-header">
       <div
@@ -39,7 +39,7 @@ export const PostHeader = ({ post, userPost }) => {
           <div className="time">
             <span>
               <TimeAgo date={post.createdAt} />
-            </span>{' '}
+            </span>{" "}
             {post?.position?.lat && post?.position?.lng && (
               <span className="logo-location">
                 <FontAwesomeIcon icon="fa-solid fa-location-dot" />
@@ -49,5 +49,5 @@ export const PostHeader = ({ post, userPost }) => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

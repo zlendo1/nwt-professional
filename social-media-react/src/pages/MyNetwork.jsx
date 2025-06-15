@@ -1,27 +1,27 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ConnectionList } from '../cmps/connections/ConnectionList'
-import { getUsers, setUsers } from '../store/actions/userActions'
-import { setCurrPage } from '../store/actions/postActions'
-import loadingGif from '../assets/imgs/loading-gif.gif'
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ConnectionList } from "../cmps/connections/ConnectionList";
+import { getUsers, setUsers } from "../store/actions/userActions";
+import { setCurrPage } from "../store/actions/postActions";
+import loadingGif from "../assets/imgs/loading-gif.gif";
 
 function MyNetwork() {
-  const dispatch = useDispatch()
-  let history = useHistory()
+  const dispatch = useDispatch();
+  let history = useHistory();
 
-  const { users } = useSelector((state) => state.userModule)
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { users } = useSelector((state) => state.userModule);
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
   useEffect(() => {
-    dispatch(getUsers())
-    dispatch(setCurrPage('mynetwork'))
+    dispatch(getUsers());
+    dispatch(setCurrPage("mynetwork"));
 
     return () => {
-      dispatch(setUsers(null))
-    }
-  }, [dispatch])
+      dispatch(setUsers(null));
+    };
+  }, [dispatch]);
 
   if (!users)
     return (
@@ -30,7 +30,7 @@ function MyNetwork() {
           <img className="loading-gif" src={loadingGif} alt="" />
         </span>
       </section>
-    )
+    );
   return (
     <section className="my-network-page">
       <div className="left">
@@ -40,7 +40,7 @@ function MyNetwork() {
           </div>
           <ul>
             <li>
-              <button onClick={() => history.push('/main/connections')}>
+              <button onClick={() => history.push("/main/connections")}>
                 <div>
                   <span className="logo">
                     <FontAwesomeIcon icon="fa-solid fa-user-group" />
@@ -72,7 +72,7 @@ function MyNetwork() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default MyNetwork
+export default MyNetwork;

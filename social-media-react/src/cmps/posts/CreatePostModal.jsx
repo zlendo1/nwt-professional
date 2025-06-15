@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 
-import { uploadImg, uploadVid } from '../../services/imgUpload.service'
-import LoadingGif from '../../assets/imgs/loading-gif.gif'
+import { uploadImg, uploadVid } from "../../services/imgUpload.service";
+import LoadingGif from "../../assets/imgs/loading-gif.gif";
 
 export const CreatePostModal = ({
   toggleShowCreatePost,
@@ -11,95 +11,95 @@ export const CreatePostModal = ({
   loggedInUser,
 }) => {
   const initPost = {
-    body: '',
+    body: "",
     imgBodyUrl: null,
     videoBodyUrl: null,
-    link: '',
-    title: '',
+    link: "",
+    title: "",
     style: {
-      textAlign: 'ltr',
+      textAlign: "ltr",
     },
-  }
+  };
 
-  const [newPost, setNewPost] = useState(initPost)
-  const [isUploding, setIsUploding] = useState(false)
+  const [newPost, setNewPost] = useState(initPost);
+  const [isUploding, setIsUploding] = useState(false);
 
   const handleChange = async (e) => {
-    const field = e.target.name
+    const field = e.target.name;
     let value =
-      e.target.type === 'number' ? +e.target.value || '' : e.target.value
+      e.target.type === "number" ? +e.target.value || "" : e.target.value;
     setNewPost((prevCred) => ({
       ...prevCred,
       [field]: value,
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
     return () => {
-      setNewPost(null)
-    }
-  }, [])
+      setNewPost(null);
+    };
+  }, []);
 
   const doSubmit = () => {
-    onAddPost(newPost)
-  }
+    onAddPost(newPost);
+  };
 
   const inputRef = (elInput) => {
-    if (elInput) elInput.focus()
-  }
+    if (elInput) elInput.focus();
+  };
 
   const onUploadImg = async (ev) => {
     try {
-      setIsUploding(true)
-      const res = await uploadImg(ev)
-      setIsUploding(false)
+      setIsUploding(true);
+      const res = await uploadImg(ev);
+      setIsUploding(false);
       setNewPost((prev) => {
         return {
           ...prev,
           imgBodyUrl: res.url,
-        }
-      })
+        };
+      });
     } catch (err) {
-      setIsUploding(false)
-      console.log(err)
+      setIsUploding(false);
+      console.log(err);
     }
-  }
+  };
 
   const onUploadVideo = async (ev) => {
     try {
-      setIsUploding(true)
-      const res = await uploadVid(ev)
-      setIsUploding(false)
+      setIsUploding(true);
+      const res = await uploadVid(ev);
+      setIsUploding(false);
       setNewPost((prev) => {
         return {
           ...prev,
           videoBodyUrl: res.url,
-        }
-      })
+        };
+      });
     } catch (err) {
-      setIsUploding(false)
-      console.log(err)
+      setIsUploding(false);
+      console.log(err);
     }
-  }
+  };
 
   return (
     <section
       className={
-        isShowCreatePost ? ' create-post-modal' : 'hide create-post-modal'
+        isShowCreatePost ? " create-post-modal" : "hide create-post-modal"
       }
       onClick={(ev) => {
-        ev.stopPropagation()
-        toggleShowCreatePost()
+        ev.stopPropagation();
+        toggleShowCreatePost();
       }}
     >
       <form
         className="container"
         onSubmit={(ev) => {
-          ev.preventDefault()
-          doSubmit()
+          ev.preventDefault();
+          doSubmit();
         }}
         onClick={(ev) => {
-          ev.stopPropagation()
+          ev.stopPropagation();
         }}
       >
         <div className="title">
@@ -175,16 +175,16 @@ export const CreatePostModal = ({
             className="cancel-btn btn"
             onClick={() => {
               setNewPost({
-                body: '',
+                body: "",
                 imgBodyUrl: null,
                 videoBodyUrl: null,
-                title: '',
+                title: "",
                 style: {
-                  textAlign: 'ltr',
+                  textAlign: "ltr",
                 },
-              })
+              });
 
-              toggleShowCreatePost()
+              toggleShowCreatePost();
             }}
           >
             Cancel
@@ -225,5 +225,5 @@ export const CreatePostModal = ({
         </div>
       </form>
     </section>
-  )
-}
+  );
+};

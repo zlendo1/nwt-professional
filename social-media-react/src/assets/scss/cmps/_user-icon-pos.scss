@@ -11,7 +11,9 @@
     border-radius: 50%;
     object-fit: cover;
     position: relative;
-    transition: width 0.3s, height 0.3s;
+    transition:
+      width 0.3s,
+      height 0.3s;
 
     &:hover {
       width: 85px;

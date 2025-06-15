@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { userService } from '../services/user/userService'
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { userService } from "../services/user/userService";
 
 export function LikePreview({ reaction }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
-  const history = useHistory()
+  const history = useHistory();
 
   const loadUser = async (id) => {
-    if (!reaction) return
-    const userPost = await userService.getById(id)
-    setUser(() => userPost)
-  }
+    if (!reaction) return;
+    const userPost = await userService.getById(id);
+    setUser(() => userPost);
+  };
 
   useEffect(() => {
-    loadUser(reaction.userId)
-  }, [])
+    loadUser(reaction.userId);
+  }, []);
 
-  if (!user) return
+  if (!user) return;
 
   return (
     <section className="like-preview">
@@ -37,5 +37,5 @@ export function LikePreview({ reaction }) {
         <button>Connect</button>
       </div>
     </section>
-  )
+  );
 }

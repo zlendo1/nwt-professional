@@ -1,17 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
-import { store } from './store'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { store } from "./store";
 
 // Import Tailwind CSS
-import './index.css'
+import "./index.css";
 
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
   faCheckSquare,
   faCoffee,
@@ -53,7 +53,7 @@ import {
   faExclamationCircle,
   faMapMarkedAlt,
   faComments,
-} from '@fortawesome/free-solid-svg-icons'
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(
   fab,
@@ -96,24 +96,24 @@ library.add(
   faLock,
   faExclamationCircle,
   faMapMarkedAlt,
-  faComments
-)
+  faComments,
+);
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
   // </React.StrictMode>
-)
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.register()
+serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+reportWebVitals();

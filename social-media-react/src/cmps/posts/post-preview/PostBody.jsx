@@ -32,5 +32,5 @@ export function PostBody({
         )}
       </div>
     </section>
-  )
+  );
 }

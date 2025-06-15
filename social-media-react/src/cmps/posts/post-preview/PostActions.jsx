@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHistory } from 'react-router-dom'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 
 export const PostActions = ({
   post,
@@ -8,18 +8,18 @@ export const PostActions = ({
   onSharePost,
   loggedInUser,
 }) => {
-  const history = useHistory()
+  const history = useHistory();
 
   const isLogedInUserLikePost = post?.reactions?.some((reaction) => {
     return (
       loggedInUser && loggedInUser._id && loggedInUser?._id === reaction.userId
-    )
-  })
+    );
+  });
 
-  const likeBtnStyle = isLogedInUserLikePost ? 'liked' : ''
+  const likeBtnStyle = isLogedInUserLikePost ? "liked" : "";
   return (
     <section className="post-actions">
-      <button className={'like ' + likeBtnStyle} onClick={onLikePost}>
+      <button className={"like " + likeBtnStyle} onClick={onLikePost}>
         <FontAwesomeIcon
           className="like-icon icon"
           icon="fa-solid fa-thumbs-up"
@@ -48,5 +48,5 @@ export const PostActions = ({
         <span>Send</span>
       </button>
     </section>
-  )
-}
+  );
+};

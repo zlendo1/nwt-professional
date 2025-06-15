@@ -1,28 +1,28 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useDispatch, useSelector } from 'react-redux'
-import { CreatePostModal } from './CreatePostModal'
-import { useState } from 'react'
-import { savePost } from '../../store/actions/postActions'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
+import { CreatePostModal } from "./CreatePostModal";
+import { useState } from "react";
+import { savePost } from "../../store/actions/postActions";
 
 export const AddPost = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
-  const [isShowCreatePost, setIsShowCreatePost] = useState(false)
+  const [isShowCreatePost, setIsShowCreatePost] = useState(false);
 
   const toggleShowCreatePost = () => {
-    setIsShowCreatePost((prev) => !prev)
-  }
+    setIsShowCreatePost((prev) => !prev);
+  };
 
   const onAddPost = (post) => {
     const postToAdd = {
       ...post,
       userId: loggedInUser._id,
       fullname: loggedInUser.fullname,
-    }
-    dispatch(savePost(postToAdd)).then(() => toggleShowCreatePost())
-  }
+    };
+    dispatch(savePost(postToAdd)).then(() => toggleShowCreatePost());
+  };
 
   return (
     <section className="add-post" onClick={toggleShowCreatePost}>
@@ -68,5 +68,5 @@ export const AddPost = () => {
         />
       }
     </section>
-  )
-}
+  );
+};

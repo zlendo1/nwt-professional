@@ -1,20 +1,20 @@
-import { useSelector } from 'react-redux'
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const CommentMenu = ({ toggleMenu, onRemoveComment, commentUserId }) => {
-  const [isAskAgain, setIsAskAgain] = useState(false)
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const [isAskAgain, setIsAskAgain] = useState(false);
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
-  const isLoggedInUserCanDelete = loggedInUser._id === commentUserId
+  const isLoggedInUserCanDelete = loggedInUser._id === commentUserId;
 
   return (
     <section>
       <div
         className="bg-menu"
         onClick={(ev) => {
-          ev.stopPropagation()
-          toggleMenu()
+          ev.stopPropagation();
+          toggleMenu();
         }}
       ></div>
       <section className="comment-menu">
@@ -47,5 +47,5 @@ export const CommentMenu = ({ toggleMenu, onRemoveComment, commentUserId }) => {
         )}
       </section>
     </section>
-  )
-}
+  );
+};

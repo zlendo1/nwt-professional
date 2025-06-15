@@ -1,23 +1,23 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { userService } from '../../services/user/userService'
-import TimeAgo from 'react-timeago'
-import { useHistory } from 'react-router-dom'
-import loadingCircle from '../../assets/imgs/loading-circle.gif'
+import { useState } from "react";
+import { useEffect } from "react";
+import { userService } from "../../services/user/userService";
+import TimeAgo from "react-timeago";
+import { useHistory } from "react-router-dom";
+import loadingCircle from "../../assets/imgs/loading-circle.gif";
 
 export function ThreadMsgPreview({ msg }) {
-  const [userMsg, setUserMsg] = useState(null)
-  const history = useHistory()
+  const [userMsg, setUserMsg] = useState(null);
+  const history = useHistory();
 
   const loadUserMsg = async (id) => {
-    if (!msg) return
-    const user = await userService.getById(id)
-    setUserMsg(() => user)
-  }
+    if (!msg) return;
+    const user = await userService.getById(id);
+    setUserMsg(() => user);
+  };
 
   useEffect(() => {
-    loadUserMsg(msg.userId)
-  }, [])
+    loadUserMsg(msg.userId);
+  }, []);
 
   return (
     <section className="thread-msg-preview">
@@ -27,7 +27,7 @@ export function ThreadMsgPreview({ msg }) {
           onClick={() => history.push(`/main/profile/${userMsg?._id}`)}
         >
           {(userMsg?.imgUrl && (
-            <img src={userMsg?.imgUrl || ''} alt="" className="img" />
+            <img src={userMsg?.imgUrl || ""} alt="" className="img" />
           )) || <img src={loadingCircle} className="img" alt="" />}
         </div>
 
@@ -46,5 +46,5 @@ export function ThreadMsgPreview({ msg }) {
         <p>{msg.txt}</p>
       </div>
     </section>
-  )
+  );
 }

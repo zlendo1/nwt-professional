@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const MapMenu = ({ menuPosition, setIsCreateShowPost }) => {
   return (
@@ -11,12 +11,12 @@ export const MapMenu = ({ menuPosition, setIsCreateShowPost }) => {
         <div
           className="add-post-to-map opt"
           onClick={() => {
-            setIsCreateShowPost(true)
+            setIsCreateShowPost(true);
           }}
         >
           <p>Add a post here</p>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

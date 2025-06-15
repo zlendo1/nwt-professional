@@ -1,32 +1,32 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
-import { useState } from 'react'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export const InputComment = ({ onSaveComment }) => {
-  const { loggedInUser } = useSelector((state) => state.userModule)
-  const { imgUrl, _id } = loggedInUser
+  const { loggedInUser } = useSelector((state) => state.userModule);
+  const { imgUrl, _id } = loggedInUser;
 
-  const [isFirstFocus, setIsFirstFocus] = useState(true)
+  const [isFirstFocus, setIsFirstFocus] = useState(true);
   const [newComment, setNewComment] = useState({
-    txt: '',
+    txt: "",
     userId: _id,
-  })
+  });
 
   const handleChange = async ({ target }) => {
-    const field = target.name
-    let value = target.type === 'number' ? +target.value || '' : target.value
-    setNewComment((prevCred) => ({ ...prevCred, [field]: value }))
-  }
+    const field = target.name;
+    let value = target.type === "number" ? +target.value || "" : target.value;
+    setNewComment((prevCred) => ({ ...prevCred, [field]: value }));
+  };
 
   const doSubmit = () => {
-    onSaveComment(newComment)
-    setNewComment(() => ({ txt: '', userId: _id }))
-  }
+    onSaveComment(newComment);
+    setNewComment(() => ({ txt: "", userId: _id }));
+  };
 
   const inputRef = (elInput) => {
-    if (elInput && isFirstFocus) elInput.focus()
-    setIsFirstFocus(false)
-  }
+    if (elInput && isFirstFocus) elInput.focus();
+    setIsFirstFocus(false);
+  };
   return (
     <section>
       <form className="input-comment" action="">
@@ -64,8 +64,8 @@ export const InputComment = ({ onSaveComment }) => {
           {newComment.txt && (
             <button
               onClick={(ev) => {
-                ev.preventDefault()
-                doSubmit()
+                ev.preventDefault();
+                doSubmit();
               }}
             >
               Post
@@ -74,5 +74,5 @@ export const InputComment = ({ onSaveComment }) => {
         </div>
       </form>
     </section>
-  )
-}
+  );
+};

@@ -1,97 +1,97 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   loadPosts,
   addFilterByPosts,
   getPostsLength,
-} from '../../store/actions/postActions'
+} from "../../store/actions/postActions";
 
 export const InputFilter = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { users } = useSelector((state) => state.userModule)
+  const { users } = useSelector((state) => state.userModule);
 
-  const [fields, setFields] = useState({ txt: '' })
+  const [fields, setFields] = useState({ txt: "" });
 
-  const [usersAutoComplete, setUsersAutoComplete] = useState([])
+  const [usersAutoComplete, setUsersAutoComplete] = useState([]);
 
-  const [isFocus, setIsFocus] = useState(false)
+  const [isFocus, setIsFocus] = useState(false);
 
   const handleChange = async ({ target }) => {
-    const field = target.name
-    let value = target.type === 'number' ? +target.value || '' : target.value
-    setFields({ [field]: value })
-    if (target.value === '') onLoadPosts()
-  }
+    const field = target.name;
+    let value = target.type === "number" ? +target.value || "" : target.value;
+    setFields({ [field]: value });
+    if (target.value === "") onLoadPosts();
+  };
 
   const handleAutComplete = () => {
-    let inputField = document.getElementById('txt')
-    let ulField = document.querySelector('.suggestions')
-    inputField.addEventListener('input', changeAutoComplete)
+    let inputField = document.getElementById("txt");
+    let ulField = document.querySelector(".suggestions");
+    inputField.addEventListener("input", changeAutoComplete);
 
-    if (ulField) ulField.addEventListener('click', selectItem)
+    if (ulField) ulField.addEventListener("click", selectItem);
 
     function changeAutoComplete({ target }) {
-      let data = target.value
-      ulField.innerHTML = ``
+      let data = target.value;
+      ulField.innerHTML = ``;
       if (data?.length) {
-        let autoCompleteValues = autoComplete(data)
+        let autoCompleteValues = autoComplete(data);
         autoCompleteValues.forEach((value) => {
-          addItem(value)
-        })
+          addItem(value);
+        });
       }
     }
 
     function autoComplete(inputValue) {
-      let destination = usersAutoComplete || []
+      let destination = usersAutoComplete || [];
       return destination.filter((value) =>
-        value.toLowerCase().includes(inputValue.toLowerCase())
-      )
+        value.toLowerCase().includes(inputValue.toLowerCase()),
+      );
     }
 
     function addItem(value) {
-      ulField.innerHTML = ulField.innerHTML + `<li>${value}</li>`
+      ulField.innerHTML = ulField.innerHTML + `<li>${value}</li>`;
     }
 
     function selectItem({ target }) {
-      if (target.tagName === 'LI') {
-        inputField.value = target.textContent
-        ulField.innerHTML = ``
-        setFields({ txt: inputField.value })
+      if (target.tagName === "LI") {
+        inputField.value = target.textContent;
+        ulField.innerHTML = ``;
+        setFields({ txt: inputField.value });
       }
     }
-  }
+  };
 
   const getUsersName = () => {
-    if (!users) return
-    const usersToReturn = users.map((user) => user.fullname)
-    setUsersAutoComplete(usersToReturn)
-  }
+    if (!users) return;
+    const usersToReturn = users.map((user) => user.fullname);
+    setUsersAutoComplete(usersToReturn);
+  };
 
   useEffect(() => {
-    getUsersName()
-    handleAutComplete()
+    getUsersName();
+    handleAutComplete();
     return () => {
-      dispatch(addFilterByPosts(null))
-    }
-  }, [users])
+      dispatch(addFilterByPosts(null));
+    };
+  }, [users]);
 
   useEffect(() => {
-    handleAutComplete()
-  }, [usersAutoComplete])
+    handleAutComplete();
+  }, [usersAutoComplete]);
 
   useEffect(() => {
-    onLoadPosts()
-  }, [fields.txt])
+    onLoadPosts();
+  }, [fields.txt]);
 
   const onLoadPosts = () => {
-    dispatch(addFilterByPosts(fields))
-    dispatch(loadPosts())
-    dispatch(getPostsLength())
-  }
+    dispatch(addFilterByPosts(fields));
+    dispatch(loadPosts());
+    dispatch(getPostsLength());
+  };
 
-  let focusStyle = isFocus ? 'focus' : ''
+  let focusStyle = isFocus ? "focus" : "";
 
   return (
     <section className="input">
@@ -101,19 +101,19 @@ export const InputFilter = () => {
         placeholder="Search..."
         onChange={handleChange}
         onKeyDown={(e) => {
-          if (e.code === 'Enter') onLoadPosts(e)
+          if (e.code === "Enter") onLoadPosts(e);
         }}
         onFocus={() => {
-          setIsFocus(true)
+          setIsFocus(true);
         }}
         onBlur={() => {
-          setIsFocus(false)
+          setIsFocus(false);
         }}
         id="txt"
         name="txt"
         value={fields.txt}
       />
-      <ul className={'suggestions ' + focusStyle}></ul>
+      <ul className={"suggestions " + focusStyle}></ul>
     </section>
-  )
-}
+  );
+};

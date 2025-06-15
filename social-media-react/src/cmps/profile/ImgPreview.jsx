@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHistory } from 'react-router-dom'
-import { userService } from '../../services/user/userService'
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
+import { userService } from "../../services/user/userService";
 
 export function ImgPreview({
   toggleShowImg,
@@ -11,18 +11,18 @@ export function ImgPreview({
   post,
   body,
 }) {
-  const history = useHistory()
+  const history = useHistory();
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   const loadUser = async (userId) => {
-    const user = await userService.getById(userId)
-    setUser(user)
-  }
+    const user = await userService.getById(userId);
+    setUser(user);
+  };
 
   useEffect(() => {
-    if (post?.userId) loadUser(post.userId)
-  }, [])
+    if (post?.userId) loadUser(post.userId);
+  }, []);
 
   return (
     <div className="img-profile-preview">
@@ -77,5 +77,5 @@ export function ImgPreview({
         </div>
       </section>
     </div>
-  )
+  );
 }

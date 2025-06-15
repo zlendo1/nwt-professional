@@ -14,7 +14,9 @@
             width: 25px;
             height: 25px;
             border: 1px solid;
-            transition: width 0.3s, height 0.3s;
+            transition:
+              width 0.3s,
+              height 0.3s;
 
             &:hover {
               width: 85px;
@@ -27,7 +29,9 @@
             svg {
               width: 15px;
               height: 15px;
-              transition: width 0.3s, height 0.3s;
+              transition:
+                width 0.3s,
+                height 0.3s;
 
               &:hover {
                 width: 35px;

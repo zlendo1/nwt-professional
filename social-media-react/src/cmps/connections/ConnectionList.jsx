@@ -1,5 +1,5 @@
-import { utilService } from '../../services/utilService'
-import { ConnectionPreview } from './ConnectionPreview'
+import { utilService } from "../../services/utilService";
+import { ConnectionPreview } from "./ConnectionPreview";
 
 export function ConnectionList({ users }) {
   return (
@@ -8,5 +8,5 @@ export function ConnectionList({ users }) {
         <ConnectionPreview key={utilService.makeId()} user={user} />
       ))}
     </ul>
-  )
+  );
 }

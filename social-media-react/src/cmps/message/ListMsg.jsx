@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
-import { MsgPreview } from './MsgPreview'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { MsgPreview } from "./MsgPreview";
 
 export function ListMsg({
   chats,
@@ -13,29 +13,29 @@ export function ListMsg({
   setTheNotLoggedUserChat,
   theNotLoggedUserChat,
 }) {
-  const [chatsToShow, setChatsToShow] = useState(null)
+  const [chatsToShow, setChatsToShow] = useState(null);
 
-  const [field, setField] = useState({ txt: '' })
+  const [field, setField] = useState({ txt: "" });
 
   const handleChange = async ({ target }) => {
-    const field = target.name
-    let value = target.type === 'number' ? +target.value || '' : target.value
-    setField({ [field]: value })
-    setFilter(value)
-  }
+    const field = target.name;
+    let value = target.type === "number" ? +target.value || "" : target.value;
+    setField({ [field]: value });
+    setFilter(value);
+  };
 
   const setFilter = (txt) => {
-    const regex = new RegExp(txt, 'i')
+    const regex = new RegExp(txt, "i");
     const filteredChats = [...chats].filter((chat) => {
-      return regex.test(chat.users[0]) || regex.test(chat.users[1])
-    })
+      return regex.test(chat.users[0]) || regex.test(chat.users[1]);
+    });
 
-    setChatsToShow(filteredChats)
-  }
+    setChatsToShow(filteredChats);
+  };
 
   useEffect(() => {
-    setChatsToShow([...chats])
-  }, [chats])
+    setChatsToShow([...chats]);
+  }, [chats]);
 
   return (
     <section className="list-msg">
@@ -85,5 +85,5 @@ export function ListMsg({
           ))}
       </div>
     </section>
-  )
+  );
 }

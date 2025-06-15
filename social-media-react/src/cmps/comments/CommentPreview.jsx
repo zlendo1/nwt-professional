@@ -1,67 +1,67 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { removeComment } from '../../store/actions/postActions'
-import { useHistory } from 'react-router-dom'
-import { userService } from '../../services/user/userService'
-import { utilService } from '../../services/utilService'
-import { CommentMenu } from './CommentMenu'
-import { ReplyList } from '../replies/ReplyList'
-import TimeAgo from 'react-timeago'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { removeComment } from "../../store/actions/postActions";
+import { useHistory } from "react-router-dom";
+import { userService } from "../../services/user/userService";
+import { utilService } from "../../services/utilService";
+import { CommentMenu } from "./CommentMenu";
+import { ReplyList } from "../replies/ReplyList";
+import TimeAgo from "react-timeago";
 
 export const CommentPreview = ({ comment, onSaveComment }) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { userId, createdAt, postId, reactions, replies } = comment
-  const [userComment, setUserComment] = useState(null)
-  const [isShowinputComment, setIsShowinputComment] = useState(false)
-  const [isShowreplyList, setIsShowReplyList] = useState(false)
-  const [isShowMenu, setIsShowMenu] = useState(false)
-  const [isFirstFocus, setIsFirstFocus] = useState(true)
+  const { userId, createdAt, postId, reactions, replies } = comment;
+  const [userComment, setUserComment] = useState(null);
+  const [isShowinputComment, setIsShowinputComment] = useState(false);
+  const [isShowreplyList, setIsShowReplyList] = useState(false);
+  const [isShowMenu, setIsShowMenu] = useState(false);
+  const [isFirstFocus, setIsFirstFocus] = useState(true);
 
   const [replyField, setReplyField] = useState({
-    txt: '',
-  })
-  const { loggedInUser } = useSelector((state) => state.userModule)
+    txt: "",
+  });
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
   const toggleMenu = () => {
-    setIsShowMenu((prevVal) => !prevVal)
-  }
+    setIsShowMenu((prevVal) => !prevVal);
+  };
 
   const loadUserComment = async (userId) => {
-    if (!userId) return
-    const userComment = await userService.getById(userId)
-    setUserComment(userComment)
-  }
+    if (!userId) return;
+    const userComment = await userService.getById(userId);
+    setUserComment(userComment);
+  };
 
   const onLikeComment = () => {
-    const commentToSave = { ...comment }
+    const commentToSave = { ...comment };
     const isAlreadyLike = commentToSave.reactions.some(
-      (reaction) => reaction.userId === loggedInUser._id
-    )
+      (reaction) => reaction.userId === loggedInUser._id,
+    );
     if (isAlreadyLike) {
       commentToSave.reactions = commentToSave.reactions.filter(
-        (reaction) => reaction.userId !== loggedInUser._id
-      )
+        (reaction) => reaction.userId !== loggedInUser._id,
+      );
     } else if (!isAlreadyLike) {
       commentToSave.reactions.push({
         userId: loggedInUser._id,
         fullname: loggedInUser.fullname,
-        reaction: 'like',
-      })
+        reaction: "like",
+      });
     }
-    onSaveComment(commentToSave)
-  }
+    onSaveComment(commentToSave);
+  };
 
   const onRemoveComment = () => {
-    dispatch(removeComment(comment))
-  }
+    dispatch(removeComment(comment));
+  };
 
   const addReply = () => {
-    if (replyField.txt === '' || !replyField.txt) return
-    const commentToSave = { ...comment }
-    setIsShowReplyList(true)
+    if (replyField.txt === "" || !replyField.txt) return;
+    const commentToSave = { ...comment };
+    setIsShowReplyList(true);
     const newRpely = {
       _id: utilService.makeId(24),
       userId: loggedInUser._id,
@@ -70,49 +70,49 @@ export const CommentPreview = ({ comment, onSaveComment }) => {
       txt: replyField.txt,
       reactions: [],
       createdAt: new Date().getTime(),
-    }
-    commentToSave.replies.unshift(newRpely)
-    onSaveComment(commentToSave)
+    };
+    commentToSave.replies.unshift(newRpely);
+    onSaveComment(commentToSave);
     setReplyField({
-      txt: '',
-    })
-  }
+      txt: "",
+    });
+  };
 
   const updateReply = (replyToUpdate) => {
-    const commentToSave = { ...comment }
+    const commentToSave = { ...comment };
     const idx = commentToSave.replies.findIndex(
-      (reply) => reply._id === replyToUpdate._id
-    )
-    commentToSave.replies[idx] = replyToUpdate
-    onSaveComment(commentToSave)
-  }
+      (reply) => reply._id === replyToUpdate._id,
+    );
+    commentToSave.replies[idx] = replyToUpdate;
+    onSaveComment(commentToSave);
+  };
 
   const handleChange = async ({ target }) => {
-    const field = target.name
-    let value = target.type === 'number' ? +target.value || '' : target.value
-    setReplyField({ [field]: value })
-  }
+    const field = target.name;
+    let value = target.type === "number" ? +target.value || "" : target.value;
+    setReplyField({ [field]: value });
+  };
 
   useEffect(() => {
-    loadUserComment(userId)
-  }, [])
+    loadUserComment(userId);
+  }, []);
 
-  if (!userComment) return
+  if (!userComment) return;
 
   const isLogedInUserLikeComment = comment?.reactions.some((reaction) => {
-    return loggedInUser._id === reaction.userId
-  })
+    return loggedInUser._id === reaction.userId;
+  });
 
-  const likeBtnStyle = isLogedInUserLikeComment ? 'liked' : ''
+  const likeBtnStyle = isLogedInUserLikeComment ? "liked" : "";
 
-  const { profession, imgUrl } = userComment
+  const { profession, imgUrl } = userComment;
 
   const inputRef = (elInput) => {
-    if (elInput && isFirstFocus) elInput.focus()
-    setIsFirstFocus(false)
-  }
+    if (elInput && isFirstFocus) elInput.focus();
+    setIsFirstFocus(false);
+  };
 
-  if (!comment) return <div>Loading</div>
+  if (!comment) return <div>Loading</div>;
 
   return (
     <section className="comment-preview">
@@ -145,8 +145,8 @@ export const CommentPreview = ({ comment, onSaveComment }) => {
           </div>
         </div>
         <div className="comment-action">
-          <span>{reactions?.length || ''}</span>
-          <button className={'like ' + likeBtnStyle} onClick={onLikeComment}>
+          <span>{reactions?.length || ""}</span>
+          <button className={"like " + likeBtnStyle} onClick={onLikeComment}>
             Like
           </button>
           |
@@ -161,7 +161,7 @@ export const CommentPreview = ({ comment, onSaveComment }) => {
                 : `Show ${comment.replies?.length} replies`}
             </button>
           ) : (
-            ''
+            ""
           )}
         </div>
 
@@ -203,5 +203,5 @@ export const CommentPreview = ({ comment, onSaveComment }) => {
         )}
       </div>
     </section>
-  )
-}
+  );
+};

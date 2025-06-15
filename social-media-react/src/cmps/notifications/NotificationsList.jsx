@@ -1,7 +1,6 @@
-import { NotificaitonPreview } from './NotificaitonPreview'
+import { NotificaitonPreview } from "./NotificaitonPreview";
 
-export function NotificationsList({activities}) {
-
+export function NotificationsList({ activities }) {
   if (!activities?.length)
     return (
       <div className="notifications-list">
@@ -9,7 +8,7 @@ export function NotificationsList({activities}) {
           <p>No activities</p>
         </div>
       </div>
-    )
+    );
 
   return (
     <section className="notifications-list">
@@ -17,5 +16,5 @@ export function NotificationsList({activities}) {
         <NotificaitonPreview key={activity?._id} activity={activity} />
       ))}
     </section>
-  )
+  );
 }

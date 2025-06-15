@@ -1,69 +1,69 @@
-import { useEffect, useState, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import loadingCircle from '../../assets/imgs/loading-circle.gif'
-import { updateUser } from '../../store/actions/userActions'
+import { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import loadingCircle from "../../assets/imgs/loading-circle.gif";
+import { updateUser } from "../../store/actions/userActions";
 
 export function ConnectionPreview({ user }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [isConnected, setIsConnected] = useState(false)
+  const [isConnected, setIsConnected] = useState(false);
 
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
   const checkIsConnected = useCallback(() => {
     const isConnected = loggedInUser?.connections?.some(
-      (connection) => connection?.userId === user?._id
-    )
+      (connection) => connection?.userId === user?._id,
+    );
 
-    setIsConnected(isConnected)
-  }, [loggedInUser, user])
+    setIsConnected(isConnected);
+  }, [loggedInUser, user]);
 
   useEffect(() => {
-    checkIsConnected()
-    return () => {}
-  }, [checkIsConnected])
+    checkIsConnected();
+    return () => {};
+  }, [checkIsConnected]);
 
   const connectProfile = async () => {
-    if (!user) return
+    if (!user) return;
     if (isConnected === true) {
       // Remove
-      const connectionToRemve = JSON.parse(JSON.stringify(user))
-      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser))
+      const connectionToRemve = JSON.parse(JSON.stringify(user));
+      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser));
 
       loggedInUserToUpdate.connections =
         loggedInUserToUpdate.connections.filter(
-          (connection) => connection.userId !== connectionToRemve._id
-        )
+          (connection) => connection.userId !== connectionToRemve._id,
+        );
 
       connectionToRemve.connections = connectionToRemve.connections.filter(
-        (connection) => connection.userId !== loggedInUserToUpdate._id
-      )
+        (connection) => connection.userId !== loggedInUserToUpdate._id,
+      );
 
-      dispatch(updateUser(loggedInUserToUpdate))
-      dispatch(updateUser(connectionToRemve))
+      dispatch(updateUser(loggedInUserToUpdate));
+      dispatch(updateUser(connectionToRemve));
     } else if (isConnected === false) {
       // Add
-      const connectionToAdd = JSON.parse(JSON.stringify(user))
+      const connectionToAdd = JSON.parse(JSON.stringify(user));
 
-      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser))
+      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser));
 
       connectionToAdd.connections.unshift({
         userId: loggedInUserToUpdate._id,
         fullname: loggedInUserToUpdate.fullname,
-      })
+      });
 
       loggedInUserToUpdate.connections.push({
         userId: connectionToAdd._id,
         fullname: connectionToAdd.fullname,
-      })
+      });
 
-      dispatch(updateUser(loggedInUserToUpdate))
-      dispatch(updateUser(connectionToAdd))
+      dispatch(updateUser(loggedInUserToUpdate));
+      dispatch(updateUser(connectionToAdd));
     }
-  }
+  };
 
-  if (!user || isConnected) return
+  if (!user || isConnected) return;
   return (
     <li className="connection-preview">
       <Link to={`/main/profile/${user?._id}`}>
@@ -84,8 +84,8 @@ export function ConnectionPreview({ user }) {
       </div>
 
       <div className="btn-container" onClick={connectProfile}>
-        <button>{!isConnected ? 'Connect' : 'Disconnect'}</button>
+        <button>{!isConnected ? "Connect" : "Disconnect"}</button>
       </div>
     </li>
-  )
+  );
 }

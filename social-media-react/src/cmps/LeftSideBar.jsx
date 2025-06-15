@@ -1,5 +1,5 @@
-import { CommunityPanel } from './CommunityPanel'
-import { FeedIdentityModule } from './FeedIdentityModule'
+import { CommunityPanel } from "./CommunityPanel";
+import { FeedIdentityModule } from "./FeedIdentityModule";
 
 export function LeftSideBar(props) {
   return (
@@ -7,5 +7,5 @@ export function LeftSideBar(props) {
       <FeedIdentityModule />
       <CommunityPanel />
     </section>
-  )
+  );
 }

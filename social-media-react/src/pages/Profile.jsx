@@ -1,122 +1,122 @@
-import { useHistory, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useHistory, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { userService } from '../services/user/userService'
-import { PostsList } from '../cmps/posts/PostsList'
-import { ImgPreview } from '../cmps/profile/ImgPreview'
-import loadingGif from '../assets/imgs/loading-gif.gif'
-import { EditModal } from '../cmps/profile/EditModal'
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { userService } from "../services/user/userService";
+import { PostsList } from "../cmps/posts/PostsList";
+import { ImgPreview } from "../cmps/profile/ImgPreview";
+import loadingGif from "../assets/imgs/loading-gif.gif";
+import { EditModal } from "../cmps/profile/EditModal";
 import {
   getPostsLength,
   loadPosts,
   setCurrPage,
   setFilterByPosts,
-} from '../store/actions/postActions'
-import { updateUser } from '../store/actions/userActions'
+} from "../store/actions/postActions";
+import { updateUser } from "../store/actions/userActions";
 
 function Profile() {
-  const params = useParams()
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const params = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  const [user, setUser] = useState(null)
-  const [isShowImdProfile, setIsShowImdProfile] = useState(false)
-  const [isShowEditModal, setIsShowEditModal] = useState(false)
-  const [isConnected, setIsConnected] = useState(null)
+  const [user, setUser] = useState(null);
+  const [isShowImdProfile, setIsShowImdProfile] = useState(false);
+  const [isShowEditModal, setIsShowEditModal] = useState(false);
+  const [isConnected, setIsConnected] = useState(null);
 
-  const { posts } = useSelector((state) => state.postModule)
-  const { loggedInUser } = useSelector((state) => state.userModule)
+  const { posts } = useSelector((state) => state.postModule);
+  const { loggedInUser } = useSelector((state) => state.userModule);
 
   const checkIsConnected = () => {
     const isConnected = loggedInUser?.connections?.some(
-      (connection) => connection?.userId === user?._id
-    )
+      (connection) => connection?.userId === user?._id,
+    );
 
-    setIsConnected(isConnected)
-  }
+    setIsConnected(isConnected);
+  };
 
   useEffect(() => {
-    checkIsConnected()
-  }, [user])
+    checkIsConnected();
+  }, [user]);
 
   const loadUser = async () => {
-    const user = await userService.getById(params.userId)
-    setUser(() => user)
-  }
+    const user = await userService.getById(params.userId);
+    setUser(() => user);
+  };
 
   const toggleShowImgProfile = () => {
-    setIsShowImdProfile((prev) => !prev)
-  }
+    setIsShowImdProfile((prev) => !prev);
+  };
   const toggleShowEditModal = () => {
-    setIsShowEditModal((prev) => !prev)
-  }
+    setIsShowEditModal((prev) => !prev);
+  };
 
   const onShowProfile = () => {
-    toggleShowImgProfile()
-  }
+    toggleShowImgProfile();
+  };
 
   const connectProfile = async () => {
-    if (!user) return
+    if (!user) return;
     if (isConnected === true) {
       // Remove
-      const connectionToRemve = JSON.parse(JSON.stringify(user))
-      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser))
+      const connectionToRemve = JSON.parse(JSON.stringify(user));
+      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser));
 
       loggedInUserToUpdate.connections =
         loggedInUserToUpdate.connections.filter(
-          (connection) => connection.userId !== connectionToRemve._id
-        )
+          (connection) => connection.userId !== connectionToRemve._id,
+        );
 
       connectionToRemve.connections = connectionToRemve.connections.filter(
-        (connection) => connection.userId !== loggedInUserToUpdate._id
-      )
+        (connection) => connection.userId !== loggedInUserToUpdate._id,
+      );
 
-      dispatch(updateUser(loggedInUserToUpdate))
-      dispatch(updateUser(connectionToRemve))
+      dispatch(updateUser(loggedInUserToUpdate));
+      dispatch(updateUser(connectionToRemve));
 
-      setUser((prev) => ({ ...prev, ...connectionToRemve }))
+      setUser((prev) => ({ ...prev, ...connectionToRemve }));
     } else if (isConnected === false) {
       // Add
-      const connectionToAdd = JSON.parse(JSON.stringify(user))
+      const connectionToAdd = JSON.parse(JSON.stringify(user));
 
-      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser))
+      const loggedInUserToUpdate = JSON.parse(JSON.stringify(loggedInUser));
 
       connectionToAdd.connections.unshift({
         userId: loggedInUserToUpdate._id,
         fullname: loggedInUserToUpdate.fullname,
-      })
+      });
 
       loggedInUserToUpdate.connections.push({
         userId: connectionToAdd._id,
         fullname: connectionToAdd.fullname,
-      })
+      });
 
-      dispatch(updateUser(loggedInUserToUpdate))
-      dispatch(updateUser(connectionToAdd))
-      setUser(connectionToAdd)
+      dispatch(updateUser(loggedInUserToUpdate));
+      dispatch(updateUser(connectionToAdd));
+      setUser(connectionToAdd);
     }
-  }
+  };
 
   const moveToChat = () => {
-    history.push(`/main/message/${user?._id}`)
-  }
+    history.push(`/main/message/${user?._id}`);
+  };
 
   useEffect(() => {
     const filterBy = {
       userId: params.userId,
-    }
-    dispatch(setCurrPage('profile'))
-    dispatch(setFilterByPosts(filterBy))
-    loadUser()
-    dispatch(loadPosts(filterBy))
-    dispatch(getPostsLength())
+    };
+    dispatch(setCurrPage("profile"));
+    dispatch(setFilterByPosts(filterBy));
+    loadUser();
+    dispatch(loadPosts(filterBy));
+    dispatch(getPostsLength());
 
     return () => {
-      dispatch(setFilterByPosts(null))
-    }
-  }, [params.userId, loggedInUser])
+      dispatch(setFilterByPosts(null));
+    };
+  }, [params.userId, loggedInUser]);
 
   if (!user)
     return (
@@ -125,9 +125,9 @@ function Profile() {
           <img className="loading-gif" src={loadingGif} alt="" />
         </span>
       </section>
-    )
+    );
 
-  const isLoggedInUserProfile = loggedInUser?._id === user?._id
+  const isLoggedInUserProfile = loggedInUser?._id === user?._id;
 
   return (
     <section className="profile-page">
@@ -159,7 +159,7 @@ function Profile() {
                 {!isLoggedInUserProfile && (
                   <button className="connect" onClick={connectProfile}>
                     <FontAwesomeIcon icon="fa-solid fa-user-plus" />
-                    <p>{!isConnected ? 'Connect' : 'Disconnect'}</p>
+                    <p>{!isConnected ? "Connect" : "Disconnect"}</p>
                   </button>
                 )}
 
@@ -195,7 +195,7 @@ function Profile() {
         <EditModal toggleShowEditModal={toggleShowEditModal} user={user} />
       )}
     </section>
-  )
+  );
 }
 
-export default Profile
+export default Profile;

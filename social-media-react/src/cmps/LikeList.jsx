@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { utilService } from '../services/utilService'
-import { LikePreview } from './LikePreview'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { utilService } from "../services/utilService";
+import { LikePreview } from "./LikePreview";
 
 export function LikeList({ reactions, toggleLikes }) {
   return (
@@ -24,5 +24,5 @@ export function LikeList({ reactions, toggleLikes }) {
         ))}
       </div>
     </section>
-  )
+  );
 }

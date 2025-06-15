@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ThreadMsgList } from './ThreadMsgList'
-import { useHistory } from 'react-router-dom'
-import { useEffect } from 'react'
-import { SendMessageForm } from './SendMessageForm'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ThreadMsgList } from "./ThreadMsgList";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { SendMessageForm } from "./SendMessageForm";
 
 export function MessageThread({
   messagesToShow,
@@ -10,17 +10,17 @@ export function MessageThread({
   chatWith,
   onSendMsg,
 }) {
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
-    scrollToBottom()
-    return () => {}
-  }, [messagesToShow])
+    scrollToBottom();
+    return () => {};
+  }, [messagesToShow]);
 
   const scrollToBottom = () => {
-    var msgsContainer = document.querySelector('.user-profile-details')
-    msgsContainer.scrollTop = msgsContainer.scrollHeight
-  }
+    var msgsContainer = document.querySelector(".user-profile-details");
+    msgsContainer.scrollTop = msgsContainer.scrollHeight;
+  };
 
   return (
     <section className="message-thread">
@@ -40,7 +40,7 @@ export function MessageThread({
               icon="fa-solid fa-x"
               className="dots-icon"
               onClick={() => {
-                setMessagesToShow(null)
+                setMessagesToShow(null);
               }}
             />
           </span>
@@ -53,5 +53,5 @@ export function MessageThread({
 
       <SendMessageForm onSendMsg={onSendMsg} messagesToShow={messagesToShow} />
     </section>
-  )
+  );
 }

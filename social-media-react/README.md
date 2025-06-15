@@ -103,8 +103,6 @@ Then follow the specific deployment steps for your chosen platform.
 
 ### Screenshot
 
-
-
 ### Demo Video
 
 Watch the demo of Travelsdin here:
@@ -126,7 +124,6 @@ Contributions are welcome! To contribute:
 If you have any questions or suggestions, feel free to contact the project maintainer at:
 
 - **Name**: Shlomi Nugarker
-- **Email**: [shlomin1231@gmail.com](mailto\:shlomin1231@gmail.com)
+- **Email**: [shlomin1231@gmail.com](mailto:shlomin1231@gmail.com)
 
 We look forward to your feedback and contributions to make **Travelsdin** even better!
-
