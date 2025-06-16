@@ -11,9 +11,10 @@ export const Signup = () => {
 
   const [signin, setIsSignin] = useState(true);
   const [cred, setCred] = useState({
-    username: "",
+    email: "",
     password: "",
-    fullname: "",
+    firstName: "",
+    lastName: "",
   });
 
   const { loggedInUser } = useSelector((state) => state.userModule);
@@ -25,7 +26,7 @@ export const Signup = () => {
   };
 
   const cleanFields = () =>
-    setCred(() => ({ username: "", password: "", fullname: "" }));
+    setCred(() => ({ email: "", password: "", firstName: "", lastName: "" }));
 
   const doLogin = async () => {
     dispatch(login(cred)).then((user) => {
@@ -70,11 +71,11 @@ export const Signup = () => {
               <div className="img-container">
                 <img
                   src={loggedInUser.imgUrl}
-                  alt={loggedInUser.fullname}
+                  alt={loggedInUser.firstName}
                   className="profile-img"
                 />
               </div>
-              <h2>Welcome back, {loggedInUser.fullname}!</h2>
+              <h2>Welcome back, {loggedInUser.firstName}!</h2>
               <p>You're already signed in</p>
             </div>
 
@@ -121,33 +122,51 @@ export const Signup = () => {
           >
             {!signin && (
               <div className="input-group">
-                <label htmlFor="fullname">Full Name</label>
+                <label htmlFor="firstName">First Name</label>
                 <div className="input-wrapper">
                   <FontAwesomeIcon icon="user" className="input-icon" />
                   <input
                     required
                     onChange={handleChange}
                     type="text"
-                    placeholder="Your full name"
-                    id="fullname"
-                    name="fullname"
-                    value={cred.fullname}
+                    placeholder="Your first name"
+                    id="firstName"
+                    name="firstName"
+                    value={cred.firstName}
+                  />
+                </div>
+              </div>
+            )}
+
+            {!signin && (
+              <div className="input-group">
+                <label htmlFor="lastName">Last Name</label>
+                <div className="input-wrapper">
+                  <FontAwesomeIcon icon="user" className="input-icon" />
+                  <input
+                    required
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="Your last name"
+                    id="lastName"
+                    name="lastName"
+                    value={cred.lastName}
                   />
                 </div>
               </div>
             )}
 
             <div className="input-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <div className="input-wrapper">
-                <FontAwesomeIcon icon="user" className="input-icon" />
+                <FontAwesomeIcon icon="envelope" className="input-icon" />
                 <input
                   onChange={handleChange}
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={cred.username}
-                  placeholder="Enter your username"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={cred.email}
+                  placeholder="Enter your email"
                   required
                 />
               </div>
