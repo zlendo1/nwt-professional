@@ -4,16 +4,15 @@ import ba.unsa.etf.content_service.dto.UserDto;
 import ba.unsa.etf.content_service.entity.User;
 import ba.unsa.etf.content_service.mapper.UserMapper;
 import ba.unsa.etf.content_service.repository.UserRepository;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -30,9 +29,10 @@ public class UserService {
   }
 
   /**
-   * Dohvaća sve lokalne reference na korisnike i za svaku dobiva pune detalje
-   * iz user-management-service putem UserMapper-a.
-   * Koristiti s oprezom ako je broj korisnika u lokalnoj bazi velik.
+   * Dohvaća sve lokalne reference na korisnike i za svaku dobiva pune detalje iz
+   * user-management-service putem UserMapper-a. Koristiti s oprezom ako je broj korisnika u
+   * lokalnoj bazi velik.
+   *
    * @return Lista UserDto objekata s punim detaljima.
    */
   @Transactional(readOnly = true)
@@ -43,13 +43,14 @@ public class UserService {
       return Collections.emptyList();
     }
     return localUserReferences.stream()
-            .map(userMapper::toDto) // userMapper.toDto interno poziva UserDataClientService
-            .collect(Collectors.toList());
+        .map(userMapper::toDto) // userMapper.toDto interno poziva UserDataClientService
+        .collect(Collectors.toList());
   }
 
   /**
-   * Dohvaća pune detalje o korisniku na temelju njegovog ID-a,
-   * koristeći UserMapper koji interno poziva user-management-service.
+   * Dohvaća pune detalje o korisniku na temelju njegovog ID-a, koristeći UserMapper koji interno
+   * poziva user-management-service.
+   *
    * @param id ID korisnika.
    * @return Optional<UserDto> s punim detaljima, ili Optional.empty() ako korisnik nije pronađen.
    */
@@ -78,6 +79,7 @@ public class UserService {
   /**
    * Osigurava da lokalna referenca na korisnika (samo s ID-om) postoji u bazi content-service-a.
    * Ako ne postoji, kreira je.
+   *
    * @param userId ID korisnika iz user-management-service-a.
    * @return Lokalni User ENTITET (samo s ID-om).
    */
@@ -85,10 +87,13 @@ public class UserService {
   public User ensureUserReferenceExists(Long userId) {
     if (userId == null) {
       logger.error("Pokušaj osiguravanja reference za korisnika s null ID-om.");
-      throw new IllegalArgumentException("User ID ne može biti null za kreiranje/dohvaćanje reference.");
+      throw new IllegalArgumentException(
+          "User ID ne može biti null za kreiranje/dohvaćanje reference.");
     }
-    return userRepository.findById(userId)
-            .orElseGet(() -> {
+    return userRepository
+        .findById(userId)
+        .orElseGet(
+            () -> {
               logger.info("Lokalna User referenca za ID: {} ne postoji. Kreiram novu.", userId);
               User newUserReference = new User(userId);
               return userRepository.save(newUserReference);
@@ -99,11 +104,12 @@ public class UserService {
   // Koristiti s oprezom jer user-management-service je glavni izvor istine.
 
   /**
-   * Kreira LOKALNU REFERENCU na korisnika u content-service bazi.
-   * NE KREIRA korisnika u user-management-service-u.
-   * Obično se poziva s ID-om korisnika.
+   * Kreira LOKALNU REFERENCU na korisnika u content-service bazi. NE KREIRA korisnika u
+   * user-management-service-u. Obično se poziva s ID-om korisnika.
+   *
    * @param userId ID korisnika za kojeg se kreira lokalna referenca.
-   * @return UserDto s punim detaljima dohvaćenim iz user-management-service-a za novokreiranu referencu.
+   * @return UserDto s punim detaljima dohvaćenim iz user-management-service-a za novokreiranu
+   *     referencu.
    */
   @Transactional
   public UserDto createLocalUserReferenceById(Long userId) {
@@ -121,9 +127,10 @@ public class UserService {
   }
 
   /**
-   * Briše LOKALNU REFERENCU na korisnika iz content-service baze.
-   * NE BRIŠE korisnika iz user-management-service-a.
-   * Potreban oprez zbog mogućih stranih ključeva (npr. postovi koji referenciraju ovog korisnika).
+   * Briše LOKALNU REFERENCU na korisnika iz content-service baze. NE BRIŠE korisnika iz
+   * user-management-service-a. Potreban oprez zbog mogućih stranih ključeva (npr. postovi koji
+   * referenciraju ovog korisnika).
+   *
    * @param id ID lokalne korisničke reference za brisanje.
    */
   @Transactional

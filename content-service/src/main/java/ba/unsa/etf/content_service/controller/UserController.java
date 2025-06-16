@@ -1,4 +1,4 @@
-package ba.unsa.etf.content_service.controller;
+/*package ba.unsa.etf.content_service.controller;
 
 import ba.unsa.etf.content_service.dto.UserDto;
 import ba.unsa.etf.content_service.service.UserService;
@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-/*
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

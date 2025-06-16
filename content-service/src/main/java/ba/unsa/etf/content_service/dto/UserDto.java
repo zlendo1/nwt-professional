@@ -6,15 +6,16 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
-  private Long id;           // Odgovara JSON ključu "id"
-  private String uuid;         // Odgovara JSON ključu "uuid" (ako ti treba)
-  private String email;        // Odgovara JSON ključu "email"
-  private String firstName;    // Odgovara JSON ključu "firstName" (UMJESTO tvog starog 'username')
-  private String lastName;     // Odgovara JSON ključu "lastName" (UMJESTO tvog starog 'userlastname')
-  private LocalDate dateOfBirth; // Odgovara JSON ključu "dateOfBirth" (Jackson će string "YYYY-MM-DD" mapirati u LocalDate)
+  private Long id; // Odgovara JSON ključu "id"
+  private String uuid; // Odgovara JSON ključu "uuid" (ako ti treba)
+  private String email; // Odgovara JSON ključu "email"
+  private String firstName; // Odgovara JSON ključu "firstName" (UMJESTO tvog starog 'username')
+  private String lastName; // Odgovara JSON ključu "lastName" (UMJESTO tvog starog 'userlastname')
+  private LocalDate
+      dateOfBirth; // Odgovara JSON ključu "dateOfBirth" (Jackson će string "YYYY-MM-DD" mapirati u
+  // LocalDate)
   private String profilePicture; // Odgovara JSON ključu "profilePicture"
-  private String role;         // Odgovara JSON ključu "role" (ako ti treba)
-
+  private String role; // Odgovara JSON ključu "role" (ako ti treba)
 
   // ----------- Generiraj Gettere i Settere za SVA GORNJA POLJA -----------
   // Primjer za nekoliko, trebaš za sva:

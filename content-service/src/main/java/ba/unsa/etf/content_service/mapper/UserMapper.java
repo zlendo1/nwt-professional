@@ -20,8 +20,8 @@ public class UserMapper {
   }
 
   /**
-   * Mapira lokalni User entitet (koji ima samo ID) u puni UserDto
-   * tako što poziva UserDataClientService da dohvati detalje.
+   * Mapira lokalni User entitet (koji ima samo ID) u puni UserDto tako što poziva
+   * UserDataClientService da dohvati detalje.
    */
   public UserDto toDto(User userEntity) {
     if (userEntity == null || userEntity.getId() == null) {
@@ -34,9 +34,8 @@ public class UserMapper {
   }
 
   /**
-   * Mapira UserDto (koji dolazi iz user-management-service ili kao zahtjev)
-   * u lokalni User entitet (koji će imati samo ID).
-   * Koristi se npr. za kreiranje lokalne reference.
+   * Mapira UserDto (koji dolazi iz user-management-service ili kao zahtjev) u lokalni User entitet
+   * (koji će imati samo ID). Koristi se npr. za kreiranje lokalne reference.
    */
   public User toEntity(UserDto userDto) {
     if (userDto == null || userDto.getId() == null) {

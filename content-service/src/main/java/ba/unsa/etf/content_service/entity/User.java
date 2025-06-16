@@ -1,6 +1,7 @@
 package ba.unsa.etf.content_service.entity;
 
 import jakarta.persistence.*;
+
 // Eventualno importi za druga polja ako ih želiš (npr. username)
 
 @Entity
