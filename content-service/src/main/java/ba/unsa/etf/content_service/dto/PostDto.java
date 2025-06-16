@@ -8,9 +8,8 @@ import java.time.LocalDate;
 public class PostDto {
 
   private Long postId;
-
-  @NotNull(message = "User ID is required")
-  private Long userId; // Ovdje ostaje "userId", ali povezujemo s `user.id` iz entiteta
+  // private Long userId; // UKLONI OVO
+  private UserDto user; // DODAJ OVO - sadržavat će podatke o korisniku
 
   @NotNull(message = "Post date is required")
   private LocalDate postDate;
@@ -22,9 +21,10 @@ public class PostDto {
   @NotBlank(message = "Status cannot be blank")
   private String status;
 
-  // imageVideo izostavljen jer je BLOB - kasnije provjeriti
+  // Možda i imageUrl ako postovi imaju slike
+  // private String imageUrl;
 
-  // Getteri i setteri
+  // Getteri i setteri za SVA polja, uključujući i novi 'user' getter/setter
   public Long getPostId() {
     return postId;
   }
@@ -33,13 +33,13 @@ public class PostDto {
     this.postId = postId;
   }
 
-  public Long getUserId() {
-    return userId;
-  }
+  public UserDto getUser() {
+    return user;
+  } // Novi getter
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
-  }
+  public void setUser(UserDto user) {
+    this.user = user;
+  } // Novi setter
 
   public LocalDate getPostDate() {
     return postDate;
@@ -64,4 +64,7 @@ public class PostDto {
   public void setStatus(String status) {
     this.status = status;
   }
+
+  // public String getImageUrl() { return imageUrl; }
+  // public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }

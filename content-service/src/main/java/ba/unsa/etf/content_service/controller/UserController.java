@@ -1,4 +1,4 @@
-package ba.unsa.etf.content_service.controller;
+/*package ba.unsa.etf.content_service.controller;
 
 import ba.unsa.etf.content_service.dto.UserDto;
 import ba.unsa.etf.content_service.service.UserService;
@@ -43,3 +43,5 @@ public class UserController {
     return ResponseEntity.noContent().build();
   }
 }
+
+ */
