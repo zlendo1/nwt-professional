@@ -33,11 +33,6 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public Optional<UserDTO> findByUsername(String username) {
-    return userRepository.findByUsername(username).map(userMapper::toDTO);
-  }
-
-  @Transactional(readOnly = true)
   public Optional<UserDTO> findByEmail(String email) {
     return userRepository.findByEmail(email).map(userMapper::toDTO);
   }
@@ -98,7 +93,6 @@ public class UserService {
         .findById(id)
         .map(
             user -> {
-              user.setUsername(dto.getUsername());
               user.setEmail(dto.getEmail());
 
               userRepository.save(user);

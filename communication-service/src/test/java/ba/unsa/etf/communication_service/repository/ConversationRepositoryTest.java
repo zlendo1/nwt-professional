@@ -21,11 +21,9 @@ public class ConversationRepositoryTest {
   @BeforeEach
   public void setUp() {
     User user1 = new User();
-    user1.setUsername("user1");
     user1.setEmail("user1@example.com");
 
     User user2 = new User();
-    user2.setUsername("user2");
     user2.setEmail("user2@example.com");
 
     Conversation conversation1 = new Conversation();

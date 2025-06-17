@@ -21,11 +21,9 @@ public class UserRepositoryTest {
   @BeforeEach
   public void setUp() {
     User user1 = new User();
-    user1.setUsername("user1");
     user1.setEmail("user1@example.com");
 
     User user2 = new User();
-    user2.setUsername("user2");
     user2.setEmail("user2@example.com");
 
     Conversation conversation1 = new Conversation();
@@ -51,7 +49,7 @@ public class UserRepositoryTest {
   }
 
   // @Test
-  public void testFindByUsername_NoNPlusOneProblem() {
+  public void testFindByEmail_NoNPlusOneProblem() {
     Statistics statistics =
         entityManager
             .getEntityManagerFactory()
@@ -60,7 +58,7 @@ public class UserRepositoryTest {
     statistics.setStatisticsEnabled(true);
     statistics.clear();
 
-    User user = userRepository.findByUsername("user1").orElseThrow();
+    User user = userRepository.findByEmail("user1@example.com").orElseThrow();
 
     for (Conversation conversation : user.getConversations()) {
       conversation.getId();

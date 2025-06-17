@@ -117,7 +117,7 @@ public class MessageControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id", is(messageDTO.getId().intValue())))
         .andExpect(jsonPath("$.userId", is(messageDTO.getUserId().intValue())))
-        .andExpect(jsonPath("$.username", is(messageDTO.getUsername())))
+        .andExpect(jsonPath("$.email", is(messageDTO.getEmail())))
         .andExpect(jsonPath("$.conversationId", is(messageDTO.getConversationId().intValue())))
         .andExpect(jsonPath("$.content", is(messageDTO.getContent())));
   }

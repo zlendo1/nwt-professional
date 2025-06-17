@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface MessageMapper {
   @Mapping(source = "user.id", target = "userId")
-  @Mapping(source = "user.username", target = "username")
+  @Mapping(source = "user.email", target = "email")
   @Mapping(source = "conversation.id", target = "conversationId")
   MessageDTO toDTO(Message message);
 

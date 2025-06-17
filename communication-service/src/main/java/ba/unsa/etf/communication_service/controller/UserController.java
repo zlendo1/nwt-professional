@@ -38,14 +38,6 @@ public class UserController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping(params = {"username"})
-  public ResponseEntity<UserDTO> getByUsername(@RequestParam(required = true) String username) {
-    return userService
-        .findByUsername(username)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
   @GetMapping(params = {"email"})
   public ResponseEntity<UserDTO> getByEmail(@RequestParam(required = true) String email) {
     return userService

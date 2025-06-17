@@ -56,8 +56,7 @@ public class UserControllerTest {
 
   @Test
   public void testGetAll() throws Exception {
-    List<UserDTO> users =
-        Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
+    List<UserDTO> users = Collections.singletonList(new UserDTO(1L, "testuser@example.com"));
     Page<UserDTO> usersPage = new PageImpl<>(users);
 
     given(userService.findAll(any())).willReturn(usersPage);
@@ -70,7 +69,7 @@ public class UserControllerTest {
 
   @Test
   public void testGetById() throws Exception {
-    UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+    UserDTO user = new UserDTO(1L, "testuser@example.com");
 
     given(userService.findById(1L)).willReturn(Optional.of(user));
 
@@ -88,27 +87,8 @@ public class UserControllerTest {
   }
 
   @Test
-  public void testGetByUsername() throws Exception {
-    UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
-
-    given(userService.findByUsername("testuser")).willReturn(Optional.of(user));
-
-    mockMvc
-        .perform(get("/api/users?username=testuser"))
-        .andExpect(status().isOk())
-        .andExpect(content().json(objectMapper.writeValueAsString(user)));
-  }
-
-  @Test
-  public void testGetByUsername_NotFound() throws Exception {
-    given(userService.findByUsername("testuser")).willReturn(Optional.empty());
-
-    mockMvc.perform(get("/api/users?username=testuser")).andExpect(status().isNotFound());
-  }
-
-  @Test
   public void testGetByEmail() throws Exception {
-    UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+    UserDTO user = new UserDTO(1L, "testuser@example.com");
 
     given(userService.findByEmail("testuser@example.com")).willReturn(Optional.of(user));
 
@@ -127,8 +107,7 @@ public class UserControllerTest {
 
   @Test
   public void testGetByConversationId() throws Exception {
-    List<UserDTO> users =
-        Collections.singletonList(new UserDTO(1L, "testuser", "testuser@example.com"));
+    List<UserDTO> users = Collections.singletonList(new UserDTO(1L, "testuser@example.com"));
     Page<UserDTO> usersPage = new PageImpl<>(users);
 
     given(userService.findByConversationId(eq(1L), any())).willReturn(usersPage);
@@ -179,8 +158,8 @@ public class UserControllerTest {
 
   @Test
   public void testCreate() throws Exception {
-    CreateUserDTO createUserDTO = new CreateUserDTO("testuser", "testuser@example.com");
-    UserDTO user = new UserDTO(1L, "testuser", "testuser@example.com");
+    CreateUserDTO createUserDTO = new CreateUserDTO("testuser@example.com");
+    UserDTO user = new UserDTO(1L, "testuser@example.com");
 
     given(userService.create(any(CreateUserDTO.class))).willReturn(user);
 
@@ -195,8 +174,8 @@ public class UserControllerTest {
 
   @Test
   public void testUpdate() throws Exception {
-    CreateUserDTO createUserDTO = new CreateUserDTO("updateduser", "updateduser@example.com");
-    UserDTO user = new UserDTO(1L, "updateduser", "updateduser@example.com");
+    CreateUserDTO createUserDTO = new CreateUserDTO("updateduser@example.com");
+    UserDTO user = new UserDTO(1L, "updateduser@example.com");
 
     given(userService.update(eq(1L), any(CreateUserDTO.class))).willReturn(Optional.of(user));
 
@@ -211,7 +190,7 @@ public class UserControllerTest {
 
   @Test
   public void testUpdate_NotFound() throws Exception {
-    CreateUserDTO createUserDTO = new CreateUserDTO("updateduser", "updateduser@example.com");
+    CreateUserDTO createUserDTO = new CreateUserDTO("updateduser@example.com");
 
     given(userService.update(eq(1L), any(CreateUserDTO.class))).willReturn(Optional.empty());
 
