@@ -23,10 +23,6 @@ public class User {
   @Column(nullable = false, unique = true)
   private String email;
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_conversation",
-      joinColumns = @JoinColumn(name = "user_id"),
-      inverseJoinColumns = @JoinColumn(name = "conversation_id"))
+  @ManyToMany(mappedBy = "users")
   private Set<Conversation> conversations = new HashSet<>();
 }
