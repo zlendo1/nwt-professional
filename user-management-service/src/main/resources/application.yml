@@ -26,6 +26,36 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+  cloud:
+    stream:
+      bindings:
+        userEvents-out-0:
+          destination: user.events
+          content-type: application/json
+          binder: rabbit
+      rabbit:
+        bindings:
+          userEvents-out-0:
+            producer:
+              routing-key-expression: "'user.' + payload.eventType.toLowerCase()"
+              exchange-type: topic
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
 
 security:
   jwt:
