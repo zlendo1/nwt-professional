@@ -37,8 +37,7 @@ spring:
         bindings:
           userEvents-out-0:
             producer:
-              routing-key-expression: "'user.' + payload.eventType.toLowerCase()"
-              exchange-type: topic
+              exchangeType: fanout
       binders:
         rabbit:
           type: rabbit

@@ -3,6 +3,7 @@ package ba.unsa.etf.user_management_service.event.service;
 import ba.unsa.etf.user_management_service.event.model.UserEvent;
 import ba.unsa.etf.user_management_service.user.model.User;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +36,32 @@ public class UserEventPublisher {
     log.info("Published USER_DELETED event for user: {}", user.getEmail());
   }
 
+  public void publishAllUsersOnStartup(List<User> users) {
+    for (User user : users) {
+      UserEvent event = createEvent("STARTUP_SYNC", user);
+      publishEvent(event);
+    }
+    log.info("Published {} user events on startup", users.size());
+  }
+
   private UserEvent createEvent(String eventType, User user) {
-    return new UserEvent(
-        eventType,
-        user,
-        UUID.randomUUID().toString(),
-        LocalDateTime.now(),
-        "user-management-service");
+    UserEvent event = new UserEvent();
+
+    event.setEventType(eventType);
+    event.setEventId(UUID.randomUUID().toString());
+    event.setTimestamp(LocalDateTime.now());
+    event.setSource("user-management-service");
+    event.setId(user.getId());
+    event.setUuid(user.getUuid());
+    event.setEmail(user.getEmail());
+    event.setPasswordHashed(user.getPasswordHashed());
+    event.setFirstName(user.getFirstName());
+    event.setLastName(user.getLastName());
+    event.setDateOfBirth(user.getDateOfBirth());
+    event.setProfilePicture(user.getProfilePicture());
+    event.setRole(user.getRole());
+
+    return event;
   }
 
   private void publishEvent(UserEvent event) {
