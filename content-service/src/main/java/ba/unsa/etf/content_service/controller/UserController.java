@@ -1,8 +1,7 @@
-/*package ba.unsa.etf.content_service.controller;
+package ba.unsa.etf.content_service.controller;
 
 import ba.unsa.etf.content_service.dto.UserDto;
 import ba.unsa.etf.content_service.service.UserService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,34 +13,33 @@ public class UserController {
 
   private final UserService userService;
 
-  @GetMapping
-  public ResponseEntity<List<UserDto>> getAllUsers() {
-    return ResponseEntity.ok(userService.getAllUsers());
-  }
+  // @GetMapping
+  //  public ResponseEntity<List<UserDto>> getAllUsers() {
+  //    return ResponseEntity.ok(userService.getAllUsers());
+  //  }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+  public ResponseEntity<UserDto> getUserDetailsById(@PathVariable Long id) {
     return userService
-        .getUserById(id)
+        .getUserDetailsById(id)
         .map(ResponseEntity::ok)
         .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
   }
 
-  @PostMapping
-  public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-    return ResponseEntity.ok(userService.createUser(userDto));
-  }
+  // @PostMapping
+  // public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+  // return ResponseEntity.ok(userService.createUser(userDto));
+  // }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
-    return ResponseEntity.ok(userService.updateUser(id, userDto));
-  }
+  // @PutMapping("/{id}")
+  // public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto)
+  // {
+  // return ResponseEntity.ok(userService.updateUser(id, userDto));
+  // }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-    userService.deleteUser(id);
-    return ResponseEntity.noContent().build();
-  }
+  // @DeleteMapping("/{id}")
+  // public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+  // userService.deleteUser(id);
+  // return ResponseEntity.noContent().build();
+  // }
 }
-
- */
