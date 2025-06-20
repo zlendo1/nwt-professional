@@ -44,13 +44,13 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: localhost
+                host: rabbitmq
                 port: 5672
                 username: guest
                 password: guest
                 virtual-host: /
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -63,3 +63,8 @@ security:
 
 server:
   port: 8025
+
+management:
+  endpoint:
+    health:
+      show-details: always

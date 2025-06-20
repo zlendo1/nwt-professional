@@ -43,7 +43,7 @@ spring:
               exchangeType: fanout
 
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
@@ -63,3 +63,8 @@ eureka:
 springdoc:
   swagger-ui:
     path: /api-ui
+
+management:
+  endpoint:
+    health:
+      show-details: always
