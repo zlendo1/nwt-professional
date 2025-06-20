@@ -1,0 +1,100 @@
+.register-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('assets/login-background.png') no-repeat center center;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.register-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  padding: 50px;
+  margin: 40px;
+  border-radius: 20px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.register-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -15deg,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05) 2px,
+    transparent 2px,
+    transparent 60px
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.register-box * {
+  position: relative;
+  z-index: 1;
+}
+
+.register-box h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.register-box form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.register-box input {
+  width: 100%;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  border: 2px solid #007bff;
+  border-radius: 30px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.register-box input:focus {
+  border-color: #6610f2;
+}
+
+.register-box button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-box button:hover {
+  background: linear-gradient(90deg, #0056b3, #520dc2);
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}

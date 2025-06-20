@@ -1,0 +1,66 @@
+.layout-container {
+  min-height: 100vh;
+  background: url('assets/background4.png') center/cover no-repeat;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.layout-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+  flex-direction: row;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.header-logo {
+  height: 42px;
+}
+
+.header-title {
+  color: white;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* povećano sa 20px ili šta god si imao */
+}
+
+
+.header-nav button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-transform: none;
+}
+
+.header-nav button:hover {
+  color: #00bfff;
+}
+
+.layout-main {
+  padding-top: 90px;
+  position: relative;
+  z-index: 1;
+}

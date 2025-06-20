@@ -1,0 +1,140 @@
+/* LoginPage.css */
+
+.login-container {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  background: url('assets/login-background.png') no-repeat center center;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.slogan-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2;
+}
+
+.login-box {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  padding: 50px;
+  margin: 40px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -15deg,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05) 2px,
+    transparent 2px,
+    transparent 60px
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.login-box * {
+  position: relative;
+  z-index: 1;
+}
+
+.login-box h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.login-box input {
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  border: 2px solid #007bff;
+  border-radius: 30px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+  width: 100%;
+}
+
+.login-box input:focus {
+  border-color: #6610f2;
+}
+
+.login-box button {
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+}
+
+.login-box button:hover {
+  background: linear-gradient(90deg, #0056b3, #520dc2);
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  text-align: center;
+  color: #333;
+}
+
+.register-link a {
+  color: #6610f2;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #520dc2;
+  text-decoration: underline;
+}
+
+.error {
+  margin-bottom: 15px;
+  color: #dc3545;
+  font-weight: bold;
+  text-align: center;
+}
+
+.login-logo {
+  display: block;
+  border: 2px dashed red;
+}

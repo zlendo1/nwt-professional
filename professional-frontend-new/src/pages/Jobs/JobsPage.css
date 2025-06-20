@@ -1,0 +1,110 @@
+.jobs-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.box-dark,
+.box-darker {
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.box-dark {
+  background: rgba(30, 30, 30, 0.95);
+  color: #eee;
+}
+
+.box-darker {
+  background: rgba(15, 15, 15, 0.92);
+  color: #f2f2f2;
+}
+
+.job-form {
+  max-width: 580px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background: #111;
+  color: #ddd;
+}
+
+::placeholder {
+  color: #777;
+}
+
+select {
+  background-color: #111;
+}
+
+button {
+  padding: 12px 20px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(90deg, #6c63ff, #a050f5);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #4e48e0, #8438d2);
+}
+
+.job-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.add-test {
+  background: linear-gradient(90deg, #6c63ff, #a050f5);
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-test:hover {
+  background: linear-gradient(90deg, #4e48e0, #8438d2);
+}
+
+.jobs-list ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+}
+
+.jobs-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #444;
+}
+
+.placeholder {
+  font-style: italic;
+  color: #999;
+  margin-top: 16px;
+}
