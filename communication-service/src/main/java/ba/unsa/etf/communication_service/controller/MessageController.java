@@ -28,27 +28,25 @@ public class MessageController {
     return ResponseEntity.ok(messageService.findAll(pageable));
   }
 
-  @GetMapping(params = {"id"})
-  public ResponseEntity<MessageDTO> getById(@RequestParam(required = true) Long id) {
+  @GetMapping("/{id}")
+  public ResponseEntity<MessageDTO> getById(@PathVariable Long id) {
     return messageService
         .findById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping(params = {"conversationId"})
+  @GetMapping("/conversationId/{conversationId}")
   public ResponseEntity<Page<MessageDTO>> getByConversationId(
-      @RequestParam(required = true) Long conversationId, Pageable pageable) {
-    return ResponseEntity.ok(messageService.findByConversationId(conversationId, pageable));
-  }
-
-  @GetMapping(params = {"userId", "conversationId"})
-  public ResponseEntity<Page<MessageDTO>> getByUserAndConversationId(
-      @RequestParam(required = true) Long userId,
-      @RequestParam(required = true) Long conversationId,
+      @PathVariable Long conversationId,
+      @RequestParam(required = false) Long userId,
       Pageable pageable) {
-    return ResponseEntity.ok(
-        messageService.findByUserAndConversationId(userId, conversationId, pageable));
+    if (userId != null) {
+      return ResponseEntity.ok(
+          messageService.findByUserAndConversationId(userId, conversationId, pageable));
+    } else {
+      return ResponseEntity.ok(messageService.findByConversationId(conversationId, pageable));
+    }
   }
 
   @PostMapping

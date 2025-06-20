@@ -33,72 +33,28 @@ public class ConversationService {
   }
 
   @Transactional(readOnly = true)
-  public Page<ConversationDTO> findByName(String name, Pageable pageable) {
-    return conversationRepository.findByName(name, pageable).map(conversationMapper::toDTO);
-  }
-
-  @Transactional(readOnly = true)
   public Page<ConversationDTO> findByUserId(Long userId, Pageable pageable) {
     return conversationRepository.findByUser_Id(userId, pageable).map(conversationMapper::toDTO);
   }
 
   @Transactional
-  public void linkWithUser(Long conversationId, Long userId) {
-    User user =
-        userRepository
-            .findById(userId)
-            .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-    Conversation conversation =
-        conversationRepository
-            .findById(conversationId)
-            .orElseThrow(() -> new EntityNotFoundException("Conversation not found"));
-
-    user.getConversations().add(conversation);
-    conversation.getUsers().add(user);
-
-    userRepository.save(user);
-    conversationRepository.save(conversation);
-  }
-
-  @Transactional
-  public void unlinkWithUser(Long conversationId, Long userId) {
-    User user =
-        userRepository
-            .findById(userId)
-            .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-    Conversation conversation =
-        conversationRepository
-            .findById(conversationId)
-            .orElseThrow(() -> new EntityNotFoundException("Conversation not found"));
-
-    user.getConversations().remove(conversation);
-    conversation.getUsers().remove(user);
-
-    userRepository.save(user);
-    conversationRepository.save(conversation);
-  }
-
-  @Transactional
   public ConversationDTO create(CreateConversationDTO dto) {
-    Conversation conversation = conversationRepository.save(conversationMapper.fromCreateDTO(dto));
+    Conversation conversation = conversationMapper.fromCreateDTO(dto);
 
-    return conversationMapper.toDTO(conversation);
-  }
+    User user1 =
+        userRepository
+            .findById(dto.getUser1_id())
+            .orElseThrow(() -> new EntityNotFoundException("User1 not found"));
 
-  @Transactional
-  public Optional<ConversationDTO> update(Long id, CreateConversationDTO dto) {
-    return conversationRepository
-        .findById(id)
-        .map(
-            conversation -> {
-              conversation.setName(dto.getName());
+    User user2 =
+        userRepository
+            .findById(dto.getUser2_id())
+            .orElseThrow(() -> new EntityNotFoundException("User2 not found"));
 
-              conversationRepository.save(conversation);
+    conversation.setUser1(user1);
+    conversation.setUser2(user2);
 
-              return conversationMapper.toDTO(conversation);
-            });
+    return conversationMapper.toDTO(conversationRepository.save(conversation));
   }
 
   @Transactional

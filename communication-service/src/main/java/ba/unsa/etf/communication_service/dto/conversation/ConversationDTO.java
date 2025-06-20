@@ -1,8 +1,7 @@
 package ba.unsa.etf.communication_service.dto.conversation;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,17 @@ public class ConversationDTO {
   @NotNull(message = "Id cannot be null")
   private Long id;
 
-  @NotBlank(message = "Conversation name cannot be blank")
-  @Size(max = 50, message = "Conversation name must not exceed 50 characters")
-  private String name;
+  @NotNull(message = "User1_id cannot be null")
+  private Long user1_id;
+
+  @NotNull(message = "Email cannot be null")
+  @Email(message = "Email must have proper format")
+  private String email1;
+
+  @NotNull(message = "User2_id cannot be null")
+  private Long user2_id;
+
+  @NotNull(message = "Email cannot be null")
+  @Email(message = "Email must have proper format")
+  private String email2;
 }

@@ -12,10 +12,8 @@ public interface UserMapper {
   UserDTO toDTO(User user);
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "conversations", ignore = true)
   User fromCreateDTO(CreateUserDTO createUserDTO);
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "conversations", ignore = true)
   User fromManagerUserDTO(ManagerUserDTO managerUserDTO);
 }
