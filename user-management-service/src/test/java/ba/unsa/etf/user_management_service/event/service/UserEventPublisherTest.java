@@ -47,7 +47,10 @@ class UserEventPublisherTest {
 
     UserEvent capturedEvent = eventCaptor.getValue();
     assertEquals("CREATE", capturedEvent.getEventType());
-    assertEquals(testUser, capturedEvent.getUser());
+    assertEquals(testUser.getId(), capturedEvent.getId());
+    assertEquals(testUser.getEmail(), capturedEvent.getEmail());
+    assertEquals(testUser.getFirstName(), capturedEvent.getFirstName());
+    assertEquals(testUser.getLastName(), capturedEvent.getLastName());
     assertEquals("user-management-service", capturedEvent.getSource());
     assertNotNull(capturedEvent.getEventId());
     assertNotNull(capturedEvent.getTimestamp());
@@ -65,7 +68,10 @@ class UserEventPublisherTest {
 
     UserEvent capturedEvent = eventCaptor.getValue();
     assertEquals("UPDATE", capturedEvent.getEventType());
-    assertEquals(testUser, capturedEvent.getUser());
+    assertEquals(testUser.getId(), capturedEvent.getId());
+    assertEquals(testUser.getEmail(), capturedEvent.getEmail());
+    assertEquals(testUser.getFirstName(), capturedEvent.getFirstName());
+    assertEquals(testUser.getLastName(), capturedEvent.getLastName());
     assertEquals("user-management-service", capturedEvent.getSource());
     assertNotNull(capturedEvent.getEventId());
     assertNotNull(capturedEvent.getTimestamp());
@@ -82,7 +88,10 @@ class UserEventPublisherTest {
 
     UserEvent capturedEvent = eventCaptor.getValue();
     assertEquals("DELETE", capturedEvent.getEventType());
-    assertEquals(testUser, capturedEvent.getUser());
+    assertEquals(testUser.getId(), capturedEvent.getId());
+    assertEquals(testUser.getEmail(), capturedEvent.getEmail());
+    assertEquals(testUser.getFirstName(), capturedEvent.getFirstName());
+    assertEquals(testUser.getLastName(), capturedEvent.getLastName());
     assertEquals("user-management-service", capturedEvent.getSource());
     assertNotNull(capturedEvent.getEventId());
     assertNotNull(capturedEvent.getTimestamp());

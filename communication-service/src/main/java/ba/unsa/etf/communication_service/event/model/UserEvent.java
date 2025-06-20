@@ -1,5 +1,6 @@
-package ba.unsa.etf.user_management_service.event.model;
+package ba.unsa.etf.communication_service.event.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEvent {
+public class UserEvent implements Serializable {
   private String eventType;
   private String eventId;
   private LocalDateTime timestamp;

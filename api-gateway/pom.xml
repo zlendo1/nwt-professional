@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.2.5</version>
-    <relativePath/>
+    <relativePath></relativePath>
   </parent>
-
   <groupId>api.service</groupId>
   <artifactId>api-gateway</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>api-gateway</name>
   <description>Api Gateway Service</description>
-
   <properties>
     <java.version>17</java.version>
     <grpc.version>1.62.2</grpc.version>
@@ -27,7 +23,6 @@
     <spring-cloud.version>2023.0.2</spring-cloud.version>
     <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -39,7 +34,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>net.devh</groupId>
@@ -63,19 +57,16 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
-
     <!-- Spring Cloud Gateway -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-gateway</artifactId>
     </dependency>
-
     <!-- Service Discovery -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
-
     <!-- gRPC Dependencies -->
     <dependency>
       <groupId>io.grpc</groupId>
@@ -92,7 +83,6 @@
       <artifactId>grpc-stub</artifactId>
       <version>${grpc.version}</version>
     </dependency>
-
     <!-- Remove grpc-server-spring-boot-starter unless you're actually creating a gRPC server -->
     <!--
     <dependency>
@@ -101,7 +91,6 @@
       <version>3.1.0.RELEASE</version>
     </dependency>
     -->
-
     <!-- Database -->
     <dependency>
       <groupId>com.h2database</groupId>
@@ -113,7 +102,6 @@
       <artifactId>mysql-connector-j</artifactId>
       <version>${mysql-connector-j.version}</version>
     </dependency>
-
     <!-- JWT -->
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
@@ -132,7 +120,6 @@
       <version>0.11.5</version>
       <scope>runtime</scope>
     </dependency>
-
     <!-- Utilities -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -145,15 +132,17 @@
       <artifactId>javax.annotation-api</artifactId>
       <version>${javax.annotation-api.version}</version>
     </dependency>
-
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
   </dependencies>
-
   <build>
     <extensions>
       <extension>
@@ -162,7 +151,6 @@
         <version>${os-maven-plugin.version}</version>
       </extension>
     </extensions>
-
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -176,20 +164,15 @@
           </excludes>
         </configuration>
       </plugin>
-
       <!-- Only include protobuf plugin if you're actually using gRPC service definitions -->
       <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
         <version>${protobuf-maven-plugin.version}</version>
         <configuration>
-          <protocArtifact>
-            com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}
-          </protocArtifact>
+          <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
           <pluginId>grpc-java</pluginId>
-          <pluginArtifact>
-            io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
-          </pluginArtifact>
+          <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
         </configuration>
         <executions>
           <execution>

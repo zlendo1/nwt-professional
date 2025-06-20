@@ -49,7 +49,7 @@ public class MessageControllerTest {
 
   @Test
   public void testGetAllMessages() throws Exception {
-    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1", 1L, "Hello", null);
+    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1@example.com", 1L, "Hello", null);
     List<MessageDTO> messages = Collections.singletonList(messageDTO);
     Page<MessageDTO> messagesPage = new PageImpl<>(messages);
 
@@ -63,33 +63,33 @@ public class MessageControllerTest {
 
   @Test
   public void testGetMessageById() throws Exception {
-    MessageDTO message = new MessageDTO(1L, 1L, "user1", 1L, "Hello", null);
+    MessageDTO message = new MessageDTO(1L, 1L, "user1@example.com", 1L, "Hello", null);
 
     Mockito.when(messageService.findById(anyLong())).thenReturn(Optional.of(message));
 
     mockMvc
-        .perform(get("/api/message?id=1"))
+        .perform(get("/api/message/1"))
         .andExpect(status().isOk())
         .andExpect(content().json(objectMapper.writeValueAsString(message)));
   }
 
   @Test
   public void testGetMessagesByConversationId() throws Exception {
-    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1", 1L, "Hello", null);
+    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1@example.com", 1L, "Hello", null);
     List<MessageDTO> messages = Collections.singletonList(messageDTO);
     Page<MessageDTO> messagesPage = new PageImpl<>(messages);
 
     Mockito.when(messageService.findByConversationId(anyLong(), any())).thenReturn(messagesPage);
 
     mockMvc
-        .perform(get("/api/message?conversationId=1"))
+        .perform(get("/api/message/conversationId/1"))
         .andExpect(status().isOk())
         .andExpect(expectContentExact(objectMapper.writeValueAsString(messages)));
   }
 
   @Test
   public void testGetMessagesByUserAndConversationId() throws Exception {
-    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1", 1L, "Hello", null);
+    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1@example.com", 1L, "Hello", null);
     List<MessageDTO> messages = Collections.singletonList(messageDTO);
     Page<MessageDTO> messagesPage = new PageImpl<>(messages);
 
@@ -97,7 +97,7 @@ public class MessageControllerTest {
         .thenReturn(messagesPage);
 
     mockMvc
-        .perform(get("/api/message?userId=1&conversationId=1"))
+        .perform(get("/api/message/conversationId/1?userId=1"))
         .andExpect(status().isOk())
         .andExpect(expectContentExact(objectMapper.writeValueAsString(messages)));
   }
@@ -105,7 +105,7 @@ public class MessageControllerTest {
   @Test
   public void testCreateMessage() throws Exception {
     CreateMessageDTO createMessageDTO = new CreateMessageDTO(1L, 1L, "Hello");
-    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1", 1L, "Hello", null);
+    MessageDTO messageDTO = new MessageDTO(1L, 1L, "user1@example.com", 1L, "Hello", null);
 
     Mockito.when(messageService.create(any(CreateMessageDTO.class))).thenReturn(messageDTO);
 

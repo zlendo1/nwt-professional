@@ -1,19 +1,14 @@
-package ba.unsa.etf.user_management_service.event.model;
+package ba.unsa.etf.communication_service.dto.user;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserEvent {
-  private String eventType;
-  private String eventId;
-  private LocalDateTime timestamp;
-  private String source;
+@NoArgsConstructor
+public class ManagerUserDTO {
   private Long id;
   private String uuid;
   private String email;

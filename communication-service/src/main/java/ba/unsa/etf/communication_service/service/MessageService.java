@@ -2,9 +2,14 @@ package ba.unsa.etf.communication_service.service;
 
 import ba.unsa.etf.communication_service.dto.message.CreateMessageDTO;
 import ba.unsa.etf.communication_service.dto.message.MessageDTO;
+import ba.unsa.etf.communication_service.entity.Conversation;
 import ba.unsa.etf.communication_service.entity.Message;
+import ba.unsa.etf.communication_service.entity.User;
 import ba.unsa.etf.communication_service.mapper.MessageMapper;
+import ba.unsa.etf.communication_service.repository.ConversationRepository;
 import ba.unsa.etf.communication_service.repository.MessageRepository;
+import ba.unsa.etf.communication_service.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class MessageService {
   private final MessageRepository messageRepository;
+  private final ConversationRepository conversationRepository;
+  private final UserRepository userRepository;
   private final MessageMapper messageMapper;
 
   @Transactional(readOnly = true)
@@ -45,9 +52,26 @@ public class MessageService {
 
   @Transactional
   public MessageDTO create(CreateMessageDTO dto) {
-    Message message = messageRepository.save(messageMapper.fromCreateDTO(dto));
+    if (!conversationRepository.existsByUser_Id(dto.getUserId())) {
+      throw new EntityNotFoundException("Conversation with user not found");
+    }
 
-    return messageMapper.toDTO(message);
+    User user =
+        userRepository
+            .findById(dto.getUserId())
+            .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+    Conversation conversation =
+        conversationRepository
+            .findById(dto.getConversationId())
+            .orElseThrow(() -> new EntityNotFoundException("Conversation not found"));
+
+    Message message = messageMapper.fromCreateDTO(dto);
+
+    message.setUser(user);
+    message.setConversation(conversation);
+
+    return messageMapper.toDTO(messageRepository.save(message));
   }
 
   @Transactional

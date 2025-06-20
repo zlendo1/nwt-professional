@@ -5,6 +5,7 @@ import ba.unsa.etf.user_management_service.user.model.User;
 import ba.unsa.etf.user_management_service.user.repository.UserRepository;
 import ba.unsa.etf.user_management_service.user.service.UserService;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,11 @@ public class UserController {
   private final UserRepository userRepository;
   private final UserService userService;
   private final UserEventPublisher userEventPublisher;
+
+  @GetMapping
+  public ResponseEntity<List<User>> getUsers() {
+    return ResponseEntity.ok(userRepository.findAll());
+  }
 
   @GetMapping("/{id}")
   public ResponseEntity<User> getUser(@PathVariable Long id) {

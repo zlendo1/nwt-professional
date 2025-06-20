@@ -3,6 +3,13 @@ package ba.unsa.etf.communication_service.controller;
 import ba.unsa.etf.communication_service.dto.message.CreateMessageDTO;
 import ba.unsa.etf.communication_service.dto.message.MessageDTO;
 import ba.unsa.etf.communication_service.service.MessageService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,44 +27,108 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/message")
 @AllArgsConstructor
+@Tag(name = "Message", description = "Message management API")
 public class MessageController {
   private final MessageService messageService;
 
   @GetMapping
-  public ResponseEntity<Page<MessageDTO>> getAll(Pageable pageable) {
+  @Operation(
+      summary = "Get all messages",
+      description = "Retrieve a paginated list of all messages")
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successfully retrieved messages",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Page.class)))
+      })
+  public ResponseEntity<Page<MessageDTO>> getAll(
+      @Parameter(description = "Pagination information") Pageable pageable) {
     return ResponseEntity.ok(messageService.findAll(pageable));
   }
 
-  @GetMapping(params = {"id"})
-  public ResponseEntity<MessageDTO> getById(@RequestParam(required = true) Long id) {
+  @GetMapping("/{id}")
+  @Operation(summary = "Get message by ID", description = "Retrieve a specific message by its ID")
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successfully retrieved message",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = MessageDTO.class))),
+        @ApiResponse(responseCode = "404", description = "Message not found")
+      })
+  public ResponseEntity<MessageDTO> getById(
+      @Parameter(description = "ID of the message to retrieve") @PathVariable Long id) {
     return messageService
         .findById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @GetMapping(params = {"conversationId"})
+  @GetMapping("/conversationId/{conversationId}")
+  @Operation(
+      summary = "Get messages by conversation ID",
+      description =
+          "Retrieve all messages for a specific conversation, optionally filtered by user")
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successfully retrieved conversation messages",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = Page.class)))
+      })
   public ResponseEntity<Page<MessageDTO>> getByConversationId(
-      @RequestParam(required = true) Long conversationId, Pageable pageable) {
-    return ResponseEntity.ok(messageService.findByConversationId(conversationId, pageable));
-  }
-
-  @GetMapping(params = {"userId", "conversationId"})
-  public ResponseEntity<Page<MessageDTO>> getByUserAndConversationId(
-      @RequestParam(required = true) Long userId,
-      @RequestParam(required = true) Long conversationId,
-      Pageable pageable) {
-    return ResponseEntity.ok(
-        messageService.findByUserAndConversationId(userId, conversationId, pageable));
+      @Parameter(description = "ID of the conversation whose messages to retrieve") @PathVariable
+          Long conversationId,
+      @Parameter(description = "Optional user ID to filter messages by user")
+          @RequestParam(required = false)
+          Long userId,
+      @Parameter(description = "Pagination information") Pageable pageable) {
+    if (userId != null) {
+      return ResponseEntity.ok(
+          messageService.findByUserAndConversationId(userId, conversationId, pageable));
+    } else {
+      return ResponseEntity.ok(messageService.findByConversationId(conversationId, pageable));
+    }
   }
 
   @PostMapping
-  public ResponseEntity<MessageDTO> create(@Valid @RequestBody CreateMessageDTO dto) {
+  @Operation(summary = "Create new message", description = "Create a new message in a conversation")
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successfully created message",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = MessageDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid input data"),
+        @ApiResponse(responseCode = "404", description = "User or conversation not found")
+      })
+  public ResponseEntity<MessageDTO> create(
+      @Parameter(description = "Message creation data") @Valid @RequestBody CreateMessageDTO dto) {
     return ResponseEntity.ok(messageService.create(dto));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+  @Operation(summary = "Delete message", description = "Delete a message by its ID")
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "204", description = "Successfully deleted message"),
+        @ApiResponse(responseCode = "404", description = "Message not found")
+      })
+  public ResponseEntity<Boolean> delete(
+      @Parameter(description = "ID of the message to delete") @PathVariable Long id) {
     boolean deleted = messageService.delete(id);
 
     if (deleted) {

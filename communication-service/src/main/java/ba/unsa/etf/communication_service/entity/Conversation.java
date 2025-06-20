@@ -17,15 +17,13 @@ public class Conversation {
   @EqualsAndHashCode.Include
   private Long id;
 
-  @Column(name = "name", nullable = false)
-  private String name;
+  @ManyToOne
+  @JoinColumn(name = "user1_id", nullable = false)
+  private User user1;
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_conversation",
-      joinColumns = @JoinColumn(name = "conversation_id"),
-      inverseJoinColumns = @JoinColumn(name = "user_id"))
-  private Set<User> users = new HashSet<>();
+  @ManyToOne
+  @JoinColumn(name = "user2_id", nullable = false)
+  private User user2;
 
   @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Message> messages = new HashSet<>();
